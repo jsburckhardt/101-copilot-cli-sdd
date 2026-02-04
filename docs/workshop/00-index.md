@@ -46,12 +46,19 @@ By the end of this workshop, you will be able to:
 
 ## Workshop Flow
 
+📊 **[View Interactive Workshop Phases Diagram](workshop-phases-diagram.md)** - Visual guide showing the learning journey through all phases
+
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │  Installation   │────▶│  Core Concepts  │────▶│    Advanced     │
 │   (Module 1)    │     │  (Modules 2-5)  │     │  (Modules 6-12) │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
+
+The workshop is organized into **three progressive phases**:
+- 📘 **Phase 1: Foundation** (50 min) - Installation, modes, and sessions
+- 🔶 **Phase 2: Core Features** (70 min) - Instructions, tools, and MCP servers
+- 🟢 **Phase 3: Advanced Capabilities** (115 min) - Skills, agents, hooks, and production
 
 ## How to Use This Workshop
 
