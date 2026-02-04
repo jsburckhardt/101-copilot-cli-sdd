@@ -226,6 +226,6 @@ graph TD
 
 ---
 
-**Total Workshop Duration:** Approximately 4 hours (235 minutes)
+**Total Workshop Duration:** 235 minutes (approximately 4 hours)
 
 *This diagram provides a visual representation of your learning journey through the GitHub Copilot CLI workshop. Follow the phases sequentially for the best learning experience.*
