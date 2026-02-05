@@ -32,9 +32,9 @@ Copilot CLI supports multiple installation methods:
 
 | Method | Command | Best For |
 |--------|---------|----------|
+| **Script** | `curl -fsSL https://gh.io/copilot-install \| bash` | Quick setup |
 | npm | `npm install -g @github/copilot` | Node.js developers |
 | Homebrew | `brew install copilot-cli` | macOS/Linux users |
-| **Script** | `curl -fsSL https://gh.io/copilot-install \| bash` | Quick setup |
 | WinGet | `winget install GitHub.Copilot` | Windows users |
 | Dev Container | Built-in | Codespaces users |
 
@@ -142,6 +142,16 @@ GitHub Copilot CLI 0.0.402
 ### Exercise 2: Authenticate with GitHub
 
 **Goal:** Connect Copilot CLI to your GitHub account.
+
+> ⚠️ **FEEDBACK**: This exercise uses interactive browser-based authentication. For non-interactive environments (CI/CD, automated agents, Docker containers), use environment variable authentication instead:
+> ```bash
+> export GITHUB_TOKEN="ghp_your_personal_access_token"
+> # or
+> export GH_TOKEN="ghp_your_personal_access_token"
+> # or
+> export COPILOT_GITHUB_TOKEN="ghp_your_personal_access_token"
+> ```
+> See [Module 12: Advanced Topics](12-advanced.md) for more details on programmatic authentication.
 
 **Steps:**
 
