@@ -7,7 +7,7 @@ This file documents incongruences, errors, typos, or confusing parts encountered
 The following issues have been addressed with inline `⚠️ **FEEDBACK**` notes in the relevant modules:
 
 - ✅ Module 1: Programmatic authentication for CI/CD environments
-- ✅ Module 2: Auth requirement warning  
+- ✅ Module 2: Auth requirement warning
 - ✅ Module 3: Session persistence clarification
 - ✅ Module 3: `--share`/`--share-gist` version availability
 - ✅ Module 5: `--allow-tool`/`--deny-tool` version availability
@@ -18,7 +18,7 @@ The following issues have been addressed with inline `⚠️ **FEEDBACK**` notes
 
 ## Open Items
 
-- **Module 10**: Hooks require `jq` to be installed. Consider adding this as a prerequisite or noting the dependency.
+None - all identified issues have been addressed.
 
 ## Summary
 
