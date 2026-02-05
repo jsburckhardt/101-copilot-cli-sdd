@@ -54,6 +54,8 @@ The `/delegate` command hands off work to GitHub's cloud-based Copilot coding ag
 
 ## Hands-On Exercises
 
+> ⚠️ **FEEDBACK**: These exercises require authentication. If you encounter errors like "not authenticated", ensure you've completed Module 1 Exercise 4, or set one of these environment variables for programmatic authentication: `GITHUB_TOKEN`, `GH_TOKEN`, or `COPILOT_GITHUB_TOKEN`.
+
 ### Exercise 1: Interactive Mode Basics
 
 **Goal:** Start an interactive session and perform basic operations.

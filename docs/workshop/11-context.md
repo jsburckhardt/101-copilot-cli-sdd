@@ -50,6 +50,8 @@ When context reaches ~95% capacity, Copilot automatically compresses history to 
 
 ## Hands-On Exercises
 
+> ⚠️ **FEEDBACK**: Actual token usage and compaction behavior cannot be fully verified without a live authenticated session. The concepts described are consistent with standard LLM context window management.
+
 ### Exercise 1: Monitor Context Usage
 
 **Goal:** Learn to track context consumption.

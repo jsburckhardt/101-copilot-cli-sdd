@@ -63,6 +63,8 @@ Copilot CLI includes specialized built-in agents:
 
 ## Hands-On Exercises
 
+> ⚠️ **FEEDBACK**: Agent files are created in `.github/agents/`. The hierarchy and YAML frontmatter structure are well-defined. Testing agent behavior requires an authenticated session, but you can create the configuration files to set up the structure.
+
 ### Exercise 1: Create a Repository Agent
 
 **Goal:** Build a specialized agent for your repository.

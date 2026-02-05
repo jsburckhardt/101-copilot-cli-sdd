@@ -112,6 +112,24 @@ git --version
 gh --version
 ```
 
+### Ubuntu/Debian Quick Setup (example)
+
+If you're missing prerequisites (e.g., in a fresh Docker container):
+
+```bash
+# Basic tools
+apt-get update && apt-get install -y curl git jq gh
+
+# Install uv (Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+# Install nvm and Node.js LTS
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+```
+
 ## Getting Help
 
 - **Official Docs**: https://docs.github.com/en/copilot

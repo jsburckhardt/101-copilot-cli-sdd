@@ -32,15 +32,51 @@ Copilot CLI supports multiple installation methods:
 
 | Method | Command | Best For |
 |--------|---------|----------|
+| **Script** | `curl -fsSL https://gh.io/copilot-install \| bash` | Quick setup |
 | npm | `npm install -g @github/copilot` | Node.js developers |
 | Homebrew | `brew install copilot-cli` | macOS/Linux users |
-| Script | `curl -fsSL https://gh.io/copilot-install \| bash` | Quick setup |
 | WinGet | `winget install GitHub.Copilot` | Windows users |
 | Dev Container | Built-in | Codespaces users |
 
+## Updating Copilot CLI
+
+> [!NOTE]
+> 💡 **Already have Copilot CLI installed?** To update to the latest version, simply run:
+> ```bash
+> copilot update
+> ```
+
 ## Hands-On Exercises
 
-### Exercise 1: Install via npm (Recommended)
+### Exercise 1: Install via Script (Quick Method) - Recommended option
+
+**Goal:** Use the automated installation script.
+
+**Steps:**
+
+1. Run the installation script:
+   ```bash
+   curl -fsSL https://gh.io/copilot-install | bash
+   ```
+
+2. Follow any prompts to add to your PATH.
+
+3. Restart your terminal or source your profile:
+   ```bash
+   source ~/.bashrc  # or ~/.zshrc
+   ```
+
+4. Verify:
+   ```bash
+   copilot --version
+   ```
+
+**Expected Outcome:**
+```
+GitHub Copilot CLI 0.0.402.
+```
+
+### Exercise 1: Install via npm option
 
 **Goal:** Install Copilot CLI globally using npm.
 
@@ -56,7 +92,7 @@ Copilot CLI supports multiple installation methods:
    ```bash
    # Install or update nvm
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-   
+
    # Install Node.js v22
    nvm install 22
    nvm use 22
@@ -74,10 +110,10 @@ Copilot CLI supports multiple installation methods:
 
 **Expected Outcome:**
 ```
-@github/copilot version X.X.X
+GitHub Copilot CLI 0.0.402
 ```
 
-### Exercise 2: Install via Homebrew (macOS/Linux)
+### Exercise 1: Install via Homebrew (macOS/Linux) option
 
 **Goal:** Install using Homebrew package manager.
 
@@ -103,35 +139,19 @@ Copilot CLI supports multiple installation methods:
 @github/copilot version X.X.X
 ```
 
-### Exercise 3: Install via Script (Quick Method)
-
-**Goal:** Use the automated installation script.
-
-**Steps:**
-
-1. Run the installation script:
-   ```bash
-   curl -fsSL https://gh.io/copilot-install | bash
-   ```
-
-2. Follow any prompts to add to your PATH.
-
-3. Restart your terminal or source your profile:
-   ```bash
-   source ~/.bashrc  # or ~/.zshrc
-   ```
-
-4. Verify:
-   ```bash
-   copilot --version
-   ```
-
-**Expected Outcome:**
-Installation completes with version displayed.
-
-### Exercise 4: Authenticate with GitHub
+### Exercise 2: Authenticate with GitHub
 
 **Goal:** Connect Copilot CLI to your GitHub account.
+
+> ⚠️ **FEEDBACK**: This exercise uses interactive browser-based authentication. For non-interactive environments (CI/CD, automated agents, Docker containers), use environment variable authentication instead:
+> ```bash
+> export GITHUB_TOKEN="ghp_your_personal_access_token"
+> # or
+> export GH_TOKEN="ghp_your_personal_access_token"
+> # or
+> export COPILOT_GITHUB_TOKEN="ghp_your_personal_access_token"
+> ```
+> See [Module 12: Advanced Topics](12-advanced.md) for more details on programmatic authentication.
 
 **Steps:**
 
@@ -148,13 +168,13 @@ Installation completes with version displayed.
 
 5. Return to your terminal. You should see the Copilot prompt:
    ```
-   > 
+   >
    ```
 
 **Expected Outcome:**
 Interactive session starts with `>` prompt ready for input.
 
-### Exercise 5: Verify Setup with First Prompt
+### Exercise 3: Verify Setup with First Prompt
 
 **Goal:** Test that everything works with a simple query.
 

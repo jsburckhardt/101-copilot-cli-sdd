@@ -405,6 +405,8 @@ Personal skills are available in all projects.
 
 ### Exercise 4: Discover Skills from agentskills.io
 
+> ⚠️ **FEEDBACK**: This exercise relies on the external URL `https://agentskills.io`. Verify that this URL is live and reachable before proceeding. If the site is unavailable, you can skip this exercise or create skills manually based on the examples in previous exercises.
+
 **Goal:** Find and use community-created skills.
 
 **Steps:**
@@ -560,6 +562,8 @@ Skill provides deployment guidance and can reference scripts.
    ```
    /skill list
    ```
+
+> ⚠️ **FEEDBACK**: The `/skill list` command may not exist in all versions. Check `copilot` then `/help` to verify available slash commands in your installation.
 
 7. Explicitly invoke a skill:
    ```

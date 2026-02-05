@@ -42,6 +42,8 @@ Session Overrides (flags)
 
 ### Exercise 1: Environment Variables
 
+> ⚠️ **FEEDBACK**: `COPILOT_TOKEN` is used in the example helper script. It's unclear if this is a standard environment variable recognized by Copilot CLI or just used within the custom script. For authentication, prefer `GITHUB_TOKEN`, `GH_TOKEN`, or `COPILOT_GITHUB_TOKEN` which are documented alternatives.
+
 **Goal:** Configure Copilot CLI behavior via environment.
 
 **Steps:**
@@ -196,6 +198,9 @@ Copilot CLI integrated into automated workflows.
    ```
 
 2. **Tool control:**
+
+   > ⚠️ **FEEDBACK**: The flags `--available-tools` and `--excluded-tools` may be synonyms or replacements for `--allow-tool` / `--deny-tool`. Documentation consistency varies by version. Check `copilot --help` to see which flags are available in your installation.
+
    ```bash
    # Allow specific tools only
    copilot --available-tools 'shell,read'
@@ -283,6 +288,8 @@ Full command-line control over Copilot behavior.
 Custom configuration for your workflow.
 
 ### Exercise 5: Troubleshooting Guide
+
+> ⚠️ **FEEDBACK**: This troubleshooting guide is comprehensive. If you encounter flag-related issues (e.g., `--allow-tool` not recognized), check your installed version with `copilot --version` and compare with the latest documentation. Some flags may only be available in newer versions.
 
 **Goal:** Diagnose and fix common issues.
 

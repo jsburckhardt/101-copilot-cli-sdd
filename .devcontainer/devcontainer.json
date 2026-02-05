@@ -1,18 +1,17 @@
 {
     "name": "101-copilot-sdd",
-    "image": "mcr.microsoft.com/devcontainers/python:3.11",
+    "image": "mcr.microsoft.com/devcontainers/python:3.11-bookworm",
     // "runArgs": [
     //     "-p","0.0.0.0:12346:12346"
     // ],
     // "forwardPorts": [12346],
     "features": {
-        // "ghcr.io/devcontainers/features/common-utils:2": {
-        //     "configureZshAsDefaultShell": true,
-        //     "installOhMyZsh": true,
-        //     "installOhMyZshConfig": true
-        // },
-        // "ghcr.io/devcontainers/features/docker-outside-of-docker": {},
-        // "ghcr.io/azure/azure-dev/azd:latest": {},
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "configureZshAsDefaultShell": true,
+            "installOhMyZsh": true,
+            "installOhMyZshConfig": true
+        },
+        "ghcr.io/devcontainers/features/docker-outside-of-docker": {},
         "ghcr.io/devcontainers/features/node": {
             "version": "lts"
         },

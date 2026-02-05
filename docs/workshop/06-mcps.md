@@ -84,6 +84,8 @@ MCP servers are configured in:
 **Expected Outcome:**
 Copilot can access GitHub resources through the built-in MCP server.
 
+> ⚠️ **FEEDBACK**: Manually editing `~/.copilot/mcp-config.json` is straightforward. The command structure for MCP config follows the standard MCP specification. Verify the JSON syntax is valid before restarting Copilot.
+
 ### Exercise 2: Configure a Remote MCP Server
 
 **Goal:** Add a remote MCP server with authentication.

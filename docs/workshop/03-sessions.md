@@ -38,6 +38,8 @@ Sessions are stored in your Copilot config directory:
 
 ### Exercise 1: Session Persistence
 
+> ⚠️ **FEEDBACK**: Session persistence behavior may be unclear. By default, each `copilot` invocation starts a **fresh session**. The expected outcome stating "Recent session context is preserved when quickly re-entering" may not match actual behavior. Use `--resume` (Exercise 2) to explicitly restore a previous session. Clarification is needed on whether auto-resume is a feature or if `--resume` is always required.
+
 **Goal:** Understand how sessions persist between interactions.
 
 **Steps:**
@@ -307,6 +309,8 @@ You know when clearing context improves your workflow.
 You can run multiple focused sessions simultaneously.
 
 ### Exercise 7: Session Export and Sharing
+
+> ⚠️ **FEEDBACK**: The `--share` and `--share-gist` flags may not be available in all versions. These flags were not visible in `copilot --help` for version `0.0.400`. If these commands don't work, they may be from a newer version or preview build. Check `copilot --help` to verify available flags in your installation.
 
 **Goal:** Export session transcripts for documentation or sharing.
 

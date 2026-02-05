@@ -44,6 +44,8 @@ Session Start → User Prompt → Pre-Tool → Tool Execution → Post-Tool → 
 
 ## Hands-On Exercises
 
+> ⚠️ **FEEDBACK**: The hooks scripts use `jq` for JSON parsing. Ensure `jq` is installed on your system (`apt install jq`, `brew install jq`, or equivalent) before running these exercises. Without `jq`, the shell scripts will fail to parse hook inputs.
+
 ### Exercise 1: Create a Basic Hooks Configuration
 
 **Goal:** Set up hooks infrastructure.
