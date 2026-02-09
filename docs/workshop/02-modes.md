@@ -265,8 +265,10 @@ You can bootstrap Copilot configuration with `/init`, rename sessions, and confi
 
 3. Ask Copilot to create a file:
    ```
-   Create a simple Python script that prints "Hello, Copilot!"
+   Create a Python script named `hello.py` that prints "Hello, Copilot!"
    ```
+
+   > ⚠️ **FEEDBACK**: Specifying the exact filename in prompts ensures consistent results across workshop participants. Without it, Copilot may generate different filenames each time (e.g., `hello_copilot.py`, `hello_python.py`).
 
 4. When prompted to approve the file write, select **Yes**.
 
@@ -310,8 +312,10 @@ A Python script evolves through multiple iterations with your guidance.
 
 5. Now ask:
    ```
-   Show me the first 10 lines of hello.py
+   Display the contents of hello.py using the cat command
    ```
+
+   > ⚠️ **FEEDBACK**: Avoid prompts that reference a specific number of lines (e.g., "first 10 lines") for short files — Copilot may reason about the file length instead of running the expected command.
 
 6. Copilot asks for shell permission again (since you only approved once).
 
@@ -354,10 +358,12 @@ You understand the difference between one-time and session-wide tool approval.
    copilot -p "Run git status and explain what it means" --allow-tool 'shell(git)'
    ```
 
-5. Pipe output:
+5. Pipe file content as context:
    ```bash
-   copilot -p "Explain this output" < README.md
+   cat README.md | copilot -p "Explain what this file contains"
    ```
+
+   > ⚠️ **FEEDBACK**: When piping content to Copilot, use prompts that reference "this content" or "this file" rather than "this output" to avoid Copilot responding with "I don't see any output to explain."
 
 **Expected Outcome:**
 Commands execute and exit without entering interactive mode.

@@ -7,7 +7,9 @@ This file documents incongruences, errors, typos, or confusing parts encountered
 The following issues have been addressed with inline `⚠️ **FEEDBACK**` notes in the relevant modules:
 
 - ✅ Module 1: Programmatic authentication for CI/CD environments
+- ✅ Module 1: Container/CI authentication troubleshooting
 - ✅ Module 2: Auth requirement warning
+- ✅ Module 2: Exercise prompt clarity (filename, line count, pipe wording)
 - ✅ Module 3: Session persistence clarification
 - ✅ Module 3: `--share`/`--share-gist` version availability
 - ✅ Module 5: `--allow-tool`/`--deny-tool` version availability
@@ -22,6 +24,11 @@ None - all identified issues have been addressed.
 
 ## Recent Changes
 
+- ✅ README: Expanded SDD acronym, added Dev Container guidance, reframed install options as alternatives
+- ✅ Module 1: Added container/CI auth troubleshooting section and table row
+- ✅ Module 2 Ex4: Specified filename (`hello.py`) in prompt to reduce randomness across participants
+- ✅ Module 2 Ex5: Replaced "first 10 lines" prompt with explicit `cat` command to avoid Copilot confusion
+- ✅ Module 2 Ex6: Fixed piped input prompt wording ("Explain what this file contains" vs "Explain this output")
 - ✅ Module 2: Added comprehensive "Slash Commands" section covering all 30+ `/command` features, keyboard shortcuts, command categories, and 3 new exercises (`/plan`, `/review`, `/diff`, `/init`, `/rename`, `/tasks`, `/theme`, `/terminal-setup`, `/lsp`, `/user`). Module renamed to "Operating Modes & Commands" with updated duration (30 min).
 
 ## Summary

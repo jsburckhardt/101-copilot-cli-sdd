@@ -234,6 +234,7 @@ Copilot correctly identifies your working directory and shows available commands
 | Authentication fails | Check subscription status at github.com/settings/copilot |
 | Permission denied (npm) | Don't use sudo; fix npm permissions instead |
 | Organization policy error | Ask your admin to enable Copilot CLI policy |
+| Auth fails in Docker/container | Use PAT auth: `export GH_TOKEN="ghp_..."`. See [Authentication in Containers](#authentication-in-containers-and-cicd) below |
 
 ### Fixing npm Permissions
 
@@ -258,6 +259,20 @@ source ~/.bashrc
 1. Go to https://github.com/settings/copilot
 2. Verify your subscription is active
 3. Check that CLI access is enabled
+
+### Authentication in Containers and CI/CD
+
+> ⚠️ **FEEDBACK**: Browser-based OAuth may not work in headless environments (Docker containers, CI/CD, remote servers). Use a Personal Access Token (PAT) instead:
+
+1. Create a fine-grained PAT at https://github.com/settings/personal-access-tokens/new
+2. Under "Permissions," add **"Copilot Requests"**
+3. Export the token:
+   ```bash
+   export GH_TOKEN="ghp_your_token_here"
+   # or
+   export GITHUB_TOKEN="ghp_your_token_here"
+   ```
+4. Start Copilot CLI — it will authenticate automatically without a browser
 
 ## Summary
 
