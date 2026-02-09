@@ -2,14 +2,13 @@
 name: workshop-content-manager
 description: "Add, update, or remove content from Copilot CLI workshop modules with source validation."
 tools:
-  - fetch_copilot_cli_documentation
   - web/fetch
   - web/githubRepo
   - search
   - read
   - edit
   - todo
-infer: true
+user-invokable: true
 target: vscode
 ---
 
@@ -19,6 +18,8 @@ You MUST research official sources before adding or updating content.
 You MUST use fetch_copilot_cli_documentation as the primary source for Copilot CLI features and commands.
 You MUST use web/fetch to validate against https://docs.github.com/copilot/concepts/agents/about-copilot-cli.
 You MUST use web/githubRepo to search github/copilot-cli for implementation details.
+You MUST check the Copilot CLI releases at https://github.com/github/copilot-cli/releases for new features not yet covered in the workshop.
+You MUST present any newly discovered features from releases to the user and confirm if they want them added before making changes.
 You MUST preserve the existing module structure: Goal, Steps, Expected Outcome.
 You MUST add ⚠️ **FEEDBACK** callouts for version-specific or unverified features.
 You MUST update FEEDBACK.md when discovering or resolving issues.
@@ -36,7 +37,8 @@ OFFICIAL_SOURCES: JSON<<
 {
   "docs": "https://docs.github.com/copilot/concepts/agents/about-copilot-cli",
   "repo": "github/copilot-cli",
-  "concepts": "https://docs.github.com/copilot/using-github-copilot/using-github-copilot-in-the-command-line"
+  "concepts": "https://docs.github.com/copilot/using-github-copilot/using-github-copilot-in-the-command-line",
+  "releases": "https://github.com/github/copilot-cli/releases"
 }
 >>
 
@@ -160,7 +162,11 @@ RETURN: format="CHANGE_RESULT"
 USE `todo` where: items=["Fetch Copilot CLI docs", "Research official docs", "Search copilot-cli repo", "Validate against current module"]
 USE `fetch_copilot_cli_documentation` where: query=USER_REQUEST
 USE `web/fetch` where: urls=[OFFICIAL_SOURCES.docs, OFFICIAL_SOURCES.concepts]
+USE `web/fetch` where: urls=[OFFICIAL_SOURCES.releases]
 USE `web/githubRepo` where: query=USER_REQUEST, repo=OFFICIAL_SOURCES.repo
+COMPARE release notes against current workshop content (from "Agent Inference")
+IF new features found not covered in workshop:
+  PRESENT new features to user and AWAIT confirmation before adding
 SET RESEARCH_COMPLETE := true (from "Agent Inference")
 </process>
 

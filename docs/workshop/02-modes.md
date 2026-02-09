@@ -1,4 +1,4 @@
-# Module 2: Operating Modes
+# Module 2: Operating Modes & Commands
 
 ## Prerequisites
 
@@ -8,6 +8,8 @@
 ## Learning Objectives
 
 - Understand the difference between interactive and programmatic modes
+- Discover and use slash commands (`/command`) for CLI control
+- Use `/plan`, `/review`, and `/diff` for structured workflows
 - Use the delegate (`/delegate`) command to hand off to cloud agents
 - Control tool approval during interactions
 - Choose the right mode for different scenarios
@@ -52,11 +54,199 @@ The `/delegate` command hands off work to GitHub's cloud-based Copilot coding ag
 /delegate implement the user authentication feature based on the spec
 ```
 
+### Slash Commands
+
+Slash commands are prefixed with `/` and provide quick access to CLI features without leaving the conversation. They are the primary way to control Copilot CLI behavior during an interactive session.
+
+#### Discovering Commands
+
+- Type `/help` to see the full list of available commands
+- Press `ctrl+x` then `/` to run a command via keyboard shortcut
+- Commands are tab-completable — start typing `/` followed by the first letters
+
+#### Command Categories
+
+| Category | Commands | Purpose |
+|----------|----------|---------|
+| **Session** | `/clear`, `/session`, `/resume`, `/rename`, `/usage` | Manage session lifecycle |
+| **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` | Control directory scope |
+| **Context** | `/context`, `/compact` | Monitor and optimize token usage |
+| **Tools** | `/allow-all`, `/yolo`, `/reset-allowed-tools` | Manage tool permissions at runtime |
+| **Review** | `/diff`, `/review`, `/plan` | Code review and planning workflows |
+| **Configuration** | `/model`, `/mcp`, `/theme`, `/terminal-setup`, `/experimental` | Customize CLI behavior |
+| **Extensibility** | `/skills`, `/plugin`, `/agent` | Manage skills, plugins, and agents |
+| **Sharing** | `/share`, `/feedback` | Export sessions and submit feedback |
+| **Account** | `/login`, `/logout`, `/user` | Authentication and user management |
+| **System** | `/help`, `/exit`, `/quit`, `/init`, `/tasks`, `/lsp` | General utilities |
+
+#### Keyboard Shortcuts
+
+In addition to slash commands, Copilot CLI supports keyboard shortcuts:
+
+| Shortcut | Action |
+|----------|--------|
+| `@` | Mention files — include file contents in context |
+| `!` | Execute a shell command directly (bypass Copilot) |
+| `Esc` | Cancel the current operation |
+| `ctrl+x → /` | Run a slash command |
+| `ctrl+c` | Cancel operation / clear input / exit |
+| `ctrl+d` | Shutdown |
+| `ctrl+l` | Clear the screen |
+| `ctrl+o` | Expand recent timeline (when no input) |
+| `ctrl+e` | Expand all timeline (when no input) |
+| `ctrl+t` | Toggle model reasoning display |
+| `Shift+Tab` | Cycle through modes (suggest, normal, autopilot) |
+
+#### Key Commands Not Covered in Other Modules
+
+Some commands are covered in depth in later modules (`/mcp` in Module 6, `/skills` in Module 7, `/plugin` in Module 8, `/context` and `/compact` in Module 11). The following important commands are unique to this section:
+
+| Command | Description |
+|---------|-------------|
+| `/plan [prompt]` | Ask Copilot to create an implementation plan before writing code |
+| `/review [prompt]` | Run a code review agent to analyze changes |
+| `/diff` | Review all changes made in the current directory during the session |
+| `/init` | Initialize Copilot instructions and agentic features for a repository |
+| `/tasks` | View and manage background tasks (subagents, shell sessions) |
+| `/rename <name>` | Rename the current session for easy identification |
+| `/theme [show\|set\|list]` | View or configure the terminal color theme |
+| `/terminal-setup` | Configure terminal for multiline input support (shift+enter) |
+| `/lsp` | View configured Language Server Protocol servers |
+| `/user [show\|list\|switch]` | Manage GitHub user list (multi-account support) |
+
 ## Hands-On Exercises
 
 > ⚠️ **FEEDBACK**: These exercises require authentication. If you encounter errors like "not authenticated", ensure you've completed Module 1 Exercise 4, or set one of these environment variables for programmatic authentication: `GITHUB_TOKEN`, `GH_TOKEN`, or `COPILOT_GITHUB_TOKEN`.
 
-### Exercise 1: Interactive Mode Basics
+### Exercise 1: Discovering Slash Commands
+
+**Goal:** Learn to discover and use slash commands inside an interactive session.
+
+**Steps:**
+
+1. Start Copilot CLI:
+   ```bash
+   copilot
+   ```
+
+2. View all available commands:
+   ```
+   /help
+   ```
+
+3. Review the output — you'll see commands grouped with descriptions.
+
+4. Try the `/theme` command to see available themes:
+   ```
+   /theme list
+   ```
+
+5. Set a theme (optional):
+   ```
+   /theme set <theme-id>
+   ```
+
+6. Check your current working directory:
+   ```
+   /cwd
+   ```
+
+7. View session usage metrics:
+   ```
+   /usage
+   ```
+
+8. Exit with `/exit`.
+
+**Expected Outcome:**
+You can discover and navigate the full set of slash commands using `/help`.
+
+### Exercise 2: Planning and Reviewing with Commands
+
+**Goal:** Use `/plan`, `/review`, and `/diff` for structured development workflows.
+
+**Steps:**
+
+1. Navigate to a project directory and start Copilot:
+   ```bash
+   mkdir -p ~/copilot-commands-lab && cd ~/copilot-commands-lab
+   git init
+   copilot
+   ```
+
+2. Use `/plan` to create an implementation plan before coding:
+   ```
+   /plan Build a simple REST API with Express.js that has CRUD endpoints for a todo list
+   ```
+
+3. Copilot creates a structured plan. Review it before proceeding.
+
+4. Ask Copilot to implement the plan:
+   ```
+   Go ahead and implement the plan
+   ```
+
+5. After files are created, review all changes made:
+   ```
+   /diff
+   ```
+
+6. Run a code review on the changes:
+   ```
+   /review Check for security issues and missing error handling
+   ```
+
+7. Exit with `/exit`.
+
+**Expected Outcome:**
+You can use `/plan` for structured implementation, `/diff` to review changes, and `/review` for code analysis.
+
+### Exercise 3: Repository Initialization and Session Management Commands
+
+**Goal:** Use `/init` to bootstrap Copilot configuration and `/rename` to organize sessions.
+
+**Steps:**
+
+1. Create a new project directory:
+   ```bash
+   mkdir -p ~/copilot-init-lab && cd ~/copilot-init-lab
+   git init
+   copilot
+   ```
+
+2. Initialize Copilot configuration for this repository:
+   ```
+   /init
+   ```
+
+3. This creates starter files like `AGENTS.md` and `.github/copilot-instructions.md`.
+
+4. Rename this session for easy identification:
+   ```
+   /rename init-lab-session
+   ```
+
+5. Check session details:
+   ```
+   /session
+   ```
+
+6. View background tasks (if any):
+   ```
+   /tasks
+   ```
+
+7. Configure terminal for multiline input:
+   ```
+   /terminal-setup
+   ```
+
+8. Exit with `/exit`.
+
+**Expected Outcome:**
+You can bootstrap Copilot configuration with `/init`, rename sessions, and configure terminal features.
+
+### Exercise 4: Interactive Mode Basics
 
 **Goal:** Start an interactive session and perform basic operations.
 
@@ -95,7 +285,7 @@ The `/delegate` command hands off work to GitHub's cloud-based Copilot coding ag
 **Expected Outcome:**
 A Python script evolves through multiple iterations with your guidance.
 
-### Exercise 2: Tool Approval Workflow
+### Exercise 5: Tool Approval Workflow
 
 **Goal:** Understand how to approve, deny, and manage tool permissions.
 
@@ -137,7 +327,7 @@ A Python script evolves through multiple iterations with your guidance.
 **Expected Outcome:**
 You understand the difference between one-time and session-wide tool approval.
 
-### Exercise 3: Programmatic Mode
+### Exercise 6: Programmatic Mode
 
 **Goal:** Execute single commands without entering interactive mode.
 
@@ -172,7 +362,7 @@ You understand the difference between one-time and session-wide tool approval.
 **Expected Outcome:**
 Commands execute and exit without entering interactive mode.
 
-### Exercise 4: Chaining Prompts
+### Exercise 7: Chaining Prompts
 
 **Goal:** Use programmatic mode in shell scripts.
 
@@ -207,7 +397,7 @@ Commands execute and exit without entering interactive mode.
 **Expected Outcome:**
 Multiple Copilot operations run sequentially in a script.
 
-### Exercise 5: Delegate to Cloud Agent
+### Exercise 8: Delegate to Cloud Agent
 
 **Goal:** Hand off a task to the cloud-based Copilot coding agent.
 
@@ -243,7 +433,7 @@ Multiple Copilot operations run sequentially in a script.
 **Expected Outcome:**
 A draft PR is created and the cloud agent begins working asynchronously.
 
-### Exercise 6: Comparing Modes
+### Exercise 9: Comparing Modes
 
 **Goal:** Understand when to use each mode.
 
@@ -321,6 +511,8 @@ You can choose the appropriate mode for any task.
 - ✅ **Interactive mode** - Conversational, multi-step, exploratory
 - ✅ **Programmatic mode** - Single prompt, scriptable, CI/CD friendly
 - ✅ **Delegate mode** - Hands off to cloud agent for heavy tasks
+- ✅ **Slash commands** - `/plan`, `/review`, `/diff`, `/init`, and 25+ others for CLI control
+- ✅ **Keyboard shortcuts** - `@` for files, `!` for shell, `ctrl+x → /` for commands
 - ✅ Tool approval has one-time and session-wide options
 - ✅ Be cautious with session-wide approval for destructive commands
 

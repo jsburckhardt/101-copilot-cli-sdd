@@ -1,5 +1,7 @@
 # GitHub Copilot CLI Workshop
 
+> **Tested against:** GitHub Copilot CLI **v0.0.405**. Check [releases](https://github.com/github/copilot-cli/releases) for newer versions — some features may change or new ones may be added.
+
 Welcome to this hands-on workshop for mastering GitHub Copilot CLI! This workshop will take you from installation to advanced automation techniques.
 
 ## Prerequisites
@@ -15,7 +17,7 @@ Welcome to this hands-on workshop for mastering GitHub Copilot CLI! This worksho
 By the end of this workshop, you will be able to:
 
 - Install and configure Copilot CLI on any platform
-- Use interactive and programmatic modes effectively
+- Use interactive and programmatic modes effectively, including slash commands
 - Manage sessions and delegate tasks to cloud agents
 - Create custom instructions with AGENTS.md and llm.txt
 - Control tool permissions and use `--yolo` mode safely
@@ -30,7 +32,7 @@ By the end of this workshop, you will be able to:
 | # | Module | Duration | Description |
 |---|--------|----------|-------------|
 | 01 | [Installation](01-installation.md) | 15 min | Install via npm, Homebrew, or script |
-| 02 | [Operating Modes](02-modes.md) | 20 min | Interactive chat, programmatic, and `/delegate` |
+| 02 | [Operating Modes & Commands](02-modes.md) | 30 min | Interactive chat, slash commands, programmatic, and `/delegate` |
 | 03 | [Session Management](03-sessions.md) | 15 min | Continue, resume, clear, and track sessions |
 | 04 | [Custom Instructions](04-instructions.md) | 25 min | AGENTS.md, llm.txt, copilot-instructions.md |
 | 05 | [Tools & Permissions](05-tools.md) | 20 min | Built-in tools, allow/deny, `--yolo` mode |
@@ -89,9 +91,13 @@ copilot --resume
 | `/clear` | Clear session context |
 | `/context` | View token usage |
 | `/compact` | Compress session history |
+| `/plan` | Create implementation plan before coding |
+| `/review` | Run code review agent |
+| `/diff` | Review changes made in current directory |
 | `/delegate` | Hand off to cloud agent |
 | `/model` | Switch AI model |
 | `/mcp` | Manage MCP servers |
+| `/init` | Initialize Copilot config for repo |
 | `/cwd` | Change working directory |
 
 ## Environment Setup Check
