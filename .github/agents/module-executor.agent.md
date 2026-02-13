@@ -2,8 +2,14 @@
 name: module-executor
 description: Executes a single workshop module inside Docker, validates commands, auto-fixes simple errors, and returns structured results. Invoked by workshop-runner for each module.
 tools:
-  ['execute/getTerminalOutput', 'execute/runInTerminal', 'read/readFile', 'edit/editFiles', 'web/fetch']
+  - execute/runInTerminal
+  - execute/getTerminalOutput
+  - read/readFile
+  - edit/editFiles
+  - web/fetch
 user-invokable: false
+disable-model-invocation: false
+target: vscode
 ---
 
 <instructions>
@@ -93,9 +99,9 @@ STATUS: "pass"
 <processes>
 <process id="execute_module" name="Execute Single Module">
 USE `read/readFile` where: filePath=MODULE_FILE
-EXTRACT code_blocks from module content (from "Agent Inference")
+SET CODE_BLOCKS := <BLOCKS> (from "Agent Inference" using MODULE_FILE)
 SET MODULE_NAME := <NAME> (from "Agent Inference" using MODULE_FILE)
-FOR EACH block in code_blocks:
+FOREACH block IN CODE_BLOCKS:
   RUN `run_command` where: command=block
 IF COMMANDS_FAILED > 0 AND FIXES_APPLIED >= COMMANDS_FAILED:
   SET STATUS := "pass" (from "Agent Inference")
@@ -114,20 +120,20 @@ IF exit_code != 0:
 
 <process id="handle_error" name="Handle Command Error">
 USE `web/fetch` where: url=COPILOT_DOCS_URL
-EXTRACT relevant_fix from docs (from "Agent Inference" using command, error_output)
-EVALUATE fix_complexity using FIX_THRESHOLD (from "Agent Inference")
-IF fix_complexity == "simple":
-  USE `edit/editFiles` where: changes=relevant_fix, file=MODULE_FILE
+SET RELEVANT_FIX := <FIX> (from "Agent Inference" using command, error_output)
+SET FIX_COMPLEXITY := <COMPLEXITY> (from "Agent Inference" using FIX_THRESHOLD)
+IF FIX_COMPLEXITY == "simple":
+  USE `edit/editFiles` where: changes=RELEVANT_FIX, file=MODULE_FILE
   SET FIXES_APPLIED := FIXES_APPLIED + 1 (from "Agent Inference")
-  APPEND to FIXES: command + " -> " + relevant_fix (from "Agent Inference")
-  USE `execute/runInTerminal` where: command=DOCKER_CMD + " '" + fixed_command + "'"
+  SET FIXES := FIXES + [command + " -> " + RELEVANT_FIX] (from "Agent Inference")
+  USE `execute/runInTerminal` where: command=DOCKER_CMD + " '" + RELEVANT_FIX + "'"
   USE `execute/getTerminalOutput`
   IF exit_code != 0:
     SET COMMANDS_FAILED := COMMANDS_FAILED + 1 (from "Agent Inference")
-    APPEND to ERRORS: command + ": " + error_output (from "Agent Inference")
+    SET ERRORS := ERRORS + [command + ": " + error_output] (from "Agent Inference")
 ELSE:
   SET COMMANDS_FAILED := COMMANDS_FAILED + 1 (from "Agent Inference")
-  APPEND to ERRORS: command + ": " + error_output + " (complex fix needed)" (from "Agent Inference")
+  SET ERRORS := ERRORS + [command + ": " + error_output + " (complex fix needed)"] (from "Agent Inference")
 </process>
 </processes>
 

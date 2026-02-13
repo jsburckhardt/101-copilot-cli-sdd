@@ -2,8 +2,15 @@
 name: workshop-runner
 description: Orchestrates the Copilot CLI workshop by initializing Docker, handling auth, and dispatching module-executor for each module. Collects results and produces final progress report.
 tools:
-  ['execute/getTerminalOutput', 'execute/runInTerminal', 'read/readFile', 'edit/editFiles', 'todo', 'agent']
+  - execute/runInTerminal
+  - execute/getTerminalOutput
+  - read/readFile
+  - edit/editFiles
+  - todo
+  - agent/runSubagent
 user-invokable: true
+disable-model-invocation: false
+target: vscode
 ---
 
 <instructions>
@@ -183,16 +190,18 @@ RUN `collect_results`
 RUN `finalize`
 </process>
 
-<process id="dispatch_all_modules" name="Dispatch All Modules in Parallel">
-PARALLEL FOR EACH module in MODULES:
-  USE `agent` where: agent=MODULE_EXECUTOR, module_file=module.file, module_id=module.id
-  CAPTURE result from `agent`
-  APPEND to MODULE_RESULTS: result (from "Agent Inference")
-END PARALLEL
+<process id="dispatch_all_modules" name="Dispatch All Modules">
+PAR:
+  FOREACH module IN MODULES:
+    USE `agent/runSubagent` where: agent=MODULE_EXECUTOR, module_file=module.file, module_id=module.id
+JOIN:
+  FOREACH module IN MODULES:
+    CAPTURE RESULT from `agent/runSubagent`
+    SET MODULE_RESULTS := MODULE_RESULTS + [RESULT] (from "Agent Inference")
 </process>
 
 <process id="collect_results" name="Collect and Aggregate Results">
-FOR EACH result in MODULE_RESULTS:
+FOREACH result IN MODULE_RESULTS:
   SET MODULE_INDEX := MODULE_INDEX + 1 (from "Agent Inference")
   SET TOTAL_FIXES := TOTAL_FIXES + result.fixes_applied (from "Agent Inference")
   IF result.status != "pass":
