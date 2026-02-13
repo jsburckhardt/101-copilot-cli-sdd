@@ -38,6 +38,23 @@ Copilot CLI reads instructions from multiple sources with this priority:
 | `*.instructions.md` | File patterns | Language/path-specific rules |
 | `llm.txt` | Website/project | LLM-optimized project documentation |
 
+### The `/instructions` Command
+
+Use `/instructions` inside an interactive session to view and toggle which custom instruction files are active:
+
+```
+/instructions
+```
+
+This displays all discovered instruction files (AGENTS.md, copilot-instructions.md, `*.instructions.md`, personal instructions) with their status. You can enable or disable individual files without deleting them — useful for debugging which instructions are affecting behavior.
+
+| Action | Example |
+|--------|---------|
+| List all instruction files | `/instructions` |
+| Toggle a file on/off | Select from the displayed list |
+
+This is especially helpful when multiple instruction files interact and you need to isolate which one is causing unexpected behavior.
+
 ## Hands-On Exercises
 
 > ⚠️ **FEEDBACK**: This module involves file creation and configuration. Since interactive verification requires authentication, you can create these files to simulate the setup even without a live authenticated session. The structure and concepts align with modern agentic workflows.
@@ -161,7 +178,7 @@ Generated code follows your specified style (2-space indent, const usage, JSDoc 
    ```
 
    ## Preferred Patterns
-   
+
    ### Error Handling
    ```typescript
    try {
@@ -177,7 +194,7 @@ Generated code follows your specified style (2-space indent, const usage, JSDoc 
    ```typescript
    export class UserService {
      constructor(private readonly db: Database) {}
-     
+
      async findById(id: string): Promise<User | null> {
        return this.db.user.findUnique({ where: { id } });
      }
@@ -221,7 +238,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    ---
    applyTo: "**/*.ts,**/*.tsx"
    ---
-   
+
    # TypeScript Instructions
 
    - Use strict TypeScript (`"strict": true` in tsconfig)
@@ -239,7 +256,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    ---
    applyTo: "**/*.test.ts,**/*.spec.ts,**/tests/**"
    ---
-   
+
    # Test File Instructions
 
    - Use descriptive test names: `it('should return 404 when user not found')`
@@ -257,7 +274,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    ---
    applyTo: "**/*.md,**/docs/**"
    ---
-   
+
    # Documentation Instructions
 
    - Use ATX-style headers (# not underlines)
@@ -275,7 +292,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    ```
    Create a test file for a UserService class
    ```
-   
+
    Then:
    ```
    Create documentation for the API endpoints

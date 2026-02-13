@@ -7,6 +7,8 @@ tools:
   - search/textSearch
   - read/readFile
   - edit/editFiles
+  - execute/runInTerminal
+  - execute/getTerminalOutput
   - web/fetch
   - web/githubRepo
   - todo
@@ -28,6 +30,7 @@ You MUST add ⚠️ **FEEDBACK** callouts for version-specific or unverified fea
 You MUST update FEEDBACK.md when discovering or resolving issues.
 You MUST use todo to track multi-step content changes.
 You MUST NOT remove existing content without explicit user confirmation.
+You MUST use execute/runInTerminal with `gh release` commands as a fallback when web/fetch is unavailable.
 You MUST NOT add content that contradicts official documentation.
 </instructions>
 

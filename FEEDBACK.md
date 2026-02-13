@@ -24,6 +24,9 @@ None - all identified issues have been addressed.
 
 ## Recent Changes
 
+- ✅ Version bump: Workshop updated from v0.0.405 to v0.0.409
+- ✅ Module 4: Added `/instructions` command section (v0.0.407 feature) with feedback callout
+- ✅ Index: Added `/instructions` to slash commands quick reference table
 - ✅ README: Expanded SDD acronym, added Dev Container guidance, reframed install options as alternatives
 - ✅ Module 1: Added container/CI auth troubleshooting section and table row
 - ✅ Module 2 Ex4: Specified filename (`hello.py`) in prompt to reduce randomness across participants
