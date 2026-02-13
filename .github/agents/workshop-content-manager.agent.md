@@ -2,20 +2,23 @@
 name: workshop-content-manager
 description: "Add, update, or remove content from Copilot CLI workshop modules with source validation."
 tools:
+  - search/codebase
+  - search/fileSearch
+  - search/textSearch
+  - read/readFile
+  - edit/editFiles
   - web/fetch
   - web/githubRepo
-  - search
-  - read
-  - edit
   - todo
 user-invokable: true
+disable-model-invocation: false
 target: vscode
 ---
 
 <instructions>
 You MUST read the workshop index at docs/workshop/00-index.md before making changes.
 You MUST research official sources before adding or updating content.
-You MUST use fetch_copilot_cli_documentation as the primary source for Copilot CLI features and commands.
+You MUST use web/fetch as the primary source for Copilot CLI features and commands.
 You MUST use web/fetch to validate against https://docs.github.com/copilot/concepts/agents/about-copilot-cli.
 You MUST use web/githubRepo to search github/copilot-cli for implementation details.
 You MUST check the Copilot CLI releases at https://github.com/github/copilot-cli/releases for new features not yet covered in the workshop.
@@ -160,20 +163,20 @@ RETURN: format="CHANGE_RESULT"
 
 <process id="research" name="Research Official Sources">
 USE `todo` where: items=["Fetch Copilot CLI docs", "Research official docs", "Search copilot-cli repo", "Validate against current module"]
-USE `fetch_copilot_cli_documentation` where: query=USER_REQUEST
 USE `web/fetch` where: urls=[OFFICIAL_SOURCES.docs, OFFICIAL_SOURCES.concepts]
 USE `web/fetch` where: urls=[OFFICIAL_SOURCES.releases]
 USE `web/githubRepo` where: query=USER_REQUEST, repo=OFFICIAL_SOURCES.repo
-COMPARE release notes against current workshop content (from "Agent Inference")
-IF new features found not covered in workshop:
-  PRESENT new features to user and AWAIT confirmation before adding
+SET RELEASE_DIFF := <DIFF> (from "Agent Inference" using release notes, current workshop content)
+IF RELEASE_DIFF is not empty:
+  TELL "New features found not covered in workshop" level=full
+  RETURN: RELEASE_DIFF
 SET RESEARCH_COMPLETE := true (from "Agent Inference")
 </process>
 
 <process id="validate" name="Validate Changes">
 USE `read/readFile` where: filePath=MODULES_DIR + "/" + MODULE_MAP[TARGET_MODULE]
-COMPARE proposed changes against official sources (from "Agent Inference")
-IF discrepancy found:
+SET VALIDATION := <RESULT> (from "Agent Inference" using proposed changes, official sources)
+IF VALIDATION = "discrepancy":
   RETURN: format="ERROR", reason="Content contradicts official documentation"
 SET CHANGES_VALIDATED := true (from "Agent Inference")
 </process>
@@ -181,15 +184,16 @@ SET CHANGES_VALIDATED := true (from "Agent Inference")
 <process id="apply_changes" name="Apply Content Changes">
 USE `edit/editFiles` where: changes=validated_changes, file=MODULES_DIR + "/" + MODULE_MAP[TARGET_MODULE]
 IF version_specific:
-  ADD FEEDBACK_MARKER to content (from "Agent Inference")
+  SET CONTENT := CONTENT + FEEDBACK_MARKER (from "Agent Inference")
+  USE `edit/editFiles` where: changes=CONTENT, file=MODULES_DIR + "/" + MODULE_MAP[TARGET_MODULE]
 USE `todo` where: complete="Apply changes"
 </process>
 
 <process id="confirm_removal" name="Confirm Content Removal">
 USE `read/readFile` where: filePath=MODULES_DIR + "/" + MODULE_MAP[TARGET_MODULE]
-DISPLAY content to be removed (from "Agent Inference")
-AWAIT user confirmation (from "Agent Inference")
-IF confirmed:
+TELL "Content to be removed" level=full
+SET CONFIRMED := <USER_RESPONSE> (from "Agent Inference")
+IF CONFIRMED = true:
   USE `edit/editFiles` where: changes=removal, file=MODULES_DIR + "/" + MODULE_MAP[TARGET_MODULE]
 </process>
 </processes>
