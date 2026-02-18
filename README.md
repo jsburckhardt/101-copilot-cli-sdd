@@ -64,3 +64,18 @@ To try out the workshop without affecting your local environment, use Docker:
 | Reconnect to stopped container | `docker start -ai copilot-workshop` |
 | Open parallel shell | `docker exec -it copilot-workshop bash` |
 | Remove container when done | `docker rm copilot-workshop` |
+
+## Responsible AI
+
+This workshop uses AI-assisted development tools. We follow [Microsoft's Responsible AI principles](https://www.microsoft.com/ai/responsible-ai), which are grounded in six core values:
+
+1. **Fairness** — AI systems should treat all people fairly
+2. **Reliability & Safety** — AI systems should perform reliably and safely
+3. **Privacy & Security** — AI systems should be secure and respect privacy
+4. **Inclusiveness** — AI systems should empower everyone and engage people
+5. **Transparency** — AI systems should be understandable
+6. **Accountability** — People should be accountable for AI systems
+
+> **Remember:** AI is a tool, not an authority. Always review, test, and validate AI-generated code before committing. You are responsible for every line in your codebase.
+
+For detailed guidance on applying these principles in practice, see [`docs/responsible-ai.md`](docs/responsible-ai.md).
