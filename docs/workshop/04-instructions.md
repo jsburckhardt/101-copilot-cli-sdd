@@ -20,19 +20,19 @@
 
 Copilot CLI reads instructions from multiple sources with this priority:
 
-```
+```text
 1. Prompt (highest) - What you type
 2. AGENTS.md - Nearest in directory tree
 3. .github/copilot-instructions.md - Repository-wide
 4. .github/instructions/*.instructions.md - Path-specific
 5. Personal instructions - ~/.copilot/instructions.md
 6. Default behavior (lowest)
-```
+```text
 
 ### File Purposes
 
 | File | Scope | Purpose |
-|------|-------|---------|
+| --- | --- | --- |
 | `AGENTS.md` | Directory tree | Agent persona and behavior |
 | `copilot-instructions.md` | Repository | Coding standards and conventions |
 | `*.instructions.md` | File patterns | Language/path-specific rules |
@@ -42,14 +42,14 @@ Copilot CLI reads instructions from multiple sources with this priority:
 
 Use `/instructions` inside an interactive session to view and toggle which custom instruction files are active:
 
-```
+```text
 /instructions
-```
+```text
 
 This displays all discovered instruction files (AGENTS.md, copilot-instructions.md, `*.instructions.md`, personal instructions) with their status. You can enable or disable individual files without deleting them — useful for debugging which instructions are affecting behavior.
 
 | Action | Example |
-|--------|---------|
+| --- | --- |
 | List all instruction files | `/instructions` |
 | Toggle a file on/off | Select from the displayed list |
 
@@ -66,7 +66,7 @@ This is especially helpful when multiple instruction files interact and you need
 1. Create the `.github` directory:
    ```bash
    mkdir -p .github
-   ```
+   ```text
 
 2. Create `copilot-instructions.md`:
    ```bash
@@ -98,15 +98,15 @@ This is especially helpful when multiple instruction files interact and you need
    - Validate all user input
    - Use parameterized queries for database operations
    EOF
-   ```
+   ```text
 
 3. Start Copilot and test:
    ```bash
    copilot
-   ```
-   ```
+   ```text
+   ```text
    Create a JavaScript function that fetches user data from an API
-   ```
+   ```text
 
 4. Observe how Copilot follows your coding standards.
 
@@ -165,7 +165,7 @@ Generated code follows your specified style (2-space indent, const usage, JSDoc 
    - Never expose internal errors to API responses
 
    ## File Structure
-   ```
+   ```text
    src/
    ├── controllers/  # Request handlers
    ├── services/     # Business logic
@@ -173,7 +173,7 @@ Generated code follows your specified style (2-space indent, const usage, JSDoc 
    ├── middleware/   # Express middleware
    ├── utils/        # Helper functions
    └── routes/       # Route definitions
-   ```
+   ```text
 
    ## Preferred Patterns
 
@@ -186,7 +186,7 @@ Generated code follows your specified style (2-space indent, const usage, JSDoc 
      logger.error('Operation failed', { error });
      return res.status(500).json({ error: 'Internal server error' });
    }
-   ```
+   ```text
 
    ### Service Pattern
    ```typescript
@@ -197,24 +197,24 @@ Generated code follows your specified style (2-space indent, const usage, JSDoc 
        return this.db.user.findUnique({ where: { id } });
      }
    }
-   ```
+   ```text
    EOF
-   ```
+   ```text
 
 2. Test the agent behavior:
    ```bash
    copilot
-   ```
-   ```
+   ```text
+   ```text
    Create a new endpoint for updating user preferences
-   ```
+   ```text
 
 3. Verify it follows your patterns and conventions.
 
 4. Test commit message generation:
-   ```
+   ```text
    I added a new login feature. What commit message should I use?
-   ```
+   ```text
 
 **Expected Outcome:**
 Copilot acts as a senior TypeScript engineer and suggests conventional commits.
@@ -228,7 +228,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
 1. Create instructions directory:
    ```bash
    mkdir -p .github/instructions
-   ```
+   ```text
 
 2. Create TypeScript-specific instructions:
    ```bash
@@ -246,7 +246,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    - Export types from dedicated `.types.ts` files
    - Use barrel exports (index.ts) for public APIs
    EOF
-   ```
+   ```text
 
 3. Create test-specific instructions:
    ```bash
@@ -264,7 +264,7 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    - Mock external dependencies, not internal modules
    - Test edge cases: null, undefined, empty arrays, boundary values
    EOF
-   ```
+   ```text
 
 4. Create documentation instructions:
    ```bash
@@ -281,20 +281,20 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    - Use reference-style links for repeated URLs
    - Include a table of contents for files > 200 lines
    EOF
-   ```
+   ```text
 
 5. Test with different file types:
    ```bash
    copilot
-   ```
-   ```
+   ```text
+   ```text
    Create a test file for a UserService class
-   ```
+   ```text
 
    Then:
-   ```
+   ```text
    Create documentation for the API endpoints
-   ```
+   ```text
 
 **Expected Outcome:**
 Different instructions apply based on file type.
@@ -353,15 +353,15 @@ Different instructions apply based on file type.
    - [Architecture Decision Records](/docs/adr/)
    - [Contributing Guide](/CONTRIBUTING.md)
    EOF
-   ```
+   ```text
 
 2. Test how Copilot uses this context:
    ```bash
    copilot
-   ```
-   ```
+   ```text
+   ```text
    How do I add a new API endpoint to this project?
-   ```
+   ```text
 
 **Expected Outcome:**
 Copilot references `llm.txt` to provide accurate project-specific guidance.
@@ -375,7 +375,7 @@ Copilot references `llm.txt` to provide accurate project-specific guidance.
 1. Create a subdirectory with its own instructions:
    ```bash
    mkdir -p src/database
-   ```
+   ```text
 
 2. Create a specialized AGENTS.md:
    ```bash
@@ -407,25 +407,25 @@ Copilot references `llm.txt` to provide accurate project-specific guidance.
    - Use `CASCADE` deletes without explicit approval
    - Create migrations that lock tables for extended periods
    EOF
-   ```
+   ```text
 
 3. Test from different directories:
    ```bash
    cd src/database
    copilot
-   ```
-   ```
+   ```text
+   ```text
    Create a migration to add a comments table
-   ```
+   ```text
 
 4. Compare with root directory behavior:
    ```bash
    cd ../..
    copilot
-   ```
-   ```
+   ```text
+   ```text
    Create a migration to add a comments table
-   ```
+   ```text
 
 **Expected Outcome:**
 The database directory uses specialized database agent behavior.
@@ -442,30 +442,30 @@ The database directory uses specialized database agent behavior.
    ```bash
    echo "console.log('hello');" > feature.js
    git add feature.js
-   ```
+   ```text
 
 3. Ask Copilot for commit message:
    ```bash
    copilot
-   ```
-   ```
+   ```text
+   ```text
    I've added a new JavaScript file. Suggest a commit message.
-   ```
+   ```text
 
 4. Copilot should suggest conventional format:
-   ```
+   ```text
    feat: add feature.js with hello world logging
-   ```
+   ```text
 
 5. Test with a bug fix scenario:
-   ```
+   ```text
    I fixed a null pointer exception in the user service. Commit message?
-   ```
+   ```text
 
    Expected:
-   ```
+   ```text
    fix(user): handle null pointer in user service
-   ```
+   ```text
 
 **Expected Outcome:**
 Commit messages follow Conventional Commits format.
@@ -478,29 +478,29 @@ Commit messages follow Conventional Commits format.
    ```markdown
    ❌ "You are a helpful assistant"
    ✅ "You are a senior React developer with 10 years of experience"
-   ```
+   ```text
 
 2. **Include explicit boundaries:**
    ```markdown
    ## DO NOT
    - Never modify package-lock.json directly
    - Never remove error handling
-   ```
+   ```text
 
 3. **Provide code examples:**
    ```markdown
    ## Preferred Error Pattern
    ```typescript
    throw new AppError('User not found', 404);
-   ```
-   ```
+   ```text
+   ```text
 
 4. **Document file structure:**
    ```markdown
    ## Project Structure
    - `/src` - Source code
    - `/tests` - Test files
-   ```
+   ```text
 
 ## Summary
 

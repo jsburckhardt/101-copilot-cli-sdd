@@ -35,7 +35,7 @@ Skills are specialized capabilities that:
 
 ### Skill Discovery Levels
 
-```
+```text
 Level 1: Discovery      → Copilot reads name/description (always)
 Level 2: Instructions   → Copilot loads SKILL.md body (when relevant)
 Level 3: Resources      → Copilot accesses supporting files (as needed)
@@ -573,7 +573,7 @@ Copilot selects appropriate skills based on your request.
 
 ### Required Files
 
-```
+```text
 .github/skills/
 └── skill-name/
     └── SKILL.md          # Required: Skill definition
@@ -581,7 +581,7 @@ Copilot selects appropriate skills based on your request.
 
 ### Optional Files
 
-```
+```text
 .github/skills/
 └── skill-name/
     ├── SKILL.md          # Required

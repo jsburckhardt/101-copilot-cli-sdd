@@ -19,6 +19,7 @@
 ### Subscription Requirements
 
 Before installing, ensure you have one of:
+
 - **Copilot Pro** - Individual subscription
 - **Copilot Pro+** - Enhanced individual subscription
 - **Copilot Business** - Organization subscription
@@ -31,7 +32,7 @@ For organization members, your admin must enable the Copilot CLI policy.
 Copilot CLI supports multiple installation methods:
 
 | Method | Command | Best For |
-|--------|---------|----------|
+| --- | --- | --- |
 | **Script** | `curl -fsSL https://gh.io/copilot-install \| bash` | Quick setup |
 | npm | `npm install -g @github/copilot` | Node.js developers |
 | Homebrew | `brew install copilot-cli` | macOS/Linux users |
@@ -42,6 +43,7 @@ Copilot CLI supports multiple installation methods:
 
 > [!NOTE]
 > 💡 **Already have Copilot CLI installed?** To update to the latest version, simply run:
+>
 > ```bash
 > copilot update
 > ```
@@ -55,6 +57,7 @@ Copilot CLI supports multiple installation methods:
 **Steps:**
 
 1. Run the installation script:
+
    ```bash
    curl -fsSL https://gh.io/copilot-install | bash
    ```
@@ -62,17 +65,20 @@ Copilot CLI supports multiple installation methods:
 2. Follow any prompts to add to your PATH.
 
 3. Restart your terminal or source your profile:
+
    ```bash
    source ~/.bashrc  # or ~/.zshrc
    ```
 
 4. Verify:
+
    ```bash
    copilot --version
    ```
 
 **Expected Outcome:**
-```
+
+```text
 GitHub Copilot CLI 0.0.402.
 ```
 
@@ -83,12 +89,14 @@ GitHub Copilot CLI 0.0.402.
 **Steps:**
 
 1. Verify Node.js and npm versions:
+
    ```bash
    node --version  # Should be v22.0.0 or higher
    npm --version   # Should be v10.0.0 or higher
    ```
 
 2. If Node.js needs updating, use nvm:
+
    ```bash
    # Install or update nvm
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
@@ -99,17 +107,20 @@ GitHub Copilot CLI 0.0.402.
    ```
 
 3. Install Copilot CLI globally:
+
    ```bash
    npm install -g @github/copilot
    ```
 
 4. Verify installation:
+
    ```bash
    copilot --version
    ```
 
 **Expected Outcome:**
-```
+
+```text
 GitHub Copilot CLI 0.0.402
 ```
 
@@ -120,22 +131,26 @@ GitHub Copilot CLI 0.0.402
 **Steps:**
 
 1. Ensure Homebrew is installed:
+
    ```bash
    brew --version
    ```
 
 2. Install Copilot CLI:
+
    ```bash
    brew install copilot-cli
    ```
 
 3. Verify installation:
+
    ```bash
    copilot --version
    ```
 
 **Expected Outcome:**
-```
+
+```text
 @github/copilot version X.X.X
 ```
 
@@ -146,6 +161,7 @@ GitHub Copilot CLI 0.0.402
 **Steps:**
 
 1. Start Copilot CLI:
+
    ```bash
    copilot
    ```
@@ -157,7 +173,8 @@ GitHub Copilot CLI 0.0.402
 4. Authorize the application when prompted.
 
 5. Return to your terminal. You should see the Copilot prompt:
-   ```
+
+   ```text
    >
    ```
 
@@ -171,7 +188,8 @@ Interactive session starts with `>` prompt ready for input.
 **Steps:**
 
 1. In the interactive session, type:
-   ```
+
+   ```text
    What directory am I in?
    ```
 
@@ -197,6 +215,7 @@ Copilot correctly identifies your working directory and shows available commands
 1. Open PowerShell or Windows Terminal.
 
 2. Install via WinGet:
+
    ```powershell
    winget install GitHub.Copilot
    ```
@@ -204,12 +223,14 @@ Copilot correctly identifies your working directory and shows available commands
 3. Restart your terminal.
 
 4. Verify installation:
+
    ```powershell
    copilot --version
    ```
 
 **Expected Outcome:**
-```
+
+```text
 @github/copilot version X.X.X
 ```
 
@@ -218,7 +239,7 @@ Copilot correctly identifies your working directory and shows available commands
 ### Common Issues
 
 | Problem | Solution |
-|---------|----------|
+| --- | --- |
 | `command not found: copilot` | Ensure npm global bin is in PATH: `npm config get prefix` |
 | Node.js version too old | Use nvm to install v22+: `nvm install 22` |
 | Authentication fails | Check subscription status at github.com/settings/copilot |
@@ -246,20 +267,22 @@ source ~/.bashrc
 
 ### Checking Subscription Status
 
-1. Go to https://github.com/settings/copilot
+1. Go to <https://github.com/settings/copilot>
 2. Verify your subscription is active
 3. Check that CLI access is enabled
 
 ### Authentication in Containers and CI/CD
 
-1. Create a fine-grained PAT at https://github.com/settings/personal-access-tokens/new
+1. Create a fine-grained PAT at <https://github.com/settings/personal-access-tokens/new>
 2. Under "Permissions," add **"Copilot Requests"**
 3. Export the token:
+
    ```bash
    export GH_TOKEN="ghp_your_token_here"
    # or
    export GITHUB_TOKEN="ghp_your_token_here"
    ```
+
 4. Start Copilot CLI — it will authenticate automatically without a browser
 
 ## Summary

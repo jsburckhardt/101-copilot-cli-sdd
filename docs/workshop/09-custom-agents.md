@@ -36,11 +36,12 @@ tools:                    # Optional: default is all tools
 ---
 
 [Markdown body with detailed instructions]
-```
+```yaml
+
 
 ### Agent Hierarchy
 
-```
+```text
 Enterprise agents (.github-private repo)
         ↓
 Organization agents (.github-private repo)

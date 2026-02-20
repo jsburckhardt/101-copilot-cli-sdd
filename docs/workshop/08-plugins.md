@@ -20,7 +20,7 @@
 
 Plugins extend Copilot's capabilities beyond built-in features:
 
-```
+```text
 ┌─────────────────┐
 │   Copilot CLI   │
 ├─────────────────┤

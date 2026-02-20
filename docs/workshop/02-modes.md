@@ -19,6 +19,7 @@
 ### Interactive Mode
 
 Interactive mode starts a conversational session where you chat with Copilot in real-time. It's ideal for:
+
 - Exploratory coding and debugging
 - Multi-step tasks requiring iteration
 - Learning a new codebase
@@ -27,7 +28,7 @@ Interactive mode starts a conversational session where you chat with Copilot in 
 ```bash
 # Start interactive mode
 copilot
-```
+```text
 
 ### Programmatic Mode
 
@@ -40,7 +41,7 @@ Programmatic mode executes a single prompt and exits. Perfect for:
 ```bash
 # Execute a single prompt
 copilot -p "summarize the README.md file"
-```
+```text
 
 ### Delegate Mode
 
@@ -50,9 +51,9 @@ The `/delegate` command hands off work to GitHub's cloud-based Copilot coding ag
 - Parallel work (you continue locally while agent works)
 - Tasks that benefit from full repository context
 
-```
+```text
 /delegate implement the user authentication feature based on the spec
-```
+```text
 
 ### Slash Commands
 
@@ -67,7 +68,7 @@ Slash commands are prefixed with `/` and provide quick access to CLI features wi
 #### Command Categories
 
 | Category | Commands | Purpose |
-|----------|----------|---------|
+| --- | --- | --- |
 | **Session** | `/clear`, `/session`, `/resume`, `/rename`, `/usage` | Manage session lifecycle |
 | **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` | Control directory scope |
 | **Context** | `/context`, `/compact` | Monitor and optimize token usage |
@@ -84,7 +85,7 @@ Slash commands are prefixed with `/` and provide quick access to CLI features wi
 In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 
 | Shortcut | Action |
-|----------|--------|
+| --- | --- |
 | `@` | Mention files — include file contents in context |
 | `!` | Execute a shell command directly (bypass Copilot; also the only way to access shell mode since v0.0.410) |
 | `Esc` | Cancel the current operation |
@@ -118,7 +119,7 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 Some commands are covered in depth in later modules (`/mcp` in Module 6, `/skills` in Module 7, `/plugin` in Module 8, `/context` and `/compact` in Module 11). The following important commands are unique to this section:
 
 | Command | Description |
-|---------|-------------|
+| --- | --- |
 | `/plan [prompt]` | Ask Copilot to create an implementation plan before writing code |
 | `/review [prompt]` | Run a code review agent to analyze changes |
 | `/diff` | Review all changes made in the current directory during the session |
@@ -146,34 +147,34 @@ Some commands are covered in depth in later modules (`/mcp` in Module 6, `/skill
 1. Start Copilot CLI:
    ```bash
    copilot
-   ```
+   ```text
 
 2. View all available commands:
-   ```
+   ```text
    /help
-   ```
+   ```text
 
 3. Review the output — you'll see commands grouped with descriptions.
 
 4. Try the `/theme` command to see available themes:
-   ```
+   ```text
    /theme list
-   ```
+   ```text
 
 5. Set a theme (optional):
-   ```
+   ```text
    /theme set <theme-id>
-   ```
+   ```text
 
 6. Check your current working directory:
-   ```
+   ```text
    /cwd
-   ```
+   ```text
 
 7. View session usage metrics:
-   ```
+   ```text
    /usage
-   ```
+   ```text
 
 8. Exit with `/exit`.
 
@@ -191,29 +192,29 @@ You can discover and navigate the full set of slash commands using `/help`.
    mkdir -p ~/copilot-commands-lab && cd ~/copilot-commands-lab
    git init
    copilot
-   ```
+   ```text
 
 2. Use `/plan` to create an implementation plan before coding:
-   ```
+   ```text
    /plan Build a simple REST API with Express.js that has CRUD endpoints for a todo list
-   ```
+   ```text
 
 3. Copilot creates a structured plan. Review it before proceeding.
 
 4. Ask Copilot to implement the plan:
-   ```
+   ```text
    Go ahead and implement the plan
-   ```
+   ```text
 
 5. After files are created, review all changes made:
-   ```
+   ```text
    /diff
-   ```
+   ```text
 
 6. Run a code review on the changes:
-   ```
+   ```text
    /review Check for security issues and missing error handling
-   ```
+   ```text
 
 7. Exit with `/exit`.
 
@@ -231,34 +232,34 @@ You can use `/plan` for structured implementation, `/diff` to review changes, an
    mkdir -p ~/copilot-init-lab && cd ~/copilot-init-lab
    git init
    copilot
-   ```
+   ```text
 
 2. Initialize Copilot configuration for this repository:
-   ```
+   ```text
    /init
-   ```
+   ```text
 
 3. This creates starter files like `AGENTS.md` and `.github/copilot-instructions.md`.
 
 4. Rename this session for easy identification:
-   ```
+   ```text
    /rename init-lab-session
-   ```
+   ```text
 
 5. Check session details:
-   ```
+   ```text
    /session
-   ```
+   ```text
 
 6. View background tasks (if any):
-   ```
+   ```text
    /tasks
-   ```
+   ```text
 
 7. Configure terminal for multiline input:
-   ```
+   ```text
    /terminal-setup
-   ```
+   ```text
 
 8. Exit with `/exit`.
 
@@ -275,17 +276,17 @@ You can bootstrap Copilot configuration with `/init`, rename sessions, and confi
    ```bash
    mkdir -p ~/copilot-workshop && cd ~/copilot-workshop
    git init
-   ```
+   ```text
 
 2. Start Copilot CLI:
    ```bash
    copilot
-   ```
+   ```text
 
 3. Ask Copilot to create a file:
-   ```
+   ```text
    Create a Python script named `hello.py` that prints "Hello, Copilot!"
-   ```
+   ```text
 
    > [!TIP]
    > Specifying the exact filename in prompts ensures consistent results across workshop participants. Without it, Copilot may generate different filenames each time (e.g., `hello_copilot.py`, `hello_python.py`).
@@ -293,14 +294,14 @@ You can bootstrap Copilot configuration with `/init`, rename sessions, and confi
 4. When prompted to approve the file write, select **Yes**.
 
 5. Ask a follow-up question:
-   ```
+   ```text
    Now modify it to accept a name as a command-line argument
-   ```
+   ```text
 
 6. Continue the conversation:
-   ```
+   ```text
    Add error handling if no argument is provided
-   ```
+   ```text
 
 7. Exit with `/exit` or `Ctrl+C`.
 
@@ -316,12 +317,12 @@ A Python script evolves through multiple iterations with your guidance.
 1. Start a new session:
    ```bash
    copilot
-   ```
+   ```text
 
 2. Ask Copilot to run a command:
-   ```
+   ```text
    List all files in the current directory with details
-   ```
+   ```text
 
 3. Copilot will request to use the `shell` tool. You'll see three options:
    - **Yes** - Allow this time only
@@ -331,9 +332,9 @@ A Python script evolves through multiple iterations with your guidance.
 4. Select **Yes** (first option) to allow once.
 
 5. Now ask:
-   ```
+   ```text
    Display the contents of hello.py using the cat command
-   ```
+   ```text
 
    > [!TIP]
    > Avoid prompts that reference a specific number of lines (e.g., "first 10 lines") for short files — Copilot may reason about the file length instead of running the expected command.
@@ -343,9 +344,9 @@ A Python script evolves through multiple iterations with your guidance.
 7. This time select **Yes, and approve shell for the rest of the session**.
 
 8. Ask another command:
-   ```
+   ```text
    Count the lines in hello.py
-   ```
+   ```text
 
 9. Notice Copilot doesn't ask for permission this time.
 
@@ -362,27 +363,27 @@ You understand the difference between one-time and session-wide tool approval.
    ```bash
    echo "# My Project" > README.md
    echo "This is a test project for learning Copilot CLI." >> README.md
-   ```
+   ```text
 
 2. Run Copilot in programmatic mode:
    ```bash
    copilot -p "What does the README.md contain?"
-   ```
+   ```text
 
 3. Try with tool permissions:
    ```bash
    copilot -p "Add a 'Getting Started' section to README.md" --allow-tool 'write'
-   ```
+   ```text
 
 4. Combine multiple tool permissions:
    ```bash
    copilot -p "Run git status and explain what it means" --allow-tool 'shell(git)'
-   ```
+   ```text
 
 5. Pipe file content as context:
    ```bash
    cat README.md | copilot -p "Explain what this file contains"
-   ```
+   ```text
 
    > [!TIP]
    > When piping content to Copilot, use prompts that reference "this content" or "this file" rather than "this output" to avoid Copilot responding with "I don't see any output to explain."
@@ -399,28 +400,28 @@ Commands execute and exit without entering interactive mode.
 1. Create a script `analyze.sh`:
    ```bash
    #!/bin/bash
-   
+
    echo "=== Project Analysis ==="
-   
+
    # Get file count
    copilot -p "Count all .py files recursively and report" --allow-tool 'shell'
-   
+
    echo ""
    echo "=== Code Quality Check ==="
-   
+
    # Check for issues
    copilot -p "Look for any TODO comments in Python files" --allow-tool 'shell'
-   ```
+   ```text
 
 2. Make it executable:
    ```bash
    chmod +x analyze.sh
-   ```
+   ```text
 
 3. Run the script:
    ```bash
    ./analyze.sh
-   ```
+   ```text
 
 **Expected Outcome:**
 Multiple Copilot operations run sequentially in a script.
@@ -436,17 +437,17 @@ Multiple Copilot operations run sequentially in a script.
 2. Start interactive mode:
    ```bash
    copilot
-   ```
+   ```text
 
 3. Build some context by exploring:
-   ```
+   ```text
    What files are in this project?
-   ```
+   ```text
 
 4. Use delegate to hand off a task:
-   ```
+   ```text
    /delegate create comprehensive unit tests for all Python files in this project
-   ```
+   ```text
 
 5. Copilot will:
    - Ask you to commit any unstaged changes
@@ -474,26 +475,26 @@ A draft PR is created and the cloud agent begins working asynchronously.
    > What does the main function do?
    > How would I add a new feature?
    > /exit
-   ```
+   ```text
 
 2. **Programmatic for automation** - Single focused tasks:
    ```bash
    # Good for CI/CD
    copilot -p "Run all tests and report failures" --allow-tool 'shell'
-   
-   # Good for git workflows  
+
+   # Good for git workflows
    copilot -p "Summarize changes since last tag" --allow-tool 'shell(git)'
-   ```
+   ```text
 
 3. **Delegate for heavy lifting** - Long-running tasks:
-   ```
+   ```text
    /delegate refactor the authentication module to use JWT tokens
-   ```
+   ```text
 
 **Decision Guide:**
 
 | Scenario | Recommended Mode |
-|----------|------------------|
+| --- | --- |
 | Learning a new codebase | Interactive |
 | Debugging an issue | Interactive |
 | CI/CD pipeline task | Programmatic |
@@ -510,7 +511,7 @@ You can choose the appropriate mode for any task.
 ### Approval Options Explained
 
 | Option | Behavior | Risk Level |
-|--------|----------|------------|
+| --- | --- | --- |
 | Yes | Allow this one time | Low - Full control |
 | Yes, for session | Allow all similar for session | Medium - Review first use |
 | No | Deny and redirect | None - Maximum safety |

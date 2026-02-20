@@ -20,7 +20,7 @@
 
 Model Context Protocol (MCP) is an open standard that extends AI capabilities:
 
-```
+```text
 ┌─────────────┐     ┌─────────────┐     ┌─────────────┐
 │ Copilot CLI │────▶│ MCP Server  │────▶│ External    │
 │             │     │             │     │ Resources   │

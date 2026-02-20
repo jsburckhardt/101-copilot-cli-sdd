@@ -32,7 +32,7 @@ By the end of this workshop, you will be able to:
 ## Workshop Modules
 
 | # | Module | Duration | Description |
-|---|--------|----------|-------------|
+| --- | --- | --- | --- |
 | 01 | [Installation](01-installation.md) | 15 min | Install via npm, Homebrew, or script |
 | 02 | [Operating Modes & Commands](02-modes.md) | 30 min | Interactive chat, slash commands, programmatic, and `/delegate` |
 | 03 | [Session Management](03-sessions.md) | 15 min | Continue, resume, clear, and track sessions |
@@ -50,7 +50,7 @@ By the end of this workshop, you will be able to:
 
 ## Workshop Flow
 
-```
+```text
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
 │  Installation   │────▶│  Core Concepts  │────▶│    Advanced     │
 │   (Module 1)    │     │  (Modules 2-5)  │     │  (Modules 6-12) │
@@ -88,7 +88,7 @@ copilot --resume
 ### Essential Slash Commands
 
 | Command | Description |
-|---------|-------------|
+| --- | --- |
 | `/help` | Show all available commands |
 | `/clear` | Clear session context |
 | `/context` | View token usage |
@@ -141,9 +141,9 @@ nvm install --lts
 
 ## Getting Help
 
-- **Official Docs**: https://docs.github.com/en/copilot
-- **GitHub Community**: https://github.com/orgs/community/discussions
-- **Issue Tracker**: https://github.com/github/copilot-cli/issues
+- **Official Docs**: <https://docs.github.com/en/copilot>
+- **GitHub Community**: <https://github.com/orgs/community/discussions>
+- **Issue Tracker**: <https://github.com/github/copilot-cli/issues>
 
 ---
 

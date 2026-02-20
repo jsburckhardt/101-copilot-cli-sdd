@@ -20,7 +20,7 @@
 
 Hooks are custom scripts that execute at specific points during Copilot agent execution:
 
-```
+```text
 Session Start → User Prompt → Pre-Tool → Tool Execution → Post-Tool → Session End
      ↓              ↓            ↓             ↓              ↓            ↓
    Hook           Hook         Hook                        Hook         Hook

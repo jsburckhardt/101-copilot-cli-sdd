@@ -20,7 +20,7 @@
 
 Context is everything Copilot "remembers" during a session:
 
-```
+```text
 ┌────────────────────────────────────────────────┐
 │                  Context Window                │
 ├────────────────────────────────────────────────┤

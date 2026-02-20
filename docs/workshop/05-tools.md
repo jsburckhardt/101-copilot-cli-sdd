@@ -32,7 +32,7 @@ Copilot CLI includes several built-in tools:
 
 Every potentially destructive action requires approval:
 
-```
+```text
 ┌─────────────┐     ┌──────────────┐     ┌─────────────┐
 │ Copilot     │────▶│ Permission   │────▶│ Execute     │
 │ wants to    │     │ Prompt       │     │ Action      │
