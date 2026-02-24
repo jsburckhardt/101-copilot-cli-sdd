@@ -61,6 +61,12 @@ const config = {
       },
       navbar: {
         title: 'Copilot CLI Workshop',
+        logo: {
+          alt: 'Microsoft',
+          src: 'img/microsoft-logo.svg',
+          width: 26,
+          height: 26,
+        },
         items: [
           {
             type: 'docSidebar',
