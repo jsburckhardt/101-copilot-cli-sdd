@@ -1,0 +1,138 @@
+---
+marp: true
+theme: default
+paginate: true
+backgroundColor: #ffffff
+color: #242424
+style: |
+  section {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+  }
+  h1 {
+    color: #0078D4;
+    border-bottom: 3px solid #0078D4;
+    padding-bottom: 0.3em;
+  }
+  h2, h3 {
+    color: #0078D4;
+  }
+  code {
+    background: #f3f2f1;
+    color: #242424;
+  }
+  pre {
+    background: #f3f2f1 !important;
+    border-radius: 4px;
+    border-left: 4px solid #0078D4;
+  }
+  table {
+    font-size: 0.85em;
+  }
+  th {
+    background: #0078D4;
+    color: #ffffff;
+  }
+  td {
+    background: #f3f2f1;
+  }
+  strong {
+    color: #0078D4;
+  }
+  blockquote {
+    border-left: 4px solid #0078D4;
+    color: #605e5c;
+    background: #f3f2f1;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+  }
+  a {
+    color: #0078D4;
+  }
+  footer {
+    color: #605e5c;
+  }
+---
+
+# Module 5: Tools & Permissions
+
+### GitHub Copilot CLI Workshop
+
+---
+
+## Built-in Tools
+
+| Tool | Purpose | Risk |
+|------|---------|------|
+| `shell` | Execute shell commands | ⚠️ High |
+| `write` | Create/modify files | ⚠️ High |
+| `read` | Read file contents | Low |
+| `show_file` | Present code/diffs to user | Low |
+| `web_fetch` | Fetch web content | Medium |
+| `mcp` | Use MCP server tools | Varies |
+
+Every destructive action **requires your approval**
+
+---
+
+## Approval Workflow
+
+Three choices when Copilot wants to use a tool:
+
+| Option | Scope | Use when... |
+|--------|-------|-------------|
+| **Yes** | This one time | Cautious, first use |
+| **Yes, for session** | Rest of session | Trusted, repeated tool |
+| **No** | Denied | Dangerous or wrong |
+
+> Use `/reset-allowed-tools` to clear session approvals
+
+---
+
+## --allow-tool & --deny-tool
+
+Pre-approve or block tools for **programmatic mode**
+
+```bash
+# Allow specific commands
+copilot -p "Show git status" --allow-tool 'shell(git)'
+
+# Allow writes
+copilot -p "Create README" --allow-tool 'write'
+
+# Deny takes precedence over allow
+copilot -p "Analyze project" \
+  --allow-all-tools \
+  --deny-tool 'shell(rm)' \
+  --deny-tool 'write'
+```
+
+---
+
+## YOLO Mode ⚡
+
+```bash
+copilot --yolo -p "Set up a Node.js project"
+```
+
+**No prompts. Full autonomy.** Use only in:
+
+- ✅ Docker containers
+- ✅ Disposable dev environments
+- ✅ CI/CD with controlled scope
+- ✅ Codespaces that can be reset
+
+**Never** in production or with important data
+
+---
+
+## Your Turn! 🚀
+
+Open **Module 5** in `docs/workshop/05-tools.md`
+
+Recommended path:
+1. **Exercise 1** — Understanding tool prompts
+2. **Exercise 3** — `--allow-tool` flag
+3. **Exercise 5** — YOLO mode (in a safe directory!)
+
+⏱️ You have **~16 minutes**
+
