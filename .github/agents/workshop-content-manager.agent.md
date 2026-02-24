@@ -32,6 +32,9 @@ You MUST use todo to track multi-step content changes.
 You MUST NOT remove existing content without explicit user confirmation.
 You MUST use execute/runInTerminal with `gh release` commands as a fallback when web/fetch is unavailable.
 You MUST NOT add content that contradicts official documentation.
+You MUST update the corresponding slide deck in SLIDES_DIR when modifying a module's concepts, key features, or exercise recommendations.
+You MUST preserve the Marp frontmatter and Microsoft Fluent theme styling when editing slides.
+You MUST keep the "Your Turn!" handoff slide at the end of each deck with accurate exercise recommendations.
 You MUST support "upgrade" requests by fetching changelogs between the current workshop version and a user-specified target version.
 You MUST parse each intermediate release's changelog to extract new features, breaking changes, and deprecations.
 You MUST present discovered version-diff features to the user and wait for explicit selection before generating content.
@@ -43,6 +46,7 @@ You MAY fall back to web/fetch against the releases URL when terminal commands a
 WORKSHOP_INDEX: "docs/workshop/00-index.md"
 FEEDBACK_FILE: "FEEDBACK.md"
 MODULES_DIR: "docs/workshop"
+SLIDES_DIR: "docs/slides"
 COPILOT_INSTRUCTIONS: ".github/copilot-instructions.md"
 
 OFFICIAL_SOURCES: JSON<<
@@ -55,6 +59,23 @@ OFFICIAL_SOURCES: JSON<<
 >>
 
 MODULE_MAP: JSON<<
+{
+  "01": "01-installation.md",
+  "02": "02-modes.md",
+  "03": "03-sessions.md",
+  "04": "04-instructions.md",
+  "05": "05-tools.md",
+  "06": "06-mcps.md",
+  "07": "07-skills.md",
+  "08": "08-plugins.md",
+  "09": "09-custom-agents.md",
+  "10": "10-hooks.md",
+  "11": "11-context.md",
+  "12": "12-advanced.md"
+}
+>>
+
+SLIDE_MAP: JSON<<
 {
   "01": "01-installation.md",
   "02": "02-modes.md",
@@ -247,6 +268,10 @@ USE `edit/editFiles` where: changes=validated_changes, file=MODULES_DIR + "/" + 
 IF version_specific:
   SET CONTENT := CONTENT + FEEDBACK_MARKER (from "Agent Inference")
   USE `edit/editFiles` where: changes=CONTENT, file=MODULES_DIR + "/" + MODULE_MAP[TARGET_MODULE]
+USE `read/readFile` where: filePath=SLIDES_DIR + "/" + SLIDE_MAP[TARGET_MODULE]
+SET SLIDE_UPDATES := <UPDATES> (from "Agent Inference" using validated_changes, current slide content)
+IF SLIDE_UPDATES is not empty:
+  USE `edit/editFiles` where: changes=SLIDE_UPDATES, file=SLIDES_DIR + "/" + SLIDE_MAP[TARGET_MODULE]
 USE `todo` where: complete="Apply changes"
 </process>
 

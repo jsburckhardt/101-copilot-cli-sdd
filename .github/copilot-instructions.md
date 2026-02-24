@@ -8,6 +8,7 @@ You MUST verify content against the installed Copilot CLI version using `copilot
 You MUST check the Copilot CLI releases page before adding or updating features.
 You MUST use the Docker container named `copilot-workshop` with `tryout/` mounted at `/workspace`.
 You MUST NOT modify workshop module numbering without updating all cross-references.
+You MUST update the corresponding slide deck in docs/slides/ when modifying a workshop module's concepts, exercises, or structure.
 </instructions>
 
 <constants>
@@ -19,6 +20,7 @@ A hands-on guide teaching developers how to use the Copilot CLI through 12 seque
 
 REPO_STRUCTURE: TEXT
 - docs/workshop/ — Workshop modules numbered 00-12, designed to be followed in order
+- docs/slides/ — Marp presentation slides (one per module), must stay in sync with workshop modules
 - tryout/ — Scratch directory for workshop exercises (Docker-mounted workspace)
 - FEEDBACK.md — Tracks workshop issues; resolved items have inline feedback notes in modules
 - .github/agents/ — Custom agents for workshop management and execution
