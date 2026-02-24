@@ -18,9 +18,8 @@ const config = {
   organizationName: 'jakkaj',
   projectName: '101-copilot-cli-sdd',
 
-  // DYK-01: Using 'warn' until Phase 8 when all pages exist; then upgrade to 'throw'
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
+  // Phase 8: All pages exist; broken links are now build errors
+  onBrokenLinks: 'throw',
 
   markdown: {
     mermaid: true, // PL-01: First mermaid config (BOTH required)
@@ -74,7 +73,17 @@ const config = {
             position: 'left',
             label: 'Workshop',
           },
-          // DYK-01: Sections dropdown deferred to Phase 8 when all category pages exist
+          {
+            type: 'dropdown',
+            label: 'Sections',
+            position: 'left',
+            items: [
+              { label: 'Getting Started', to: '/docs/category/getting-started' },
+              { label: 'Customization', to: '/docs/category/customization' },
+              { label: 'Extensibility', to: '/docs/category/extensibility' },
+              { label: 'Advanced', to: '/docs/category/advanced' },
+            ],
+          },
           {
             href: 'https://github.com/jakkaj/101-copilot-cli-sdd',
             label: 'GitHub',
@@ -89,15 +98,25 @@ const config = {
             title: 'Workshop',
             items: [
               { label: 'Introduction', to: '/docs/intro' },
+              { label: 'Getting Started', to: '/docs/category/getting-started' },
+              { label: 'Customization', to: '/docs/category/customization' },
+            ],
+          },
+          {
+            title: 'More Topics',
+            items: [
+              { label: 'Extensibility', to: '/docs/category/extensibility' },
+              { label: 'Advanced', to: '/docs/category/advanced' },
+              { label: 'Reference', to: '/docs/category/reference' },
             ],
           },
           {
             title: 'Resources',
             items: [
               { label: 'GitHub', href: 'https://github.com/jakkaj/101-copilot-cli-sdd' },
+              { label: 'Copilot Docs', href: 'https://docs.github.com/en/copilot' },
             ],
           },
-          // DYK-01: Additional footer links deferred to Phase 8
         ],
         copyright: `© Microsoft ${new Date().getFullYear()}. Built with Docusaurus.`,
       },
