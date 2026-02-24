@@ -17,21 +17,45 @@
 .heroContent {
   position: relative;
   max-width: 800px;
-  padding: 32px 48px 32px 0;
+  padding: 48px 48px 48px 0;
   z-index: 1;
 }
 
 .heroTitle {
   color: var(--ms-learn-hero-text);
-  font-size: 40px;
+  font-size: 48px;
   font-weight: 600;
-  line-height: 45px;
-  margin: 0 0 24px;
+  line-height: 54px;
+  margin: 0 0 16px;
 }
 
 .heroSubtitle {
   color: var(--ms-learn-hero-text);
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0 0 32px;
+  opacity: 0.9;
+}
+
+.heroCta {
+  display: inline-block;
+  background: #ffffff;
+  color: var(--ms-learn-hero-bg);
   font-size: 16px;
-  line-height: 25.6px;
-  margin: 0;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.heroCta:hover {
+  background: #f0f0f0;
+  color: var(--ms-learn-hero-bg);
+  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.heroCta:visited {
+  color: var(--ms-learn-hero-bg);
 }

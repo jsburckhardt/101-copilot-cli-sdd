@@ -9,7 +9,9 @@ export default function Home(): React.ReactElement {
     <Layout title="Copilot CLI Workshop" description="A hands-on guide to mastering the GitHub Copilot CLI">
       <HeroSection
         title="Copilot CLI Workshop"
-        subtitle="A hands-on guide to mastering the GitHub Copilot CLI"
+        subtitle="A hands-on, 13-module guide to mastering the GitHub Copilot CLI. Learn modes, commands, custom instructions, skills, MCP servers, and advanced workflows."
+        ctaLabel="Start the workshop →"
+        ctaHref="/docs/intro"
       />
 
       <main>
