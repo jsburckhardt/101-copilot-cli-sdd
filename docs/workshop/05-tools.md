@@ -127,31 +127,32 @@ You understand the difference between one-time and session-wide approval, and ca
    List all files in the current directory
    ```
 
-2. Copilot requests `shell(ls)`. Approve for session.
+2. If Copilot requests `shell(ls)`, approve for session.
+   > Note: In some managed environments, `ls` may already be allowed and run without a prompt.
 
 3. Now try:
    ```
    Show me the disk usage of this directory
    ```
 
-4. Copilot requests `shell(du)`. This is a different command!
+4. If prompted, Copilot requests `shell(du)`. This is a different command.
 
-5. Approve `du` for session as well.
+5. Approve `du` for session as well (if prompted).
 
 6. Request something more dangerous:
    ```
    Delete the test.txt file
    ```
 
-7. Copilot requests `shell(rm)`. **Select No** and explain:
+7. Copilot requests `shell(rm)` (or blocks it by policy). **Select No** and explain:
    ```
    I don't want to delete files right now. Just show me what would be deleted.
    ```
 
-8. Copilot adjusts its approach without executing `rm`.
+8. Copilot adjusts its approach without executing `rm` (or reports that `rm` is blocked).
 
 **Expected Outcome:**
-Shell commands are approved individually by command name.
+Low-risk shell commands may already be pre-approved in some environments, while dangerous commands are still handled separately (prompted or blocked) by command name.
 
 ### Exercise 3: Using --allow-tool Flag
 
@@ -203,7 +204,7 @@ Commands execute without interactive prompts.
 2. Block git push while allowing other git:
    ```bash
    copilot -p "Commit these changes with a good message" \
-     --allow-tool 'shell(git)' \
+     --allow-tool 'shell(git:*)' \
      --deny-tool 'shell(git push)'
    ```
 
@@ -275,11 +276,20 @@ Deny rules take precedence over allow rules.
 **Expected Outcome:**
 You understand YOLO mode's power and risks.
 
-### Exercise 6: Configuring Trusted Directories
+### Exercise 6: Configuring Trusted and Accessible Directories
 
-**Goal:** Manage which directories Copilot can access.
+**Goal:** Understand the two separate directory permission layers in Copilot CLI.
 
-**Steps:**
+> **Key concept:** Copilot CLI has two distinct directory controls:
+>
+> | Layer | Purpose | Scope |
+> |---|---|---|
+> | **Startup trust** (`trusted_folders`) | Skips the "do you trust this folder?" prompt when launching Copilot | Launch-time only |
+> | **Runtime access** (`/add-dir`, `--allow-path`) | Controls which paths the agent can read/write during a session | Session-time only |
+>
+> These are **independent** — trusting a folder does **not** grant runtime file access to it, and vice versa.
+
+#### Part A: Startup Trust
 
 1. Start Copilot in a new directory:
    ```bash
@@ -288,18 +298,19 @@ You understand YOLO mode's power and risks.
    ```
 
 2. When prompted about trusting the folder:
-   - **Yes, proceed** - Trust for this session only
-   - **Yes, and remember** - Permanently trust
-   - **No, exit** - Don't trust
+   - **Yes, proceed** — Trust for this session only
+   - **Yes, and remember** — Permanently add to `trusted_folders`
+   - **No, exit** — Don't trust
 
 3. Select **Yes, proceed** for now.
 
-4. Check trusted directories in config:
+4. In a side terminal, check the config:
    ```bash
    cat ~/.copilot/config.json
    ```
+   Notice that `trusted_folders` was **not** updated (you chose session-only trust).
 
-5. Manually add trusted directories:
+5. To permanently skip the prompt for specific directories, add them to your config:
    ```bash
    # Edit config.json to add:
    {
@@ -309,19 +320,31 @@ You understand YOLO mode's power and risks.
      ]
    }
    ```
+   Next time you launch Copilot from those directories, it won't ask for trust confirmation.
 
-6. Use `/add-dir` at runtime:
+#### Part B: Runtime File Access
+
+6. Back in your Copilot session, check which paths the agent can access:
+   ```
+   /list-dirs
+   ```
+   You'll see only the **working directory** and `/tmp` — not the `trusted_folders` entries.
+
+7. Grant runtime access to an additional directory:
+   > Note: Create the directory first (e.g., `mkdir -p /tmp/safe-dir`).
    ```
    /add-dir /tmp/safe-dir
    ```
 
-7. View accessible directories:
-   ```
-   /list-dirs
+8. Verify with `/list-dirs` — the new path now appears.
+
+9. To grant runtime access at launch instead, use the `--allow-path` flag:
+   ```bash
+   copilot --allow-path /home/user/projects --allow-path /home/user/copilot-workshop
    ```
 
 **Expected Outcome:**
-You can control directory access both persistently and per-session.
+You understand that `trusted_folders` controls the **startup trust prompt**, while `/add-dir`, `/list-dirs`, and `--allow-path` control **runtime file access** — and that these are two independent permission layers.
 
 ### Exercise 7: Creating a Safe Automation Script
 
@@ -386,7 +409,7 @@ Safe, repeatable automation with explicit permissions.
 --allow-tool 'shell(git status)'
 
 # Allow command family
---allow-tool 'shell(git)'
+--allow-tool 'shell(git:*)'
 
 # Allow all shell
 --allow-tool 'shell'
@@ -416,7 +439,7 @@ Safe, repeatable automation with explicit permissions.
 
 | Flag | Equivalent |
 |------|------------|
-| `--yolo` | `--allow-all-tools` |
+| `--yolo` | `--allow-all-tools --allow-all-paths --allow-all-urls` |
 | `--available-tools` | Allowlist specific tools |
 | `--excluded-tools` | Denylist specific tools |
 
@@ -430,7 +453,7 @@ Safe, repeatable automation with explicit permissions.
 
 ## Summary
 
-- ✅ Copilot requires approval for file changes and command execution
+- ✅ Copilot requires approval for high-risk actions; some low-risk tools may be pre-approved by environment policy
 - ✅ One-time vs session-wide approval gives granular control
 - ✅ Use `/reset-allowed-tools` to clear session approvals
 - ✅ `--allow-tool` and `--deny-tool` enable automation

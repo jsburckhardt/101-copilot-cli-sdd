@@ -29,6 +29,8 @@ Copilot CLI reads instructions from multiple sources with this priority:
 6. Default behavior (lowest)
 ```
 
+*Note: `llm.txt` for copilot instructions is currently listed as an issue to be implemented. This file currently can be located within websites to allow models/LLM's to better consume and navigate the site. See [here](https://llmstxthub.com/) for examples*
+
 ### File Purposes
 
 | File | Scope | Purpose |
@@ -36,7 +38,7 @@ Copilot CLI reads instructions from multiple sources with this priority:
 | `AGENTS.md` | Directory tree | Agent persona and behavior |
 | `copilot-instructions.md` | Repository | Coding standards and conventions |
 | `*.instructions.md` | File patterns | Language/path-specific rules |
-| `llm.txt` | Website/project | LLM-optimized project documentation |
+| `llm.txt` | Website/project | LLM-optimized information about the site for a model |
 
 ### The `/instructions` Command
 
@@ -299,74 +301,8 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
 **Expected Outcome:**
 Different instructions apply based on file type.
 
-### Exercise 4: Create llm.txt
 
-**Goal:** Provide LLM-optimized project documentation.
-
-**Steps:**
-
-1. Create `llm.txt` in your project root:
-   ```bash
-   cat > llm.txt << 'EOF'
-   # Project: My Awesome App
-
-   > A full-stack application for managing tasks with team collaboration features.
-
-   ## Quick Facts
-   - Language: TypeScript
-   - Frontend: React 18 + Vite
-   - Backend: Node.js + Express
-   - Database: PostgreSQL + Prisma
-   - Auth: JWT + refresh tokens
-
-   ## Key Files
-   - `/src/server/index.ts` - Express app entry point
-   - `/src/client/App.tsx` - React app root
-   - `/prisma/schema.prisma` - Database schema
-   - `/src/server/routes/` - API endpoints
-
-   ## Common Tasks
-
-   ### Add a new API endpoint
-   1. Create route in `/src/server/routes/`
-   2. Create service in `/src/server/services/`
-   3. Add to router in `/src/server/index.ts`
-   4. Write tests in `/tests/routes/`
-
-   ### Add a new React component
-   1. Create in `/src/client/components/`
-   2. Export from `/src/client/components/index.ts`
-   3. Add Storybook story in same directory
-
-   ## API Conventions
-   - All endpoints prefixed with `/api/v1`
-   - Use plural nouns: `/users`, `/tasks`
-   - Standard responses: `{ data, error, meta }`
-
-   ## Environment Variables
-   - `DATABASE_URL` - PostgreSQL connection string
-   - `JWT_SECRET` - Token signing secret
-   - `PORT` - Server port (default: 3000)
-
-   ## Links
-   - [API Documentation](/docs/api.md)
-   - [Architecture Decision Records](/docs/adr/)
-   - [Contributing Guide](/CONTRIBUTING.md)
-   EOF
-   ```
-
-2. Test how Copilot uses this context:
-   ```bash
-   copilot
-   ```
-   ```
-   How do I add a new API endpoint to this project?
-   ```
-
-**Expected Outcome:**
-Copilot references `llm.txt` to provide accurate project-specific guidance.
-
-### Exercise 5: Nested AGENTS.md for Subdirectories
+### Exercise 4: Nested AGENTS.md for Subdirectories
 
 **Goal:** Use different agent behaviors in different parts of the codebase.
 
@@ -430,7 +366,7 @@ Copilot references `llm.txt` to provide accurate project-specific guidance.
 **Expected Outcome:**
 The database directory uses specialized database agent behavior.
 
-### Exercise 6: Commit Convention Enforcement
+### Exercise 5: Commit Convention Enforcement
 
 **Goal:** Ensure Copilot suggests proper commit messages.
 

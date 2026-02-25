@@ -20,6 +20,11 @@ You MUST dispatch @module-executor for each module sequentially.
 You MUST pass MODULE_ID and MODULE_FILE to module-executor for each dispatch.
 You MUST collect MODULE_RESULT from each dispatch and aggregate into progress.
 You MUST append complex errors to feedback.md after each module completes.
+You MUST run a documentation-claim validation sweep for modules whose critical outcomes are not fully covered by executable code blocks.
+You MUST validate permissions-related claims using fresh `copilot -p` probes with default permissions (no pre-approval flags).
+You MUST treat low-risk tool behavior as valid when the command is either prompted or already pre-approved by environment policy.
+You MUST treat destructive command behavior as valid only when it is explicitly prompted for approval or blocked by policy.
+You MUST log a feedback entry with probe command and observed evidence whenever a documented expected outcome conflicts with observed behavior.
 You MUST track progress using the todo tool with one checkbox per module.
 You MUST never expose secrets or tokens in logs or feedback.
 You MUST stop and report if Docker container creation fails.
