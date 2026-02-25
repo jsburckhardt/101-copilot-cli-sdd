@@ -132,10 +132,15 @@ Block `rm -rf`, `sudo`, writes to `.env`, sensitive paths, etc.
 
 Open **Module 10** in `docs/workshop/10-hooks.md`
 
-Recommended path:
-1. **Exercise 1** — Create hooks skeleton
-2. **Exercise 2** — Session logging hooks
-3. **Exercise 4** — Pre-tool permission control (the key one!)
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Basic hooks config
+- **Exercise 2** — Session logging hooks
+- **Exercise 3** — Prompt auditing hook
+- **Exercise 4** — Pre-tool permission control
+- **Exercise 5** — Post-tool verification
+- **Exercise 6** — Error handling hooks
+- **Exercise 7** — Directory-restricted hooks
 
 ⏱️ You have **~16 minutes**
 

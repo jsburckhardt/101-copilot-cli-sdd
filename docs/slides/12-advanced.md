@@ -170,10 +170,14 @@ alias cop-resume='copilot --resume'
 
 Open **Module 12** in `docs/workshop/12-advanced.md`
 
-Recommended path:
-1. **Exercise 4** — Autopilot mode
-2. **Exercise 5** — Fleet command
-3. **Exercise 2** — CI/CD integration
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Environment variables
+- **Exercise 2** — CI/CD integration
+- **Exercise 3** — Advanced CLI flags
+- **Exercise 4–5** — Autopilot mode & fleet command
+- **Exercise 6–7** — Shell config & LSP setup
+- **Exercise 8–11** — Config, troubleshooting & team workflows
 
 ⏱️ You have **~24 minutes**
 

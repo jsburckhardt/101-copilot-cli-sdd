@@ -170,12 +170,13 @@ Saved as `.github/instructions/tests.instructions.md`
 
 Open **Module 4** in `docs/workshop/04-instructions.md`
 
-**Start with Exercise 1 or 2** — they set up the core files
+**Start from Exercise 1** and work through as many as you can
 
-Recommended path:
-1. **Exercise 1** — Create `copilot-instructions.md`
-2. **Exercise 2** — Create `AGENTS.md`
-3. **Exercise 3** — Path-specific instructions
+- **Exercise 1** — Create `copilot-instructions.md`
+- **Exercise 2** — Create `AGENTS.md`
+- **Exercise 3** — Path-specific instructions
+- **Exercise 4** — Nested `AGENTS.md`
+- **Exercise 5** — Commit convention enforcement
 
 ⏱️ You have **~12 minutes**
 

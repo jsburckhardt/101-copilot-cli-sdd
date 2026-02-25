@@ -127,10 +127,15 @@ Show me just src/auth/middleware.ts
 
 Open **Module 11** in `docs/workshop/11-context.md`
 
-Recommended path:
-1. **Exercise 1** — Monitor context usage with `/context`
-2. **Exercise 2** — Manual compaction with `/compact`
-3. **Exercise 3** — Context-efficient prompting
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Monitor context usage
+- **Exercise 2** — Manual compaction
+- **Exercise 3** — Context-efficient prompting
+- **Exercise 4** — Large codebases
+- **Exercise 5** — Context window optimization
+- **Exercise 6** — Auto-compaction
+- **Exercise 7** — Context-aware workflow
 
 ⏱️ You have **~12 minutes**
 

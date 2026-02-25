@@ -126,10 +126,14 @@ description: Generates API documentation from source code
 
 Open **Module 7** in `docs/workshop/07-skills.md`
 
-Recommended path:
-1. **Exercise 1** — Create an API docs skill
-2. **Exercise 2** — Skill with resource files
-3. **Exercise 3** — Personal skills across projects
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Create a project skill
+- **Exercise 2** — Skill with resource files
+- **Exercise 3** — Personal skills
+- **Exercise 4** — Discover skills from agentskills.io
+- **Exercise 5** — Skill with scripts
+- **Exercise 6** — Skill invocation
 
 ⏱️ You have **~16 minutes**
 

@@ -130,10 +130,15 @@ Agents can **delegate to other agents** (`@test-agent`, `@docs-agent`)
 
 Open **Module 9** in `docs/workshop/09-custom-agents.md`
 
-Recommended path:
-1. **Exercise 1** — Create your first custom agent
-2. **Exercise 3** — Try the built-in agents
-3. **Exercise 4** — Agent with tool restrictions
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Create a repository agent
+- **Exercise 2** — Documentation agent
+- **Exercise 3** — Built-in agents
+- **Exercise 4** — Agent with tool restrictions
+- **Exercise 5** — Organization-level agents
+- **Exercise 6** — Subagents & delegation
+- **Exercise 7** — Debugging agent config
 
 ⏱️ You have **~8 minutes**
 

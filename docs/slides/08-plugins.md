@@ -139,10 +139,15 @@ copilot --allow-tool 'plugin-name' --deny-tool 'shell(rm)'
 
 Open **Module 8** in `docs/workshop/08-plugins.md`
 
-Recommended path:
-1. **Exercise 1** — Explore official copilot-plugins repo
-2. **Exercise 3** — Install a community plugin
-3. **Exercise 5** — Build a simple custom plugin
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Explore official plugins
+- **Exercise 2** — Explore work-iq-mcp
+- **Exercise 3** — Install a community plugin
+- **Exercise 4** — Database plugin integration
+- **Exercise 5** — Create a custom plugin
+- **Exercise 6** — Plugin security review
+- **Exercise 7** — Plugin discovery
 
 ⏱️ You have **~12 minutes**
 

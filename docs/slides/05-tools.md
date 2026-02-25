@@ -129,10 +129,15 @@ copilot --yolo -p "Set up a Node.js project"
 
 Open **Module 5** in `docs/workshop/05-tools.md`
 
-Recommended path:
-1. **Exercise 1** — Understanding tool prompts
-2. **Exercise 3** — `--allow-tool` flag
-3. **Exercise 5** — YOLO mode (in a safe directory!)
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Understanding tool prompts
+- **Exercise 2** — Shell command approval
+- **Exercise 3** — `--allow-tool` flag
+- **Exercise 4** — `--deny-tool` flag
+- **Exercise 5** — YOLO mode
+- **Exercise 6** — Trusted directories
+- **Exercise 7** — Safe automation script
 
 ⏱️ You have **~16 minutes**
 

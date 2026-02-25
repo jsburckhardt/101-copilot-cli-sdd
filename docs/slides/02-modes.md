@@ -180,11 +180,12 @@ Open **Module 2** in `docs/workshop/02-modes.md`
 
 **Start from Exercise 1** and work through as many as you can
 
-Recommended path:
-1. **Exercise 1** — Discover slash commands
-2. **Exercise 4** — Interactive basics
-3. **Exercise 6** — Programmatic mode
-4. **Exercise 2** — Plan → Review → Diff workflow
+- **Exercise 1** — Slash commands
+- **Exercise 2** — Plan → Review → Diff
+- **Exercise 3** — Repo init & sessions
+- **Exercise 4–5** — Interactive basics & tool approval
+- **Exercise 6–7** — Programmatic mode & chaining
+- **Exercise 8–9** — Delegate & comparing modes
 
 ⏱️ You have **~16 minutes**
 

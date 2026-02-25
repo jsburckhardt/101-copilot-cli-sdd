@@ -154,10 +154,15 @@ All from inside a Copilot session:
 
 Open **Module 6** in `docs/workshop/06-mcps.md`
 
-Recommended path:
-1. **Exercise 1** — Explore the built-in GitHub MCP
-2. **Exercise 2** — Add Exa remote search (no API key needed)
-3. **Exercise 5** — MCP management commands
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Explore GitHub MCP
+- **Exercise 2** — Remote MCP server
+- **Exercise 3** — Local MCP server
+- **Exercise 4** — File system MCP
+- **Exercise 5** — MCP management commands
+- **Exercise 6** — MCP tools with permissions
+- **Exercise 7** — Temporary MCP config
 
 ⏱️ You have **~12 minutes**
 

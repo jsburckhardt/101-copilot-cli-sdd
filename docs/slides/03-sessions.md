@@ -134,10 +134,15 @@ Copilot can only access directories you've allowed
 
 Open **Module 3** in `docs/workshop/03-sessions.md`
 
-Recommended path:
-1. **Exercise 1** — Session persistence
-2. **Exercise 2** — Resume a session
-3. **Exercise 3** — Slash commands for session control
+**Start from Exercise 1** and work through as many as you can
+
+- **Exercise 1** — Session persistence
+- **Exercise 2** — Resume a session
+- **Exercise 3** — Session slash commands
+- **Exercise 4** — Working directory management
+- **Exercise 5** — Clearing strategies
+- **Exercise 6** — Multiple sessions
+- **Exercise 7** — Export & sharing
 
 ⏱️ You have **~12 minutes**
 
