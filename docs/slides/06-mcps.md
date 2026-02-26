@@ -140,9 +140,11 @@ All from inside a Copilot session:
 
 | Command | Action |
 |---------|--------|
-| `/mcp show` | List all servers |
+| `/mcp show` | List all servers (grouped by source, v0.0.415) |
 | `/mcp add` | Interactive setup |
-| `/mcp reload` | Reload config without restart |
+| `/mcp edit NAME` | Edit an existing server |
+| `/mcp delete NAME` | Remove a server |
+| `/mcp reload` | Reload config without restart (v0.0.412+) |
 | `/mcp disable NAME` | Temporarily disable |
 | `/mcp enable NAME` | Re-enable |
 

@@ -72,7 +72,7 @@ Live in **`.github/agents/name.md`** → invoke with **`@name`**
 
 ---
 
-## Agent File Structure
+## Agent Profile Structure
 
 ```yaml
 ---
@@ -102,7 +102,7 @@ Use these right now — no setup needed
 
 | Agent | What it does | Example |
 |-------|-------------|---------|
-| `@explore` | Fast codebase Q&A | `@explore how does auth work?` |
+| `@explore` | Fast codebase Q&A; uses GitHub MCP tools (v0.0.414+) | `@explore how does auth work?` |
 | `@task` | Run commands smartly | `@task run tests, summarize` |
 | `@plan` | Implementation planning | `@plan add user profiles` |
 | `@code-review` | High-signal reviews | `@code-review last 3 commits` |

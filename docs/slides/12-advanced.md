@@ -86,6 +86,9 @@ Or toggle mid-session:
 /autopilot off
 ```
 
+- **Permission elevation** (v0.0.414) — shows dialog to prevent auto-denied tool errors
+- **Plan approval menu** (v0.0.415) — model-curated actions incl. **autopilot+fleet** option
+
 > ✅ Boilerplate, well-defined tasks
 > ❌ High-risk ops, exploratory work
 
@@ -106,10 +109,12 @@ Your Prompt → Orchestrator
     │ Ag 1 │ Ag 2 │ Ag 3 │ Ag 4 │  parallel!
     └──────┴──────┴──────┴──────┘
                   ↓
-         Orchestrator validates
+         Orchestrator validates       ← v0.0.412+
                   ↓
          Consolidated output
 ```
+
+> v0.0.412: Orchestrator validates sub-agent work, parallel dispatch (9+ concurrent agents)
 
 ---
 
@@ -119,7 +124,7 @@ Your Prompt → Orchestrator
 # .github/workflows/copilot-review.yml
 - name: Run Code Review
   env:
-    GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+    COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
   run: |
     copilot -p "Review PR changes" \
       --allow-tool 'shell(git)' \
@@ -146,8 +151,10 @@ copilot --bash-env
 # Custom config location
 export XDG_CONFIG_HOME=/custom/path
 
-# Auth token for CI
-export GITHUB_TOKEN="ghp_..."
+# Auth tokens (in order of precedence)
+export COPILOT_GITHUB_TOKEN="ghp_..."  # highest priority
+export GH_TOKEN="ghp_..."
+export GITHUB_TOKEN="ghp_..."          # lowest priority
 ```
 
 ---

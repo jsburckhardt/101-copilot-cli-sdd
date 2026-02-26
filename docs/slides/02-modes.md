@@ -137,12 +137,16 @@ Type **`/help`** to see them all
 
 | Category | Key commands |
 |----------|-------------|
-| **Workflow** | `/plan`, `/review`, `/diff` |
-| **Session** | `/clear`, `/rename`, `/session` |
-| **Navigation** | `/cwd`, `/cd` |
+| **Review** | `/plan`, `/review`, `/diff` |
+| **Session** | `/clear`, `/resume`, `/rename`, `/session`, `/usage` |
+| **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` |
 | **Context** | `/context`, `/compact` |
-| **Config** | `/model`, `/mcp`, `/init` |
-| **Tools** | `/allow-all`, `/yolo` |
+| **Config** | `/model`, `/mcp`, `/theme`, `/terminal-setup` |
+| **Tools** | `/allow-all`, `/yolo`, `/reset-allowed-tools` |
+| **Extensibility** | `/skills`, `/plugin`, `/agent` |
+| **Sharing** | `/share`, `/feedback` |
+| **Account** | `/login`, `/logout`, `/user` |
+| **System** | `/help`, `/exit`, `/init`, `/tasks`, `/lsp`, `/update` |
 
 ---
 
@@ -151,11 +155,16 @@ Type **`/help`** to see them all
 | Shortcut | Action |
 |----------|--------|
 | `@` | Mention files — include as context |
-| `!` | Run shell commands directly |
-| `Shift+Tab` | Cycle between modes |
+| `!` | Run shell commands directly (only way to access shell since v0.0.410) |
+| `Shift+Tab` | Cycle between suggest ⟷ normal mode (v0.0.410+) |
 | `Esc` | Cancel current operation |
 | `ctrl+t` | Toggle reasoning display |
 | `ctrl+x → /` | Quick slash command |
+| `ctrl+c` | Cancel / clear input / exit |
+| `ctrl+d` | Shutdown on empty prompt (v0.0.410+) |
+| `ctrl+y` | Edit plan in terminal editor (v0.0.412+) |
+
+> See workshop for 20+ additional shortcuts including text editing and alt-screen navigation
 
 ---
 

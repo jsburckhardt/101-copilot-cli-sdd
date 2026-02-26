@@ -79,6 +79,20 @@ When full → **auto-compaction** at ~95% capacity
 
 ---
 
+## Models & Token Limits
+
+| Model | Approximate Limit |
+|-------|-------------------|
+| GPT-4 | ~128K tokens |
+| GPT-4.1 | ~128K tokens |
+| Claude Sonnet 4.6 | ~200K tokens |
+
+Use **`/model`** to switch models. Also available: Claude Opus 4.6, Gemini 3 Pro, GPT-5.3-Codex, GPT-5 mini
+
+> Model availability varies by subscription tier. v0.0.413 auto-migrated users from claude-sonnet-4.5.
+
+---
+
 ## Key Commands
 
 | Command | Action | When to use |

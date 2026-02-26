@@ -102,7 +102,7 @@ Plugins are configured as **MCP servers** in `~/.copilot/mcp-config.json`
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "brave-search": {
       "command": "npx",
       "args": ["-y", "@anthropic/mcp-server-brave-search"],
@@ -115,6 +115,27 @@ Plugins are configured as **MCP servers** in `~/.copilot/mcp-config.json`
 ```
 
 > Always use `${ENV_VAR}` for secrets — never hardcode
+
+---
+
+## Remote Plugin Sources (v0.0.413+)
+
+```json
+{
+  "mcpServers": {
+    "remote-plugin": {
+      "url": "https://plugin-server.example.com/mcp/",
+      "requestInit": {
+        "headers": {
+          "Authorization": "Bearer ${TOKEN}"
+        }
+      }
+    }
+  }
+}
+```
+
+> Remote sources reference GitHub repos and git URLs via `marketplace.json`
 
 ---
 
