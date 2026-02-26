@@ -49,7 +49,10 @@ Plugins extend Copilot's capabilities beyond built-in features:
 2. **microsoft/work-iq-mcp** - Enterprise integrations
 3. **Community plugins** - Third-party extensions
 4. **Custom plugins** - Your own integrations
-5. **Remote sources** - GitHub repos and git URLs referenced in `marketplace.json` (v0.0.413+)
+5. **Remote sources** - GitHub repos and git URLs referenced in `marketplace.json`
+
+> [!NOTE]
+> Remote marketplace sources require Copilot CLI **v0.0.413+**. Verify your version with `copilot --version`.
 
 ## Hands-On Exercises
 
@@ -64,15 +67,14 @@ Plugins extend Copilot's capabilities beyond built-in features:
    https://github.com/github/copilot-plugins
    ```
 
-2. Browse the available plugins:
-   - Database integrations
-   - Cloud provider tools
-   - Development utilities
-   - Team collaboration tools
+2. Browse the available plugins. The repo currently contains:
+   - **Skills** — Reusable prompts and workflows (e.g., `spark-app-template`, `workiq`)
 
-3. Read plugin documentation for one that interests you.
+3. Note the `plugins/` directory structure:
+   - `plugins/spark/skills/spark-app-template` — A skill for scaffolding Spark apps
+   - `plugins/workiq` — Microsoft Work IQ integration (see Exercise 2)
 
-4. Note the installation requirements and configuration.
+4. Read the [CONTRIBUTING.md](https://github.com/github/copilot-plugins/blob/main/CONTRIBUTING.md) for how to submit your own plugins.
 
 5. Clone the repository to explore locally:
    ```bash
@@ -83,8 +85,8 @@ Plugins extend Copilot's capabilities beyond built-in features:
 
 6. Examine a plugin's structure:
    ```bash
-   ls -la plugins/example-plugin/
-   cat plugins/example-plugin/README.md
+   ls -R plugins/
+   cat plugins/workiq/README.md
    ```
 
 **Expected Outcome:**
@@ -101,35 +103,49 @@ You understand the available plugins and their purposes.
    https://github.com/microsoft/work-iq-mcp
    ```
 
-2. work-iq-mcp provides integrations for:
-   - Microsoft 365 (Outlook, Teams, SharePoint)
-   - Azure services
-   - Enterprise data sources
-   - Business applications
+2. Microsoft Work IQ (Public Preview) queries your **Microsoft 365 data** with natural language:
+   - **Emails** — "What did John say about the proposal?"
+   - **Meetings** — "What's on my calendar tomorrow?"
+   - **Documents** — "Find my recent PowerPoint presentations"
+   - **Teams messages** — "Summarize today's messages in the Engineering channel"
+   - **People** — "Who is working on Project Alpha?"
 
-3. Review the architecture:
+3. Install via the Copilot CLI plugin marketplace (`github/copilot-plugins` is a **default marketplace** — no need to add it manually):
+   ```bash
+   copilot
+   ```
+   ```
+   /plugin install workiq@copilot-plugins
+   ```
+
+   Or install standalone via npm:
+   ```bash
+   npm install -g @microsoft/workiq
+   workiq accept-eula
+   workiq mcp   # starts the MCP server
+   ```
+
+4. Review the admin setup guide:
    ```bash
    git clone https://github.com/microsoft/work-iq-mcp.git
    cd work-iq-mcp
-   cat README.md
-   ```
-
-4. Examine configuration options:
-   ```bash
-   cat docs/configuration.md
+   cat ADMIN-INSTRUCTIONS.md
    ```
 
 5. Understand authentication requirements:
-   - OAuth2 flows
-   - Service principals
-   - Token management
+   - Requires **Microsoft Entra tenant** admin consent on first access
+   - Browser-based sign-in flow
+   - If you are not a tenant admin, contact your administrator (see [Admin Guide](https://github.com/microsoft/work-iq-mcp/blob/main/ADMIN-INSTRUCTIONS.md))
+
+> [!NOTE]
+> Work IQ is **not open source** — the runtime is proprietary. The GitHub repo is public for documentation, feedback, and issue tracking only.
 
 **Expected Outcome:**
 You understand enterprise integration capabilities.
 
-### Exercise 3: Install a Community Plugin
+### Exercise 3: Install a Community MCP Server
 
-**Goal:** Install and configure a third-party plugin.
+**Goal:** Install and configure an MCP server that requires no API key.
 
 **Steps:**
 
@@ -138,42 +154,43 @@ You understand enterprise integration capabilities.
    npm search @modelcontextprotocol
    ```
 
-2. Install a useful plugin (e.g., Brave Search):
+2. Install the official **Filesystem** MCP server (provides file read/write/search capabilities):
    ```bash
-   npm install -g @anthropic/mcp-server-brave-search
+   npm install -g @modelcontextprotocol/server-filesystem
    ```
 
-3. Get a Brave Search API key:
-   - Visit https://brave.com/search/api/
-   - Create an account and get an API key
+3. Configure as MCP server (no API key needed — just specify an allowed directory).
 
-4. Configure as MCP server:
-   ```bash
-   cat >> ~/.copilot/mcp-config.json << 'EOF'
+   Add to `~/.copilot/mcp-config.json`:
+   ```json
    {
-     "servers": {
-       "brave-search": {
+     "mcpServers": {
+       "filesystem": {
          "command": "npx",
-         "args": ["-y", "@anthropic/mcp-server-brave-search"],
-         "env": {
-           "BRAVE_API_KEY": "your-api-key-here"
-         }
+         "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/projects"]
        }
      }
    }
-   EOF
    ```
 
-5. Restart Copilot and test:
+   > [!IMPORTANT]
+   > Use an **absolute path** — tilde (`~`) is not expanded because Copilot spawns processes without a shell. Replace `/home/user/projects` with the actual directory you want the server to access. The directory must exist before starting the server.
+
+4. Restart Copilot and test:
    ```bash
    copilot
    ```
    ```
-   Search the web for the latest Node.js release
+   List the files in my workspace and summarize what you find
+   ```
+
+5. Try other filesystem operations:
+   ```
+   Search for any markdown files and show me their contents
    ```
 
 **Expected Outcome:**
-Web search capability added via plugin.
+Filesystem access capability added via MCP server — no API key required.
 
 ### Exercise 4: Database Plugin Integration
 
@@ -186,21 +203,22 @@ Web search capability added via plugin.
    npm install -g @modelcontextprotocol/server-postgres
    ```
 
-2. Configure with your database:
-   ```bash
-   # Add to mcp-config.json
+2. Configure with your database.
+
+   Add to `~/.copilot/mcp-config.json`:
+   ```json
    {
-     "servers": {
+     "mcpServers": {
        "postgres": {
          "command": "npx",
-         "args": ["-y", "@modelcontextprotocol/server-postgres"],
-         "env": {
-           "POSTGRES_CONNECTION": "postgresql://user:pass@localhost/dbname"
-         }
+         "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost/dbname"]
        }
      }
    }
    ```
+
+   > [!NOTE]
+   > The connection string is passed as an argument, not as an environment variable. Replace the URL with your actual database connection string.
 
 3. Test database queries:
    ```bash
@@ -221,7 +239,7 @@ Database query capabilities via Copilot.
 ### Exercise 5: Create a Simple Custom Plugin
 
 > [!TIP]
-> The code snippet uses `require` (CommonJS) but doesn't include `module.exports` or type definition in `package.json`. This is fine as CommonJS is the default. The `npm install @modelcontextprotocol/sdk` command should complete successfully.
+> This exercise uses the `McpServer` high-level API from `@modelcontextprotocol/sdk` (v1.27+). Tool input schemas use [Zod](https://zod.dev/) (bundled with the SDK). The server communicates over stdio.
 
 **Goal:** Build a basic plugin for your workflow.
 
@@ -238,68 +256,55 @@ Database query capabilities via Copilot.
    npm init -y
    ```
 
-3. Create a simple MCP server:
+3. Install dependencies:
+   ```bash
+   npm install @modelcontextprotocol/sdk
+   ```
+
+4. Create a simple MCP server:
    ```bash
    cat > index.js << 'EOF'
-   const { Server } = require('@modelcontextprotocol/sdk/server');
+   const { McpServer } = require('@modelcontextprotocol/sdk/server/mcp.js');
+   const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
+   const { z } = require('zod');
 
-   const server = new Server({
+   const server = new McpServer({
      name: 'my-tools',
      version: '1.0.0'
    });
 
    // Add a simple tool
-   server.addTool({
-     name: 'get-timestamp',
-     description: 'Get the current timestamp in various formats',
-     parameters: {
-       type: 'object',
-       properties: {
-         format: {
-           type: 'string',
-           enum: ['iso', 'unix', 'human'],
-           default: 'iso'
-         }
-       }
-     },
-     handler: async ({ format }) => {
+   server.tool(
+     'get-timestamp',
+     'Get the current timestamp in various formats',
+     { format: z.enum(['iso', 'unix', 'human']).default('iso') },
+     async ({ format }) => {
        const now = new Date();
+       let timestamp;
        switch (format) {
-         case 'unix':
-           return { timestamp: Math.floor(now.getTime() / 1000) };
-         case 'human':
-           return { timestamp: now.toLocaleString() };
-         default:
-           return { timestamp: now.toISOString() };
+         case 'unix':  timestamp = String(Math.floor(now.getTime() / 1000)); break;
+         case 'human': timestamp = now.toLocaleString(); break;
+         default:      timestamp = now.toISOString(); break;
        }
+       return { content: [{ type: 'text', text: timestamp }] };
      }
-   });
+   );
 
-   // Add a resource
-   server.addResource({
-     name: 'system-info',
-     description: 'System information',
-     handler: async () => ({
-       platform: process.platform,
-       nodeVersion: process.version,
-       cwd: process.cwd()
-     })
-   });
-
-   server.start();
+   // Start the server over stdio
+   async function main() {
+     const transport = new StdioServerTransport();
+     await server.connect(transport);
+   }
+   main().catch(console.error);
    EOF
    ```
 
-4. Install dependencies:
-   ```bash
-   npm install @modelcontextprotocol/sdk
-   ```
+5. Configure in Copilot.
 
-5. Configure in Copilot:
-   ```bash
-   # Add to mcp-config.json
+   Add to `~/.copilot/mcp-config.json`:
+   ```json
    {
-     "servers": {
+     "mcpServers": {
        "my-tools": {
          "command": "node",
          "args": ["/home/user/copilot-plugins/my-tools/index.js"]
@@ -307,6 +312,9 @@ Database query capabilities via Copilot.
      }
    }
    ```
+
+   > [!IMPORTANT]
+   > Use an **absolute path** in `args` — tilde (`~`) is not expanded. Replace `/home/user` with your actual home directory (run `echo $HOME` to check).
 
 6. Test your plugin:
    ```bash
@@ -348,7 +356,7 @@ Custom plugin provides new capabilities to Copilot.
 3. Configure with least privilege:
    ```json
    {
-     "servers": {
+     "mcpServers": {
        "plugin-name": {
          "command": "npx",
          "args": ["-y", "@package/plugin"],
@@ -420,7 +428,7 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "plugin-name": {
       "command": "npx",
       "args": ["-y", "@scope/package-name", "--option"],
@@ -438,7 +446,7 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "remote-plugin": {
       "url": "https://plugin-server.example.com/mcp/",
       "requestInit": {
@@ -455,9 +463,8 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 
 | Plugin | Package | Purpose |
 |--------|---------|---------|
-| Brave Search | `@anthropic/mcp-server-brave-search` | Web search |
-| PostgreSQL | `@modelcontextprotocol/server-postgres` | Database |
-| Filesystem | `@modelcontextprotocol/server-filesystem` | File ops |
+| Filesystem | `@modelcontextprotocol/server-filesystem` | File operations |
+| PostgreSQL | `@modelcontextprotocol/server-postgres` | Database queries |
 | GitHub | Built-in | GitHub integration |
 | Memory | `@modelcontextprotocol/server-memory` | Persistence |
 | Puppeteer | `@anthropic/mcp-server-puppeteer` | Browser automation |
@@ -479,7 +486,10 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 - ✅ Community MCP servers add diverse capabilities
 - ✅ You can create custom plugins for specific needs
 - ✅ Always review plugins for security before installation
-- ✅ `/plugin install` and `/plugin marketplace add` now support local paths with spaces (v0.0.415 fix)
+- ✅ `/plugin install` and `/plugin marketplace add` now support local paths with spaces
+
+> [!NOTE]
+> The local-paths-with-spaces fix requires Copilot CLI **v0.0.415+**.
 
 ## Next Steps
 
