@@ -11,7 +11,7 @@
 - Understand the Agent Skills framework
 - Create project-specific skills
 - Create personal skills for cross-project use
-- Discover skills from agentskills.io
+- Discover and install community skills
 - Use progressive disclosure for efficient context
 
 ## Concepts
@@ -54,9 +54,8 @@ Level 3: Resources      → Copilot accesses supporting files (as needed)
    mkdir -p .github/skills/api-docs
    ```
 
-2. Create the skill definition:
-   ```bash
-   cat > .github/skills/api-docs/SKILL.md << 'EOF'
+2. Create the skill definition file at `.github/skills/api-docs/SKILL.md` with the following contents:
+   ~~~markdown
    ---
    name: api-docs
    description: Generates comprehensive API documentation from source code. Use when asked to document APIs, create OpenAPI specs, or write endpoint documentation.
@@ -97,7 +96,7 @@ Level 3: Resources      → Copilot accesses supporting files (as needed)
    ```
 
    ### For Markdown documentation:
-   ```markdown
+   ````markdown
    ## Endpoint Name
 
    `METHOD /path`
@@ -113,15 +112,14 @@ Level 3: Resources      → Copilot accesses supporting files (as needed)
    ```json
    { "example": "response" }
    ```
-   ```
+   ````
 
    ## Instructions
    1. First, examine the source code to understand the API structure
    2. Identify all endpoints, parameters, and response types
    3. Generate documentation following the style guide above
    4. Include practical examples that users can copy-paste
-   EOF
-   ```
+   ~~~
 
 3. Test the skill:
    ```bash
@@ -147,9 +145,9 @@ API documentation generated following your skill's style guide.
    mkdir -p .github/skills/test-writer
    ```
 
-2. Create the main skill file:
-   ```bash
-   cat > .github/skills/test-writer/SKILL.md << 'EOF'
+2. Create the skill file at `.github/skills/test-writer/SKILL.md` with the following contents:
+
+   ~~~markdown
    ---
    name: test-writer
    description: Writes comprehensive unit and integration tests. Use when asked to create tests, improve test coverage, or write test cases.
@@ -188,8 +186,7 @@ API documentation generated following your skill's style guide.
    - Remove failing tests without understanding why
    - Skip edge cases
    - Create tests that depend on external services without mocking
-   EOF
-   ```
+   ~~~
 
 3. Add example templates:
    ```bash
@@ -279,6 +276,9 @@ Skill uses example files to generate framework-appropriate tests.
 
 **Goal:** Create skills that work across all your projects.
 
+> [!NOTE]
+> In Exercises 1-2 we created skills under `.github/skills/` — those are **project skills**, scoped to a single repository and shared with your team via Git. In this exercise we use `~/.copilot/skills/` — these are **personal skills**, stored in your home directory and available in every project you open with Copilot CLI. Use project skills for repo-specific tasks; use personal skills for workflows you want everywhere.
+
 **Steps:**
 
 1. Create personal skills directory:
@@ -286,9 +286,9 @@ Skill uses example files to generate framework-appropriate tests.
    mkdir -p ~/.copilot/skills/git-workflow
    ```
 
-2. Create a Git workflow skill:
-   ```bash
-   cat > ~/.copilot/skills/git-workflow/SKILL.md << 'EOF'
+2. Create a Git workflow skill at `~/.copilot/skills/git-workflow/SKILL.md`:
+
+   ~~~markdown
    ---
    name: git-workflow
    description: Manages Git operations following best practices. Use for commits, branches, PRs, and Git troubleshooting.
@@ -340,14 +340,15 @@ Skill uses example files to generate framework-appropriate tests.
    ```bash
    git branch --merged | grep -v "main\|develop" | xargs git branch -d
    ```
-   EOF
-   ```
+   ~~~
 
-3. Create a code review skill:
+3. Create a code review skill at `~/.copilot/skills/code-review/SKILL.md`:
+
    ```bash
    mkdir -p ~/.copilot/skills/code-review
+   ```
 
-   cat > ~/.copilot/skills/code-review/SKILL.md << 'EOF'
+   ~~~markdown
    ---
    name: code-review
    description: Performs thorough code reviews focusing on quality, security, and maintainability. Use when reviewing PRs or code changes.
@@ -388,8 +389,7 @@ Skill uses example files to generate framework-appropriate tests.
    ```
 
    🟡 **Suggestion**: Consider extracting to a helper function for reuse.
-   EOF
-   ```
+   ~~~
 
 4. Test personal skills in any project:
    ```bash
@@ -403,43 +403,50 @@ Skill uses example files to generate framework-appropriate tests.
 **Expected Outcome:**
 Personal skills are available in all projects.
 
-### Exercise 4: Discover Skills from agentskills.io
+### Exercise 4: Discover and Install Community Skills
 
 **Goal:** Find and use community-created skills.
 
 **Steps:**
 
-1. Visit https://agentskills.io
+1. The [Agent Skills specification](https://agentskills.io/) defines the open standard for skills. Example skills are hosted at [github.com/anthropics/skills](https://github.com/anthropics/skills).
 
-2. Browse available skills by category:
-   - Documentation
-   - Testing
-   - Security
-   - DevOps
-   - Data processing
+2. Browse the example skills repository:
+   ```bash
+   # View available skills
+   curl -s https://api.github.com/repos/anthropics/skills/contents/skills | jq '.[].name'
+   ```
 
-3. Install a skill (example: security-review):
+3. Install a skill from the repository (example: `mcp-builder`):
    ```bash
    # Download skill to project
-   mkdir -p .github/skills/security-review
-   curl -o .github/skills/security-review/SKILL.md \
-     https://agentskills.io/skills/security-review/SKILL.md
+   mkdir -p .github/skills/mcp-builder
+   curl -o .github/skills/mcp-builder/SKILL.md \
+     https://raw.githubusercontent.com/anthropics/skills/main/skills/mcp-builder/SKILL.md
    ```
 
-4. Or install to personal skills:
+4. Or install to personal skills so it works across all projects:
    ```bash
-   mkdir -p ~/.copilot/skills/security-review
-   curl -o ~/.copilot/skills/security-review/SKILL.md \
-     https://agentskills.io/skills/security-review/SKILL.md
+   mkdir -p ~/.copilot/skills/mcp-builder
+   curl -o ~/.copilot/skills/mcp-builder/SKILL.md \
+     https://raw.githubusercontent.com/anthropics/skills/main/skills/mcp-builder/SKILL.md
    ```
 
-5. Test the installed skill:
+5. Verify the skill was downloaded:
+   ```bash
+   cat .github/skills/mcp-builder/SKILL.md | head -10
+   ```
+
+6. Test the installed skill:
    ```bash
    copilot
    ```
    ```
-   Review this code for security vulnerabilities
+   Build a simple MCP server in TypeScript that provides a calculator tool with add, subtract, multiply, and divide operations
    ```
+
+> [!TIP]
+> Skills follow the open [Agent Skills](https://agentskills.io/) format and work across multiple AI agents — not just Copilot CLI. Any SKILL.md file from the community can be dropped into `.github/skills/` or `~/.copilot/skills/`.
 
 **Expected Outcome:**
 Community skills enhance your Copilot capabilities.
@@ -455,9 +462,9 @@ Community skills enhance your Copilot capabilities.
    mkdir -p .github/skills/deploy
    ```
 
-2. Create the skill with script references:
-   ```bash
-   cat > .github/skills/deploy/SKILL.md << 'EOF'
+2. Create the skill file at `.github/skills/deploy/SKILL.md` with the following contents:
+
+   ~~~markdown
    ---
    name: deploy
    description: Handles deployment tasks including build, test, and deploy to various environments. Use for deployment operations.
@@ -498,8 +505,7 @@ Community skills enhance your Copilot capabilities.
    ```bash
    ./scripts/status.sh <environment>
    ```
-   EOF
-   ```
+   ~~~
 
 3. Add helper scripts:
    ```bash
@@ -526,48 +532,47 @@ Community skills enhance your Copilot capabilities.
 **Expected Outcome:**
 Skill provides deployment guidance and can reference scripts.
 
-### Exercise 6: Skill Invocation
+### Exercise 6: Understanding Skill Auto-Selection
 
-**Goal:** Understand how Copilot invokes skills.
+**Goal:** Observe how Copilot automatically selects skills based on your prompt.
 
 **Steps:**
 
-1. Create multiple skills in your project.
+1. Ensure you have multiple skills from earlier exercises (api-docs, test-writer, deploy).
 
-2. Start Copilot and observe skill selection:
+2. Start Copilot:
    ```bash
    copilot
    ```
 
-3. Ask a general question:
+3. Ask a question that matches the **test-writer** skill:
    ```
-   Help me with the user authentication
+   Write unit tests for a function that validates email addresses
+   ```
+   Observe: the output should follow AAA pattern (Arrange, Act, Assert) as defined in the test-writer skill.
+
+4. Ask a question that matches the **api-docs** skill:
+   ```
+   Document a REST endpoint POST /users that creates a new user
+   ```
+   Observe: the output should follow the OpenAPI/Markdown format from the api-docs skill.
+
+5. Ask a question that matches the **deploy** skill:
+   ```
+   What are the steps to deploy to staging?
+   ```
+   Observe: the output should reference the deployment checklist and scripts from the deploy skill.
+
+6. Explicitly reference a skill by name to ensure it's used:
+   ```
+   Using the api-docs skill, generate OpenAPI specs for a todo list API
    ```
 
-4. Ask questions that match specific skills:
-   ```
-   Write tests for the payment service
-   ```
-   (Should trigger test-writer skill)
-
-5. Ask about documentation:
-   ```
-   Document the REST API endpoints
-   ```
-   (Should trigger api-docs skill)
-
-6. Use the `/skill` command (if available):
-   ```
-   /skill list
-   ```
-
-7. Explicitly invoke a skill:
-   ```
-   Using the test-writer skill, create tests for utils.ts
-   ```
+> [!TIP]
+> Copilot selects skills by matching your prompt against the `name` and `description` in each SKILL.md frontmatter. Write clear, specific descriptions to improve auto-selection accuracy.
 
 **Expected Outcome:**
-Copilot selects appropriate skills based on your request.
+Different prompts trigger different skills, producing output that follows each skill's specific guidelines and format.
 
 ## Skill Structure Reference
 
@@ -618,7 +623,7 @@ license: MIT              # Optional: License identifier
 - ✅ Progressive disclosure loads only relevant content
 - ✅ Project skills in `.github/skills/`, personal in `~/.copilot/skills/`
 - ✅ Include examples and templates for better output quality
-- ✅ agentskills.io provides community-created skills
+- ✅ Community skills available at [github.com/anthropics/skills](https://github.com/anthropics/skills)
 - ✅ Copilot auto-selects skills based on your request
 - ✅ YAML array syntax for `allowed-tools` in skill files now loads correctly (v0.0.413 fix)
 - ✅ Skill files saved with UTF-8 BOM (common on Windows) now load correctly (v0.0.415 fix)
@@ -631,4 +636,5 @@ license: MIT              # Optional: License identifier
 
 - [Agent Skills - VS Code Docs](https://code.visualstudio.com/docs/copilot/customization/agent-skills)
 - [About Agent Skills - GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
-- [agentskills.io](https://agentskills.io/)
+- [Agent Skills Specification](https://agentskills.io/)
+- [Example Skills Repository](https://github.com/anthropics/skills)
