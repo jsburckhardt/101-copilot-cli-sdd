@@ -53,7 +53,8 @@
                 "bierner.markdown-mermaid",
                 "eamodio.gitlens",
                 "DavidAnson.vscode-markdownlint",
-                "yzhang.markdown-all-in-one"
+                "yzhang.markdown-all-in-one",
+                "marp-team.marp-vscode"
             ]
         }
     },
