@@ -21,7 +21,7 @@
 Hooks are custom scripts that execute at specific points during Copilot agent execution:
 
 ```
-Session Start → User Prompt → Pre-Tool → Tool Execution → Post-Tool → Session End
+User Prompt → Session Start → Pre-Tool → Tool Execution → Post-Tool → Session End
      ↓              ↓            ↓             ↓              ↓            ↓
    Hook           Hook         Hook                        Hook         Hook
 ```
@@ -84,12 +84,14 @@ Hooks configuration file ready for customization.
 **Steps:**
 
 1. Create a logs directory:
+
    ```bash
    mkdir -p logs
    echo "logs/" >> .gitignore
    ```
 
 2. Update hooks.json with session hooks:
+
    ```bash
    cat > .github/hooks/hooks.json << 'EOF'
    {
@@ -98,8 +100,8 @@ Hooks configuration file ready for customization.
        "sessionStart": [
          {
            "type": "command",
-           "bash": "echo \"[$(date -Iseconds)] SESSION_START source=$SOURCE\" >> logs/copilot-audit.log",
-           "powershell": "Add-Content -Path logs/copilot-audit.log -Value \"[$(Get-Date -Format o)] SESSION_START source=$env:SOURCE\"",
+           "bash": "cat | jq -r '.timestamp' > /tmp/copilot-session-start; echo \"[$(date -Iseconds)] SESSION_START\" >> logs/copilot-audit.log",
+           "powershell": "$data = [Console]::In.ReadToEnd() | ConvertFrom-Json; $data.timestamp | Out-File /tmp/copilot-session-start; Add-Content -Path logs/copilot-audit.log -Value \"[$(Get-Date -Format o)] SESSION_START\"",
            "cwd": ".",
            "timeoutSec": 5
          }
@@ -107,8 +109,8 @@ Hooks configuration file ready for customization.
        "sessionEnd": [
          {
            "type": "command",
-           "bash": "echo \"[$(date -Iseconds)] SESSION_END duration=${DURATION}s\" >> logs/copilot-audit.log",
-           "powershell": "Add-Content -Path logs/copilot-audit.log -Value \"[$(Get-Date -Format o)] SESSION_END duration=$env:DURATION\"",
+           "bash": "END=$(cat | jq -r '.timestamp'); START=$(cat /tmp/copilot-session-start 2>/dev/null || echo $END); echo \"[$(date -Iseconds)] SESSION_END duration=$((END - START))ms\" >> logs/copilot-audit.log",
+           "powershell": "$data = [Console]::In.ReadToEnd() | ConvertFrom-Json; $start = Get-Content /tmp/copilot-session-start -ErrorAction SilentlyContinue; Add-Content -Path logs/copilot-audit.log -Value \"[$(Get-Date -Format o)] SESSION_END duration=$($data.timestamp - $start)ms\"",
            "cwd": ".",
            "timeoutSec": 5
          }
@@ -139,7 +141,17 @@ Hooks configuration file ready for customization.
    ```
 
 **Expected Outcome:**
-Sessions are logged with timestamps.
+Sessions are logged with timestamps and duration:
+```
+[2026-02-24T10:30:00+00:00] SESSION_START
+[2026-02-24T10:30:15+00:00] SESSION_END duration=15000ms
+```
+
+> **How it works:**
+> - Hooks receive JSON data via stdin (standard input)
+> - Use `jq` to parse JSON fields (e.g., `cat | jq -r '.timestamp'`)
+> - The `sessionStart` hook saves the timestamp to a temp file
+> - The `sessionEnd` hook reads back the start time and calculates duration in milliseconds
 
 ### Exercise 3: Prompt Auditing Hook
 
@@ -172,7 +184,7 @@ Sessions are logged with timestamps.
        "userPromptSubmitted": [
          {
            "type": "command",
-           "bash": "echo \"[$(date -Iseconds)] PROMPT: $(echo $PROMPT | head -c 100)...\" >> logs/copilot-audit.log",
+           "bash": "INPUT=$(cat); PROMPT=$(echo \"$INPUT\" | jq -r '.prompt // \"\"'); echo \"[$(date -Iseconds)] PROMPT: $(echo \"$PROMPT\" | head -c 100)...\" >> logs/copilot-audit.log",
            "cwd": ".",
            "timeoutSec": 5
          }
@@ -205,7 +217,17 @@ Sessions are logged with timestamps.
    ```
 
 **Expected Outcome:**
-All prompts logged with timestamps.
+All prompts logged with timestamps:
+```
+[2026-02-24T10:30:00+00:00] PROMPT: List all files in the current directory...
+[2026-02-24T10:30:01+00:00] SESSION_START
+[2026-02-24T10:30:05+00:00] SESSION_END
+[2026-02-24T10:30:10+00:00] PROMPT: Show me the contents of hooks.json...
+[2026-02-24T10:30:11+00:00] SESSION_START
+[2026-02-24T10:30:15+00:00] SESSION_END
+```
+
+> **Note:** The `userPromptSubmitted` hook fires when you submit a prompt, which triggers the session to start. So the order is: PROMPT → SESSION_START → SESSION_END.
 
 ### Exercise 4: Pre-Tool Permission Control
 
@@ -223,9 +245,9 @@ All prompts logged with timestamps.
    # Read input from stdin
    INPUT=$(cat)
 
-   # Parse tool information
+   # Parse tool information (toolArgs is a JSON string, so parse with fromjson)
    TOOL_NAME=$(echo "$INPUT" | jq -r '.toolName')
-   TOOL_ARGS=$(echo "$INPUT" | jq -r '.toolArgs')
+   TOOL_ARGS=$(echo "$INPUT" | jq -r '.toolArgs | fromjson')
 
    # Log the tool request
    echo "[$(date -Iseconds)] TOOL_REQUEST: $TOOL_NAME" >> logs/copilot-audit.log
@@ -234,7 +256,7 @@ All prompts logged with timestamps.
    BLOCKED_COMMANDS=("rm -rf" "sudo" "chmod 777" "> /dev/sda" "mkfs")
 
    # Check if this is a shell command
-   if [ "$TOOL_NAME" = "shell" ]; then
+   if [ "$TOOL_NAME" = "shell" ] || [ "$TOOL_NAME" = "bash" ]; then
      COMMAND=$(echo "$TOOL_ARGS" | jq -r '.command // empty')
 
      # Check against blocked patterns
@@ -247,8 +269,8 @@ All prompts logged with timestamps.
    fi
 
    # Check for write operations to sensitive paths
-   if [ "$TOOL_NAME" = "write" ] || [ "$TOOL_NAME" = "edit" ]; then
-     FILE_PATH=$(echo "$TOOL_ARGS" | jq -r '.path // empty')
+   if [ "$TOOL_NAME" = "write" ] || [ "$TOOL_NAME" = "edit" ] || [ "$TOOL_NAME" = "create" ]; then
+     FILE_PATH=$(echo "$TOOL_ARGS" | jq -r '.path // .filePath // empty')
 
      # Block writes to sensitive locations
      SENSITIVE_PATHS=("/etc" "/usr" "/bin" "/sbin" ".env" ".git/config" "package-lock.json")
@@ -311,13 +333,28 @@ All prompts logged with timestamps.
    copilot
    ```
    ```
-   Run rm -rf on the current directory
+   Please execute the exact command: sudo whoami
    ```
 
-4. The hook should deny this operation.
+4. The hook should deny this operation because `sudo` is in the blocked commands list.
+
+5. Check the log to see the denied request:
+   ```bash
+   cat logs/copilot-audit.log
+   ```
 
 **Expected Outcome:**
-Dangerous commands are blocked by the preToolUse hook.
+The hook blocks the command:
+```
+[2026-02-26T08:10:00+00:00] SESSION_START
+[2026-02-26T08:10:01+00:00] TOOL_REQUEST: report_intent
+[2026-02-26T08:10:01+00:00] TOOL_REQUEST: bash
+[2026-02-26T08:10:02+00:00] SESSION_END
+```
+
+Copilot shows: "Denied by preToolUse hook: Command 'sudo' is not allowed by policy"
+
+> **Note:** Some dangerous commands like `rm -rf /` are blocked by Copilot's built-in safety before the hook runs.
 
 ### Exercise 5: Post-Tool Verification
 
@@ -333,13 +370,12 @@ Dangerous commands are blocked by the preToolUse hook.
    INPUT=$(cat)
 
    TOOL_NAME=$(echo "$INPUT" | jq -r '.toolName')
-   SUCCESS=$(echo "$INPUT" | jq -r '.success')
-   DURATION=$(echo "$INPUT" | jq -r '.durationMs')
+   RESULT_TYPE=$(echo "$INPUT" | jq -r '.toolResult.resultType')
 
-   echo "[$(date -Iseconds)] TOOL_COMPLETE: $TOOL_NAME success=$SUCCESS duration=${DURATION}ms" >> logs/copilot-audit.log
+   echo "[$(date -Iseconds)] TOOL_COMPLETE: $TOOL_NAME result=$RESULT_TYPE" >> logs/copilot-audit.log
 
    # Alert on failures
-   if [ "$SUCCESS" = "false" ]; then
+   if [ "$RESULT_TYPE" = "error" ]; then
      echo "[$(date -Iseconds)] ALERT: Tool $TOOL_NAME failed!" >> logs/copilot-alerts.log
    fi
    EOF
@@ -385,14 +421,35 @@ Dangerous commands are blocked by the preToolUse hook.
    EOF
    ```
 
-3. Test with various operations and check logs.
+3. Test with various operations and check logs:
+   ```bash
+   copilot
+   ```
+   ```
+   list files in current directory
+   ```
+   ```
+   /exit
+   ```
+   ```bash
+   cat logs/copilot-audit.log
+   ```
 
 **Expected Outcome:**
-All tool executions are logged with results.
+All tool executions are logged with results:
+```
+[2026-02-26T08:10:00+00:00] SESSION_START
+[2026-02-26T08:10:01+00:00] TOOL_REQUEST: report_intent
+[2026-02-26T08:10:01+00:00] TOOL_REQUEST: bash
+[2026-02-26T08:10:01+00:00] TOOL_COMPLETE: report_intent result=success
+[2026-02-26T08:10:01+00:00] TOOL_COMPLETE: bash result=success
+```
 
 ### Exercise 6: Error Handling Hooks
 
-**Goal:** Capture and respond to errors.
+**Goal:** Capture and respond to internal Copilot errors.
+
+> **Note:** The `errorOccurred` hook fires for internal Copilot errors (network failures, API errors, etc.), not for tool failures. Tool failures are handled gracefully via `postToolUse` with `resultType: "error"`.
 
 **Steps:**
 
@@ -403,36 +460,64 @@ All tool executions are logged with results.
 
    INPUT=$(cat)
 
-   ERROR_TYPE=$(echo "$INPUT" | jq -r '.errorType')
-   ERROR_MESSAGE=$(echo "$INPUT" | jq -r '.errorMessage')
+   ERROR_TYPE=$(echo "$INPUT" | jq -r '.errorType // "unknown"')
+   ERROR_MESSAGE=$(echo "$INPUT" | jq -r '.errorMessage // .message // "No message"')
    TIMESTAMP=$(date -Iseconds)
 
    # Log the error
    echo "[$TIMESTAMP] ERROR: $ERROR_TYPE - $ERROR_MESSAGE" >> logs/copilot-errors.log
-
-   # Could also send to monitoring system, Slack, etc.
-   # curl -X POST https://monitoring.example.com/api/errors \
-   #   -H "Content-Type: application/json" \
-   #   -d "{\"type\":\"$ERROR_TYPE\",\"message\":\"$ERROR_MESSAGE\"}"
    EOF
 
    chmod +x .github/hooks/scripts/handle-error.sh
    ```
 
-2. Add error hook:
-   ```json
-   "errorOccurred": [
-     {
-       "type": "command",
-       "bash": ".github/hooks/scripts/handle-error.sh",
-       "cwd": ".",
-       "timeoutSec": 10
+2. Update hooks.json to include the error hook:
+   ```bash
+   cat > .github/hooks/hooks.json << 'EOF'
+   {
+     "version": 1,
+     "hooks": {
+       "sessionStart": [
+         {
+           "type": "command",
+           "bash": "echo \"[$(date -Iseconds)] SESSION_START\" >> logs/copilot-audit.log",
+           "cwd": ".",
+           "timeoutSec": 5
+         }
+       ],
+       "sessionEnd": [],
+       "userPromptSubmitted": [],
+       "preToolUse": [],
+       "postToolUse": [],
+       "errorOccurred": [
+         {
+           "type": "command",
+           "bash": ".github/hooks/scripts/handle-error.sh",
+           "cwd": ".",
+           "timeoutSec": 10
+         }
+       ]
      }
-   ]
+   }
+   EOF
+   ```
+
+3. Verify the hook is configured:
+   ```bash
+   cat .github/hooks/hooks.json | jq '.hooks.errorOccurred'
    ```
 
 **Expected Outcome:**
-Errors are logged and can trigger alerts.
+```json
+[
+  {
+    "type": "command",
+    "bash": ".github/hooks/scripts/handle-error.sh",
+    "cwd": ".",
+    "timeoutSec": 10
+  }
+]
+```
 
 ### Exercise 7: Directory-Restricted Hooks
 
@@ -448,20 +533,21 @@ Errors are logged and can trigger alerts.
    INPUT=$(cat)
    TOOL_NAME=$(echo "$INPUT" | jq -r '.toolName')
 
-   # Only check write operations
-   if [ "$TOOL_NAME" != "write" ] && [ "$TOOL_NAME" != "edit" ]; then
+   # Only check write operations (tool name is 'create' for file creation)
+   if [ "$TOOL_NAME" != "write" ] && [ "$TOOL_NAME" != "edit" ] && [ "$TOOL_NAME" != "create" ]; then
      echo "{}"
      exit 0
    fi
 
-   FILE_PATH=$(echo "$INPUT" | jq -r '.toolArgs.path // empty')
+   # toolArgs is a JSON string, so parse it with fromjson
+   FILE_PATH=$(echo "$INPUT" | jq -r '.toolArgs | fromjson | .path // .filePath // empty')
 
    # Allowed directories
-   ALLOWED_DIRS=("src/" "test/" "tests/" "docs/")
+   ALLOWED_DIRS=("/docs/" "/src/" "/test/" "/tests/")
 
    ALLOWED=false
    for DIR in "${ALLOWED_DIRS[@]}"; do
-     if [[ "$FILE_PATH" == $DIR* ]] || [[ "$FILE_PATH" == ./$DIR* ]]; then
+     if [[ "$FILE_PATH" == *"$DIR"* ]]; then
        ALLOWED=true
        break
      fi
@@ -478,9 +564,31 @@ Errors are logged and can trigger alerts.
    chmod +x .github/hooks/scripts/restrict-paths.sh
    ```
 
-2. Update preToolUse to use this script.
+2. Update hooks.json to use the path restriction:
+   ```bash
+   cat > .github/hooks/hooks.json << 'EOF'
+   {
+     "version": 1,
+     "hooks": {
+       "sessionStart": [],
+       "sessionEnd": [],
+       "userPromptSubmitted": [],
+       "preToolUse": [
+         {
+           "type": "command",
+           "bash": ".github/hooks/scripts/restrict-paths.sh",
+           "cwd": ".",
+           "timeoutSec": 10
+         }
+       ],
+       "postToolUse": [],
+       "errorOccurred": []
+     }
+   }
+   EOF
+   ```
 
-3. Test:
+3. Test creating a file in the root (should be denied):
    ```bash
    copilot
    ```
@@ -488,15 +596,17 @@ Errors are logged and can trigger alerts.
    Create a file called config.json in the root directory
    ```
 
-4. Should be denied. Then try:
+4. Then test creating in docs/ (should be allowed):
+   ```bash
+   copilot
    ```
-   Create a file called utils.ts in the src directory
    ```
-
-5. Should be allowed.
+   Create a file called test.md in the docs directory
+   ```
 
 **Expected Outcome:**
-Writes restricted to allowed directories.
+- Root directory file creation is blocked: "Can only edit files in src/, test/, tests/, or docs/ directories"
+- Files in `docs/` are allowed
 
 ## Hooks Configuration Reference
 
@@ -505,40 +615,67 @@ Writes restricted to allowed directories.
 #### sessionStart
 ```json
 {
-  "source": "cli|vscode|coding-agent",
-  "timestamp": "2024-01-15T10:30:00Z"
+  "sessionId": "uuid-string",
+  "timestamp": 1771976925152,
+  "cwd": "/path/to/workspace",
+  "source": "new",
+  "initialPrompt": "User's first prompt if provided"
 }
 ```
+
+> **Note:** In CLI sessions, `source` is always "new" (even when using `--resume`).
 
 #### userPromptSubmitted
 ```json
 {
-  "prompt": "User's prompt text",
-  "timestamp": "2024-01-15T10:30:00Z"
+  "sessionId": "uuid-string",
+  "timestamp": 1771976925200,
+  "cwd": "/path/to/workspace",
+  "prompt": "User's prompt text"
 }
 ```
 
 #### preToolUse
 ```json
 {
-  "toolName": "shell|write|edit|read|...",
-  "toolArgs": {
-    "command": "...",
-    "path": "..."
-  }
+  "sessionId": "uuid-string",
+  "timestamp": 1771976925300,
+  "cwd": "/path/to/workspace",
+  "toolName": "bash",
+  "toolArgs": "{\"command\": \"ls -la\"}"
+}
+```
+
+> **Note:** `toolArgs` is a JSON **string**, not an object. Parse it with `jq -r '.toolArgs | fromjson'`.
+
+> **Note:** Common tool names: `bash` (shell commands), `create` (file creation), `view` (directory listing), `report_intent` (internal).
+
+#### sessionEnd
+```json
+{
+  "sessionId": "uuid-string",
+  "timestamp": 1771976928952,
+  "cwd": "/path/to/workspace",
+  "reason": "complete"
 }
 ```
 
 #### postToolUse
 ```json
 {
-  "toolName": "shell",
-  "toolArgs": {},
-  "success": true,
-  "durationMs": 150,
-  "result": "..."
+  "sessionId": "uuid-string",
+  "timestamp": 1771976925400,
+  "cwd": "/path/to/workspace",
+  "toolName": "bash",
+  "toolArgs": "{\"command\": \"ls -la\"}",
+  "toolResult": {
+    "resultType": "success",
+    "textResultForLlm": "file1.txt\nfile2.txt"
+  }
 }
 ```
+
+> **Note:** `resultType` is `"success"` or `"error"`. `toolArgs` is a JSON string.
 
 ### Permission Decision Response
 
