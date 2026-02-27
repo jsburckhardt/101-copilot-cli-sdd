@@ -108,6 +108,31 @@ Lives at `.github/hooks/hooks.json`
 
 ---
 
+## Session Logging
+
+Track session start/end with `sessionStart` and `sessionEnd`
+
+```json
+{
+  "sessionStart": [{
+    "type": "command",
+    "bash": "echo \"[$(date -Iseconds)] SESSION_START\" >> logs/audit.log",
+    "cwd": ".",
+    "timeoutSec": 5
+  }],
+  "sessionEnd": [{
+    "type": "command",
+    "bash": "echo \"[$(date -Iseconds)] SESSION_END\" >> logs/audit.log",
+    "cwd": ".",
+    "timeoutSec": 5
+  }]
+}
+```
+
+**Use case:** Audit trail, usage metrics, compliance
+
+---
+
 ## Pre-Tool Permission Control
 
 Block dangerous operations with `preToolUse`
