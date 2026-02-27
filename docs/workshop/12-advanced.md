@@ -933,7 +933,8 @@ Team-wide standardization on Copilot usage, including shared LSP and environment
 4. **Efficient context management:**
 
    ```bash
-   # Use @explore for overview without context cost
+   # Use the Explore agent for overview without context cost
+   # Use @path/to/file to include specific files in prompts
    # Use targeted reads instead of reading all files
    # Compact proactively, not reactively
    ```

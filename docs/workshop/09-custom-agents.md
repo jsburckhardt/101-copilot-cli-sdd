@@ -24,6 +24,8 @@ Custom agents are specialized versions of Copilot with:
 - **Clear boundaries** - What they should never do
 - **Domain knowledge** - Context about their specialty
 
+Each custom agent is defined by a Markdown file with an **`.agent.md`** extension.
+
 ### Agent Profile Structure
 
 ```yaml
@@ -39,10 +41,34 @@ tools:                        # Optional: default is all tools
 [Markdown body with detailed instructions]
 ```
 
+### Creating Agents
+
+You can create agent files manually, or use the **`/agent`** slash command in interactive mode:
+
+1. Enter `/agent` and select **Create new agent**.
+2. Choose a location:
+   - **Project** (`.github/agents/`)
+   - **User** (`~/.config/copilot/agents/`)
+3. Choose whether to have Copilot generate the agent profile or create it yourself.
+4. Configure tool access (default is all tools).
+5. **Restart the CLI** to load your new custom agent.
+
+### Invoking Agents
+
+Custom agents can be invoked in four ways:
+
+| Method | Example |
+|--------|---------|
+| **Slash command** | `/agent` → select from list → enter prompt |
+| **Explicit instruction** | `Use the test-agent agent on all files in /src` |
+| **By inference** | A prompt that matches the agent's described expertise |
+| **Programmatically** | `copilot --agent test-agent --prompt "Check /src"` |
 
 ### Agent Hierarchy
 
 ```
+User agents (~/.config/copilot/agents/)
+        ↓
 Enterprise agents (.github-private repo)
         ↓
 Organization agents (.github-private repo)
@@ -51,6 +77,8 @@ Repository agents (.github/agents/)
         ↓
 AGENTS.md (root or directory-specific)
 ```
+
+> **Note:** If you have custom agents with the same name in both user and repository locations, the one in your home directory (`~/.config/copilot/agents/`) will be used.
 
 ### Built-in Agents
 
@@ -62,6 +90,8 @@ Copilot CLI includes specialized built-in agents:
 | **Task** | Run commands with smart output handling |
 | **Plan** | Create implementation plans |
 | **Code-review** | High signal-to-noise code reviews |
+
+> **Note:** Built-in agents are not included in the `/agent` list. They are invoked via the main agent's task tool.
 
 ## Hands-On Exercises
 
@@ -78,7 +108,7 @@ Copilot CLI includes specialized built-in agents:
 
 2. Create a test-agent:
    ```bash
-   cat > .github/agents/test-agent.md << 'EOF'
+   cat > .github/agents/test-agent.agent.md << 'EOF'
    ---
    name: test-agent
    description: Writes comprehensive unit tests following TDD principles. Use for creating tests, improving coverage, and validating code behavior.
@@ -160,13 +190,18 @@ Copilot CLI includes specialized built-in agents:
    EOF
    ```
 
-3. Test the agent:
+3. Restart the CLI to load the new agent, then test it:
    ```bash
    copilot
    ```
    ```
-   @test-agent create tests for the user authentication module
+   Use the test-agent agent to create tests for the user authentication module
    ```
+   Or use the `/agent` slash command:
+   ```
+   /agent
+   ```
+   Select **test-agent** from the list, then enter your prompt.
 
 **Expected Outcome:**
 Agent creates comprehensive tests following your specifications.
@@ -179,7 +214,7 @@ Agent creates comprehensive tests following your specifications.
 
 1. Create the agent file:
    ```bash
-   cat > .github/agents/docs-agent.md << 'EOF'
+   cat > .github/agents/docs-agent.agent.md << 'EOF'
    ---
    name: docs-agent
    description: Creates and maintains technical documentation. Use for README files, API docs, architecture docs, and user guides.
@@ -273,12 +308,12 @@ Agent creates comprehensive tests following your specifications.
    EOF
    ```
 
-2. Test the agent:
+2. Restart the CLI, then test the agent:
    ```bash
    copilot
    ```
    ```
-   @docs-agent create a comprehensive README for this project
+   Use the docs-agent agent to create a comprehensive README for this project
    ```
 
 **Expected Outcome:**
@@ -295,17 +330,17 @@ Agent creates well-structured documentation.
    copilot
    ```
    ```
-   @explore how is authentication implemented in this codebase?
+   How is authentication implemented in this codebase?
    ```
 
-   The Explore agent:
+   Copilot will automatically delegate to the Explore agent when it determines codebase analysis is needed. The Explore agent:
    - Performs fast analysis
    - Doesn't clutter main context
    - Great for learning codebases
 
 2. **Use the Task agent** for running commands:
    ```
-   @task run the test suite and summarize results
+   Run the test suite and summarize results
    ```
 
    The Task agent:
@@ -315,7 +350,7 @@ Agent creates well-structured documentation.
 
 3. **Use the Plan agent** for implementation planning:
    ```
-   @plan create a plan to add user profile editing feature
+   Create a plan to add user profile editing feature
    ```
 
    The Plan agent:
@@ -325,13 +360,15 @@ Agent creates well-structured documentation.
 
 4. **Use the Code-review agent** for reviews:
    ```
-   @code-review review the changes in the last 3 commits
+   Review the changes in the last 3 commits
    ```
 
    The Code-review agent:
    - High signal-to-noise feedback
    - Focuses on real issues
    - Actionable suggestions
+
+> **Note:** Built-in agents are not listed in the `/agent` menu. They are invoked automatically by the main agent when it determines their expertise is needed.
 
 **Expected Outcome:**
 Each built-in agent provides specialized assistance.
@@ -344,7 +381,7 @@ Each built-in agent provides specialized assistance.
 
 1. Create a read-only analysis agent:
    ```bash
-   cat > .github/agents/analyzer.md << 'EOF'
+   cat > .github/agents/analyzer.agent.md << 'EOF'
    ---
    name: analyzer
    description: Analyzes code for quality, security, and performance issues without making changes. Use for code audits and reviews.
@@ -417,12 +454,17 @@ Each built-in agent provides specialized assistance.
 
 2. Notice the `tools` section excludes `write`.
 
-3. Test the agent:
+3. Restart the CLI, then test the agent:
    ```bash
    copilot
    ```
    ```
-   @analyzer review the authentication module for security issues
+   Use the analyzer agent to review the authentication module for security issues
+   ```
+
+   Or invoke programmatically:
+   ```bash
+   copilot --agent analyzer --prompt "Review the authentication module for security issues"
    ```
 
 4. The agent can only read and run shell commands, not write.
@@ -430,45 +472,52 @@ Each built-in agent provides specialized assistance.
 **Expected Outcome:**
 Agent performs analysis without modification capabilities.
 
-### Exercise 5: Organization-Level Agents
+### Exercise 5: User-Level Agents
 
-**Goal:** Understand organization-wide agent deployment.
+**Goal:** Understand user-level agent deployment.
 
 **Steps:**
 
-1. Organization agents go in a special repository:
+1. User-level agents go in your home directory:
    ```
-   .github-private/.agents/AGENT-NAME.md
+   ~/.config/copilot/agents/AGENT-NAME.agent.md
    ```
 
-2. Create an organization standard (in your org's .github-private repo):
-   ```markdown
+   User-level agents are available across all repositories and take priority over repository agents with the same name.
+
+2. Create a user-level agent:
+   ```bash
+   mkdir -p ~/.config/copilot/agents
+   cat > ~/.config/copilot/agents/security-reviewer.agent.md << 'EOF'
    ---
    name: security-reviewer
-   description: Reviews code for security compliance with company standards.
+   description: Reviews code for security compliance with personal standards.
    ---
 
    # Security Review Agent
 
-   You enforce [Company Name] security standards.
+   You review code for security best practices.
 
    ## Required Checks
    - OWASP Top 10 compliance
-   - Company security policy adherence
-   - Data privacy regulations (GDPR, CCPA)
    - Secrets detection
-
-   [Organization-specific content]
+   - Input validation
+   - Authentication and authorization issues
+   EOF
    ```
 
-3. Organization agents are available to all repos in the org.
+3. Restart the CLI. The agent is now available in all your repositories.
 
-4. Priority order:
-   - Repository agents override organization agents
-   - Organization agents override enterprise agents
+4. Priority order (highest to lowest):
+   - **User agents** (`~/.config/copilot/agents/`) — highest priority
+   - Enterprise agents (`.github-private` repo, enterprise level)
+   - Organization agents (`.github-private` repo, org level)
+   - **Repository agents** (`.github/agents/`)
+
+> **Note:** Enterprise and organization-level agents are configured by admins in a `.github-private` repository. See the [GitHub Docs](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/prepare-for-custom-agents) for details.
 
 **Expected Outcome:**
-You understand how to deploy organization-wide agents.
+You understand how to deploy user-level agents and the priority hierarchy.
 
 ### Exercise 6: Subagents and Delegation
 
@@ -478,7 +527,7 @@ You understand how to deploy organization-wide agents.
 
 1. Create a coordinator agent:
    ```bash
-   cat > .github/agents/project-lead.md << 'EOF'
+   cat > .github/agents/project-lead.agent.md << 'EOF'
    ---
    name: project-lead
    description: Coordinates development tasks by delegating to specialized agents. Use for complex features requiring multiple types of work.
@@ -528,12 +577,17 @@ You understand how to deploy organization-wide agents.
    EOF
    ```
 
-2. Test delegation:
+2. Restart the CLI, then test delegation:
    ```bash
    copilot
    ```
    ```
-   @project-lead implement a user preferences feature end-to-end
+   Use the project-lead agent to implement a user preferences feature end-to-end
+   ```
+
+   Or programmatically:
+   ```bash
+   copilot --agent project-lead --prompt "Implement a user preferences feature end-to-end"
    ```
 
 3. Observe how the coordinator delegates to specialists.
@@ -552,34 +606,35 @@ Complex workflows coordinated across multiple agents.
    copilot
    ```
    ```
-   /help
+   /agent
    ```
 
-   Look for your custom agents in the list.
+   Your custom agents should appear in the list.
 
 2. Test agent invocation directly:
    ```
-   @agent-name hello, are you there?
+   Use the test-agent agent to say hello
    ```
 
 3. Common issues and fixes:
 
    | Problem | Solution |
    |---------|----------|
-   | Agent not found | Check file location: `.github/agents/name.md` |
+   | Agent not found | Check file location: `.github/agents/name.agent.md` |
    | Wrong behavior | Check YAML frontmatter syntax |
    | Tools not working | Verify tools list in frontmatter |
    | Description missing | Add description field |
+   | Agent not loading | Restart the CLI after creating the agent file |
 
 4. Validate YAML frontmatter:
    ```bash
    # Check for syntax errors
-   cat .github/agents/test-agent.md | head -20
+   cat .github/agents/test-agent.agent.md | head -20
    ```
 
 5. Test in isolation:
-   ```
-   @test-agent describe yourself and your capabilities
+   ```bash
+   copilot --agent test-agent --prompt "Describe yourself and your capabilities"
    ```
 
 **Expected Outcome:**
@@ -620,9 +675,12 @@ tools:                        # Optional, defaults to all
 
 | Location | Scope | Example Path |
 |----------|-------|--------------|
-| Repository | Single repo | `.github/agents/name.md` |
-| Organization | All org repos | `.github-private/.agents/name.md` |
+| User | All repos (highest priority) | `~/.config/copilot/agents/name.agent.md` |
+| Repository | Single repo | `.github/agents/name.agent.md` |
+| Organization | All org repos | `.github-private/agents/name.agent.md` |
 | Enterprise | All enterprise repos | Same as org, enterprise level |
+
+> **Note:** User-level agents override repository-level agents with the same name.
 
 ### Naming Conventions
 
@@ -632,14 +690,17 @@ tools:                        # Optional, defaults to all
 
 ## Summary
 
-- ✅ Custom agents provide specialized personas and expertise
-- ✅ Agents defined in `.github/agents/` with YAML frontmatter
+- ✅ Custom agents defined with `.agent.md` extension
+- ✅ Create agents via `/agent` command or manually in `.github/agents/`
+- ✅ Invoke agents via `/agent` slash command, explicit instruction, inference, or `--agent` flag
+- ✅ User-level agents (`~/.config/copilot/agents/`) override repo-level agents
 - ✅ Built-in agents (Explore, Task, Plan, Code-review) handle common tasks
 - ✅ Explore agent can use GitHub MCP tools when available (v0.0.414+)
 - ✅ Agent `model` field overrides the default AI model (v0.0.415+)
 - ✅ Tool restrictions limit what agents can do
 - ✅ Organization agents provide team-wide standards
 - ✅ Agents can delegate to other agents for complex workflows
+- ✅ Restart the CLI after creating new agents
 
 ## Next Steps
 
@@ -648,5 +709,7 @@ tools:                        # Optional, defaults to all
 ## References
 
 - [About Custom Agents - GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-custom-agents)
-- [Create Custom Agents - GitHub Docs](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+- [Create Custom Agents for CLI - GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli)
+- [Custom Agents Configuration - GitHub Docs](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+- [Comparing CLI Customization Features - GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/comparing-cli-features)
 - [How to Write Great AGENTS.md](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/)

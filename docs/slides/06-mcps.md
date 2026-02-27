@@ -76,11 +76,13 @@ Connect Copilot to: databases, APIs, file systems, search, Slack, and more
 
 ## Three Types of MCP Servers
 
-| Type | Where it runs | Example |
-|------|--------------|---------|
-| **Built-in** | Included with Copilot | GitHub (issues, PRs, repos) |
-| **Remote** | Hosted externally | Cloud APIs, team services |
-| **Local** | Your machine | Memory, filesystem, Postgres |
+| Type | Protocol | Where it runs | Example |
+|------|----------|--------------|---------|
+| **Built-in** | N/A | Included with Copilot | GitHub (issues, PRs, repos) |
+| **Remote** | `http` / `sse` | Hosted externally | Cloud APIs, team services |
+| **Local** | `local` / `stdio` | Your machine | Memory, filesystem, Postgres |
+
+> `local` = `stdio`, `http` = streamable HTTP, `sse` = legacy SSE (deprecated)
 
 ---
 
@@ -92,18 +94,17 @@ Lives at **`~/.copilot/mcp-config.json`**
 {
   "mcpServers": {
     "memory": {
+      "type": "local",
       "command": "npx",
       "args": ["-y", "@modelcontextprotocol/server-memory"]
     },
-    "exa": {
-      "type": "http",
-      "url": "https://mcp.exa.ai/mcp"
-    }
+    "exa": { "type": "http", "url": "https://mcp.exa.ai/mcp" }
   }
 }
 ```
 
-**Local** → `command` + `args` | **Remote** → `"type": "http"` + `url`
+**Local** → `"type": "local"` + `command`/`args` | **Remote** → `"type": "http"` + `url`
+Optional: `"tools": ["*"]` (default), `"env": {}`, `"headers": {}`
 
 ---
 
@@ -141,12 +142,12 @@ All from inside a Copilot session:
 | Command | Action |
 |---------|--------|
 | `/mcp show` | List all servers (grouped by source, v0.0.415) |
-| `/mcp add` | Interactive setup |
+| `/mcp show NAME` | View details and tools for a specific server |
+| `/mcp add` | Interactive setup (available immediately) |
 | `/mcp edit NAME` | Edit an existing server |
 | `/mcp delete NAME` | Remove a server |
 | `/mcp reload` | Reload config without restart (v0.0.412+) |
-| `/mcp disable NAME` | Temporarily disable |
-| `/mcp enable NAME` | Re-enable |
+| `/mcp disable/enable` | Toggle server on/off |
 
 > Use `--additional-mcp-config "$(cat file.json)"` for session-only servers
 

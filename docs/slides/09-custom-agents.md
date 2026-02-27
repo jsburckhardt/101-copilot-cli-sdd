@@ -68,7 +68,9 @@ style: |
 - 🚫 Clear boundaries
 - 📚 Domain knowledge
 
-Live in **`.github/agents/name.md`** → invoke with **`@name`**
+Live in **`.github/agents/name.agent.md`** or **`~/.config/copilot/agents/`**
+
+Create with **`/agent`** slash command or manually
 
 ---
 
@@ -94,24 +96,39 @@ You are a senior QA engineer...
 - Never skip failing tests
 ```
 
+File: `.github/agents/test-agent.agent.md`
+
+---
+
+## Invoking Custom Agents
+
+| Method | Example |
+|--------|---------|
+| **`/agent`** slash command | `/agent` → select → prompt |
+| **Explicit instruction** | `Use the test-agent agent on /src` |
+| **By inference** | Prompt matching agent's expertise |
+| **Programmatic** | `copilot --agent test-agent --prompt "..."` |
+
 ---
 
 ## Built-in Agents
 
-Use these right now — no setup needed
+Invoked automatically — not listed in `/agent` menu
 
-| Agent | What it does | Example |
+| Agent | What it does | Trigger |
 |-------|-------------|---------|
-| `@explore` | Fast codebase Q&A; uses GitHub MCP tools (v0.0.414+) | `@explore how does auth work?` |
-| `@task` | Run commands smartly | `@task run tests, summarize` |
-| `@plan` | Implementation planning | `@plan add user profiles` |
-| `@code-review` | High-signal reviews | `@code-review last 3 commits` |
+| **Explore** | Fast codebase Q&A; uses GitHub MCP tools (v0.0.414+) | Codebase analysis prompts |
+| **Task** | Run commands smartly | Command execution prompts |
+| **Plan** | Implementation planning | Planning prompts |
+| **Code-review** | High-signal reviews | Review prompts |
 
 ---
 
 ## Agent Hierarchy
 
 ```
+User agents          (~/.config/copilot/agents/)  ← highest priority
+       ↓
 Enterprise agents    (.github-private repo)
        ↓
 Organization agents  (.github-private repo)
@@ -121,8 +138,8 @@ Repository agents    (.github/agents/)
 AGENTS.md            (root or subdirectory)
 ```
 
-More specific **overrides** less specific
-Agents can **delegate to other agents** (`@test-agent`, `@docs-agent`)
+User-level agents **override** repo-level agents with the same name
+Agents can **delegate to other agents** for complex workflows
 
 ---
 
@@ -136,7 +153,7 @@ Open **Module 9** in `docs/workshop/09-custom-agents.md`
 - **Exercise 2** — Documentation agent
 - **Exercise 3** — Built-in agents
 - **Exercise 4** — Agent with tool restrictions
-- **Exercise 5** — Organization-level agents
+- **Exercise 5** — User-level agents
 - **Exercise 6** — Subagents & delegation
 - **Exercise 7** — Debugging agent config
 

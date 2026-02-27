@@ -11,7 +11,8 @@ The full workshop guide is available in [`docs/workshop/`](docs/workshop/00-inde
 Slide decks for each module are in [`docs/slides/`](docs/slides/) (powered by [Marp](https://marp.app/)):
 
 - **VS Code** — Install the [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) extension (pre-installed in Dev Container), open any slide `.md` file, and click the preview icon (or `Marp: Open Preview to the Side`).
-- **Browser** — `npx @marp-team/marp-cli docs/slides/02-modes.md --preview`
+- **Browser (direct preview)** — `npx @marp-team/marp-cli docs/slides/02-modes.md --preview`
+- **Browser (server-client)** — `npx @marp-team/marp-cli docs/slides/ --server` then visit http://localhost:8080
 - **Export to PDF/PPTX** — `npx @marp-team/marp-cli docs/slides/02-modes.md -o slides.pdf`
 
 ### Recommended: Open in Dev Container
