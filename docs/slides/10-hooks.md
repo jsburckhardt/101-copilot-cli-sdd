@@ -64,9 +64,9 @@ style: |
 **Custom scripts** that run at key points in the agent lifecycle
 
 ```
-Session Start → Prompt → Pre-Tool → Execute → Post-Tool → Session End
-     ↓            ↓         ↓                      ↓           ↓
-   Hook         Hook      Hook                   Hook        Hook
+Prompt → Session Start → Pre-Tool → Execute → Post-Tool → Session End
+   ↓           ↓            ↓                     ↓           ↓
+ Hook        Hook         Hook                  Hook        Hook
 ```
 
 Use cases: **logging**, **security guardrails**, **auditing**, **alerts**
@@ -110,21 +110,37 @@ Lives at `.github/hooks/hooks.json`
 
 ## Pre-Tool Permission Control
 
-The most powerful hook — **block dangerous operations**
+Block dangerous operations with `preToolUse`
 
 ```bash
-# Script receives JSON on stdin with toolName + toolArgs
-# Return deny decision to block:
-echo '{
-  "permissionDecision": "deny",
-  "permissionDecisionReason": "rm -rf is not allowed"
-}'
+INPUT=$(cat)
+TOOL_NAME=$(echo "$INPUT" | jq -r '.toolName')
+COMMAND=$(echo "$INPUT" | jq -r '.toolArgs | fromjson.command')
 
-# Return empty object to allow:
+if [[ "$COMMAND" == *"sudo"* ]]; then
+  echo '{"permissionDecision":"deny","permissionDecisionReason":"sudo not allowed"}'
+  exit 0
+fi
 echo '{}'
 ```
 
-Block `rm -rf`, `sudo`, writes to `.env`, sensitive paths, etc.
+> **Note:** Copilot has built-in safety that blocks some commands (like `rm -rf /`) before hooks run. Use hooks for organization-specific policies.
+
+---
+
+## Post-Tool Logging
+
+Log tool results with `postToolUse`
+
+```bash
+INPUT=$(cat)
+TOOL_NAME=$(echo "$INPUT" | jq -r '.toolName')
+RESULT=$(echo "$INPUT" | jq -r '.toolResult.resultType')
+
+echo "[$(date -Iseconds)] $TOOL_NAME: $RESULT" >> logs/audit.log
+```
+
+> `resultType` is `"success"` or `"error"`
 
 ---
 
@@ -132,15 +148,13 @@ Block `rm -rf`, `sudo`, writes to `.env`, sensitive paths, etc.
 
 Open **Module 10** in `docs/workshop/10-hooks.md`
 
-**Start from Exercise 1** and work through as many as you can
-
-- **Exercise 1** — Basic hooks config
-- **Exercise 2** — Session logging hooks
-- **Exercise 3** — Prompt auditing hook
-- **Exercise 4** — Pre-tool permission control
-- **Exercise 5** — Post-tool verification
-- **Exercise 6** — Error handling hooks
-- **Exercise 7** — Directory-restricted hooks
+**Exercises 1-7:**
+1. **Exercise 1** — Create hooks skeleton
+2. **Exercise 2** — Session logging hooks
+3. **Exercise 3** — Tool usage logging
+4. **Exercise 4** — Pre-tool permission control
+5. **Exercise 5** — Post-tool result logging
+6. **Exercise 6** — Error handling hooks
+7. **Exercise 7** — Directory restriction guardrails
 
 ⏱️ You have **~16 minutes**
-
