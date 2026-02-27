@@ -9,8 +9,9 @@
 ## Learning Objectives
 
 - Understand how context works in Copilot CLI
-- Use `/context` to monitor token usage
+- Use `/context` and `/usage` to monitor token usage and session stats
 - Use `/compact` to compress session history
+- Use `@path/to/file` to include specific files in prompts
 - Optimize context for better responses
 - Manage large codebases efficiently
 
@@ -56,9 +57,22 @@ Context is everything Copilot "remembers" during a session:
 >
 > Model availability may vary by Copilot subscription tier.
 
+### Including Files with `@`
+
+You can include a specific file's contents in your prompt using `@` followed by the relative path:
+
+```
+Explain @config/ci/ci-required-checks.yml
+```
+```
+Fix the bug in @src/app.js
+```
+
+When you start typing a file path after `@`, matching paths are displayed below the prompt box. Use the arrow keys to select a path and press Tab to complete it.
+
 ### Auto-Compaction
 
-When context reaches ~95% capacity, Copilot automatically compresses history to continue the session.
+When context reaches ~95% capacity, Copilot automatically compresses history in the background without interrupting your workflow.
 
 ## Hands-On Exercises
 
@@ -78,33 +92,40 @@ When context reaches ~95% capacity, Copilot automatically compresses history to 
    /context
    ```
 
-   You'll see:
-   - Total tokens available
-   - Tokens used
-   - Percentage filled
-   - Breakdown by category
+   You'll see a visual overview of your current token usage.
 
-3. Have a conversation that uses context:
+3. Check session stats with `/usage`:
+   ```
+   /usage
+   ```
+
+   You'll see:
+   - Premium requests used in the current session
+   - Session duration
+   - Total lines of code edited
+   - Token usage breakdown per model
+
+4. Have a conversation that uses context:
    ```
    Explain the concept of dependency injection
    ```
 
-4. Check context again:
+5. Check context again:
    ```
    /context
    ```
 
-5. Read some files:
+6. Read some files (try using `@` to include a file):
    ```
    Show me the contents of package.json
    ```
 
-6. Check how file reading affects context:
+7. Check how file reading affects context:
    ```
    /context
    ```
 
-7. Continue building context:
+8. Continue building context:
    ```
    Now explain how TypeScript interfaces work
    ```
@@ -112,7 +133,7 @@ When context reaches ~95% capacity, Copilot automatically compresses history to 
    Give me examples of generics in TypeScript
    ```
 
-8. Monitor the growth:
+9. Monitor the growth:
    ```
    /context
    ```
@@ -217,10 +238,10 @@ You can manage context efficiently.
    copilot
    ```
    ```
-   @explore give me an overview of this codebase structure
+   Give me an overview of this codebase structure
    ```
 
-   The Explore agent doesn't pollute main context.
+   Copilot delegates to the Explore agent automatically, which doesn't pollute main context.
    As of v0.0.414, it can also use GitHub MCP tools when available.
 
 2. **Focus on specific areas:**
@@ -366,8 +387,10 @@ Auto-compaction preserves session continuity.
    copilot
    ```
    ```
-   @explore what are the main components of this application?
+   What are the main components of this application?
    ```
+
+   Copilot may delegate to the Explore agent, keeping main context clean.
 
 2. **Phase 2: Focus (targeted context)**
    ```
@@ -410,11 +433,13 @@ Systematic workflow keeps context under control.
 
 | Command | Description |
 |---------|-------------|
-| `/context` | Show detailed context usage |
+| `/context` | Show visual overview of token usage |
+| `/usage` | Show session stats (requests, duration, lines edited, token usage per model) |
 | `/compact` | Compress session history |
 | `/clear` | Clear all context (start fresh) |
-| `/cwd` | Change working directory (affects context scope) |
+| `/cwd` or `/cd` | Change working directory (affects context scope) |
 | `/add-dir` | Add directory to accessible scope |
+| `@path/to/file` | Include specific file contents in your prompt |
 
 ### Context Categories
 
@@ -432,7 +457,8 @@ Systematic workflow keeps context under control.
 |----------|-------------|
 | `/clear` | Switching to unrelated topic |
 | `/compact` | Long session, need to continue |
-| `@explore` | Codebase overview without context cost |
+| Explore agent | Codebase overview without context cost |
+| `@path/to/file` | Include specific files without broad reads |
 | Selective reading | Large files, specific needs |
 | Summarization | Preserve knowledge, reduce tokens |
 
@@ -440,11 +466,12 @@ Systematic workflow keeps context under control.
 
 ### Do ✅
 
-- Check `/context` regularly
+- Check `/context` and `/usage` regularly
+- Use `@path/to/file` to include specific files
 - Compact before running out
 - Clear when switching topics
 - Use targeted queries
-- Leverage `@explore` for overview
+- Leverage the Explore agent for overview
 
 ### Don't ❌
 
@@ -456,12 +483,13 @@ Systematic workflow keeps context under control.
 
 ## Summary
 
-- ✅ Context is limited - monitor with `/context`
+- ✅ Context is limited - monitor with `/context` and `/usage`
 - ✅ `/compact` compresses while preserving key info
 - ✅ `/clear` resets for topic changes
 - ✅ Auto-compaction triggers at ~95% capacity
+- ✅ Use `@path/to/file` to include specific files in prompts
 - ✅ Efficient prompting extends useful session length
-- ✅ `@explore` agent preserves main context
+- ✅ Explore agent preserves main context
 
 ## Next Steps
 
@@ -469,5 +497,5 @@ Systematic workflow keeps context under control.
 
 ## References
 
-- [Use Copilot CLI - GitHub Docs](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli)
+- [Use Copilot CLI - GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli#context-management)
 - [Context Management Changelog](https://github.blog/changelog/2026-01-14-github-copilot-cli-enhanced-agents-context-management-and-new-ways-to-install/)

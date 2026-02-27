@@ -98,9 +98,11 @@ Use **`/model`** to switch models. Also available: Claude Opus 4.6, Gemini 3 Pro
 | Command | Action | When to use |
 |---------|--------|-------------|
 | `/context` | Show token usage | Check regularly |
+| `/usage` | Session stats (requests, duration, lines edited) | Track consumption |
 | `/compact` | Compress history | Long sessions |
 | `/clear` | Reset everything | Switching topics |
-| `@explore` | Query without context cost | Codebase overview |
+| `/cwd` or `/cd` | Change working directory | Switch project scope |
+| `@path/to/file` | Include file in prompt | Targeted context |
 
 ---
 
@@ -117,10 +119,10 @@ List files in src/
 ```
 then selectively:
 ```
-Show me just src/auth/middleware.ts
+Show me just @src/auth/middleware.ts
 ```
 
-> Load on-demand, not all at once. Use `@explore` for overviews.
+> Load on-demand, not all at once. Use `@path/to/file` to include specific files.
 
 ---
 
@@ -130,8 +132,8 @@ Show me just src/auth/middleware.ts
 |----------|------|
 | `/clear` | Switching to unrelated topic |
 | `/compact` | Long session, need to continue |
-| `@explore` | Codebase overview without cost |
-| Selective reads | Large files, specific needs |
+| Explore agent | Codebase overview without cost |
+| `@path/to/file` | Include specific files |
 | Batch questions | Multiple related questions |
 | Summarize → clear | Preserve knowledge, free space |
 

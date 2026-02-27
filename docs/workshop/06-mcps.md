@@ -48,11 +48,14 @@ Use `/mcp show` to check which servers are connected and their current status.
 
 ### Server Types
 
-| Type | Location | Use Case |
-|------|----------|----------|
-| Remote | Hosted externally | Team-wide tools, cloud services |
-| Local | Runs on your machine | Local resources, custom tools |
-| Built-in | Included with Copilot | GitHub integration |
+| Type | Protocol Name | Location | Use Case |
+|------|---------------|----------|----------|
+| Remote (HTTP) | `http` | Hosted externally | Team-wide tools, cloud services |
+| Remote (SSE) | `sse` | Hosted externally | Legacy HTTP+SSE transport (deprecated in MCP spec) |
+| Local (STDIO) | `local` or `stdio` | Runs on your machine | Local resources, custom tools |
+| Built-in | N/A | Included with Copilot | GitHub integration |
+
+> **Note:** `local` and `stdio` are equivalent — `stdio` is the standard MCP protocol name, so choose it if you want configuration compatible with VS Code and other MCP clients. Similarly, `http` uses Streamable HTTP and `sse` uses the legacy Server-Sent Events transport.
 
 ### Configuration Location
 
@@ -124,11 +127,13 @@ Copilot can access GitHub resources through the built-in MCP server.
    ```
 
 3. Use Tab to navigate between fields:
-   - **Name**: `exa`
-   - **Type**: remote
+   - **Server Name**: `exa`
+   - **Server Type**: Select HTTP (for remote servers)
    - **URL**: `https://mcp.exa.ai/mcp`
+   - **HTTP Headers**: (leave empty — Exa's public tools don't require auth)
+   - **Tools**: `*` (all tools, the default)
 
-4. Press `Ctrl+S` to save.
+4. Press `Ctrl+S` to save. The server is available immediately — no restart needed.
 
 5. Verify the configuration:
    ```
@@ -142,7 +147,8 @@ Copilot can access GitHub resources through the built-in MCP server.
      "mcpServers": {
        "exa": {
          "type": "http",
-         "url": "https://mcp.exa.ai/mcp"
+         "url": "https://mcp.exa.ai/mcp",
+         "tools": ["*"]
        }
      }
    }
@@ -150,6 +156,8 @@ Copilot can access GitHub resources through the built-in MCP server.
    ```
 
    > **Note:** Exa's public tools (web search, code search, company research) don't require authentication. Only the corporate/enterprise Exa tools require an API key or OAuth.
+   >
+   > When editing the config file directly, restart the CLI or use `/mcp reload` (v0.0.412+) to pick up changes.
 
 7. Test the Exa search tools:
    ```
@@ -177,19 +185,24 @@ Remote Exa MCP server configured. Copilot can now perform web searches, code sea
      "mcpServers": {
        "exa": {
          "type": "http",
-         "url": "https://mcp.exa.ai/mcp"
+         "url": "https://mcp.exa.ai/mcp",
+         "tools": ["*"]
        },
        "memory": {
+         "type": "local",
          "command": "npx",
          "args": [
            "-y",
            "@modelcontextprotocol/server-memory"
-         ]
+         ],
+         "tools": ["*"]
        }
      }
    }
    EOF
    ```
+
+   > **Note:** The `PATH` environment variable is automatically inherited from your shell. All other environment variables must be configured in the `"env"` field.
 
 3. Restart Copilot to load the new server:
    ```bash
@@ -234,16 +247,19 @@ Local MCP server runs and provides additional capabilities.
      "mcpServers": {
        "exa": {
          "type": "http",
-         "url": "https://mcp.exa.ai/mcp"
+         "url": "https://mcp.exa.ai/mcp",
+         "tools": ["*"]
        },
        "filesystem": {
+         "type": "local",
          "command": "npx",
          "args": [
            "-y",
            "@modelcontextprotocol/server-filesystem",
            "~/projects"
          ],
-         "cwd": "~/projects"
+         "cwd": "~/projects",
+         "tools": ["*"]
        }
      }
    }
@@ -417,7 +433,8 @@ Additional MCP servers can be loaded per-session without modifying base config.
       "url": "https://example.com/mcp/",
       "headers": {
         "Authorization": "Bearer ${GITHUB_TOKEN}"
-      }
+      },
+      "tools": ["*"]
     }
   }
 }
@@ -429,16 +446,20 @@ Additional MCP servers can be loaded per-session without modifying base config.
 {
   "mcpServers": {
     "server-name": {
+      "type": "local",
       "command": "npx",
       "args": ["-y", "@package/server-name"],
       "env": {
         "API_KEY": "${ENV_VAR}"
       },
-      "cwd": "~/projects/my-server"
+      "cwd": "~/projects/my-server",
+      "tools": ["*"]
     }
   }
 }
 ```
+
+> **Note:** The `PATH` variable is automatically inherited. All other environment variables must be configured in `"env"`. The `"tools"` field defaults to `["*"]` (all tools) if omitted. You can restrict to specific tools with a list of tool names.
 
 ### Common MCP Servers
 
@@ -457,7 +478,8 @@ Additional MCP servers can be loaded per-session without modifying base config.
 | Command | Description |
 |---------|-------------|
 | `/mcp show` | Display all MCP servers (grouped by source since v0.0.415) |
-| `/mcp add` | Add a new server interactively |
+| `/mcp show NAME` | View details and tools for a specific server |
+| `/mcp add` | Add a new server interactively (available immediately) |
 | `/mcp edit NAME` | Edit an existing server |
 | `/mcp delete NAME` | Remove a server |
 | `/mcp disable NAME` | Temporarily disable |
@@ -483,7 +505,9 @@ Additional MCP servers can be loaded per-session without modifying base config.
 
 ## References
 
-- [Extending Copilot with MCP - GitHub Docs](https://docs.github.com/en/copilot/customizing-copilot/using-model-context-protocol/extending-copilot-chat-with-mcp)
-- [GitHub MCP Server Setup](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp/set-up-the-github-mcp-server)
+- [Adding MCP Servers for Copilot CLI - GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-mcp-servers)
+- [About Model Context Protocol - GitHub Docs](https://docs.github.com/en/copilot/concepts/about-mcp)
+- [Extending Copilot Coding Agent with MCP - GitHub Docs](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/extend-coding-agent-with-mcp)
+- [GitHub MCP Registry](https://github.com/mcp)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 - [MCP Servers Repository](https://github.com/modelcontextprotocol/servers)
