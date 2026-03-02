@@ -118,6 +118,9 @@ You understand the available plugins and their purposes.
    /plugin install workiq@copilot-plugins
    ```
 
+   > [!NOTE]
+   > As of **v0.0.417**, plugins installed via `/plugin install` are **hot-loaded** — their agents and skills are available immediately without restarting the CLI.
+
    Or install standalone via npm:
    ```bash
    npm install -g @microsoft/workiq
@@ -166,6 +169,7 @@ You understand enterprise integration capabilities.
    {
      "mcpServers": {
        "filesystem": {
+         "type": "local",
          "command": "npx",
          "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/user/projects"]
        }
@@ -210,6 +214,7 @@ Filesystem access capability added via MCP server — no API key required.
    {
      "mcpServers": {
        "postgres": {
+         "type": "local",
          "command": "npx",
          "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost/dbname"]
        }
@@ -306,6 +311,7 @@ Database query capabilities via Copilot.
    {
      "mcpServers": {
        "my-tools": {
+         "type": "local",
          "command": "node",
          "args": ["/home/user/copilot-plugins/my-tools/index.js"]
        }
@@ -358,6 +364,7 @@ Custom plugin provides new capabilities to Copilot.
    {
      "mcpServers": {
        "plugin-name": {
+         "type": "local",
          "command": "npx",
          "args": ["-y", "@package/plugin"],
          "env": {
@@ -430,6 +437,7 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 {
   "mcpServers": {
     "plugin-name": {
+      "type": "local",
       "command": "npx",
       "args": ["-y", "@scope/package-name", "--option"],
       "env": {
@@ -487,6 +495,7 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 - ✅ You can create custom plugins for specific needs
 - ✅ Always review plugins for security before installation
 - ✅ `/plugin install` and `/plugin marketplace add` now support local paths with spaces
+- ✅ `/plugin install` hot-loads agents and skills — no CLI restart needed (v0.0.417+)
 
 > [!NOTE]
 > The local-paths-with-spaces fix requires Copilot CLI **v0.0.415+**.

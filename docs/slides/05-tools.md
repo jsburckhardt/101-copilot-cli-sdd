@@ -86,6 +86,8 @@ Three choices when Copilot wants to use a tool:
 
 > Use `/reset-allowed-tools` to clear session approvals
 
+> ⚠️ **v0.0.416+:** Undo operations now always require confirmation — they no longer auto-apply
+
 ---
 
 ## --allow-tool & --deny-tool

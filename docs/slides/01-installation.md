@@ -78,7 +78,8 @@ style: |
 | WinGet | `winget install GitHub.Copilot` | Windows |
 | Dev Container | Built-in | Codespaces |
 
-> 💡 Already installed? Just run `copilot update`
+> 🎉 Copilot CLI is **Generally Available** (v0.0.418+)
+> 💡 Already installed? `copilot update` — now replaces the full binary
 
 ---
 
@@ -122,7 +123,7 @@ copilot
 
 Open **Module 1** in `docs/workshop/01-installation.md`
 
-1. **Exercise 1a/b/c** — Install via your preferred method
+1. **Exercise 1a/b/c/d** — Install via your preferred method
 2. **Exercise 2** — Authenticate with GitHub
 3. **Exercise 3** — Verify with your first prompt
 

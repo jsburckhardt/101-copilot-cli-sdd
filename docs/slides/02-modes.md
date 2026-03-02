@@ -137,7 +137,7 @@ Type **`/help`** to see them all
 
 | Category | Key commands |
 |----------|-------------|
-| **Review** | `/plan`, `/review`, `/diff` |
+| **Review** | `/plan`, `/review`, `/diff`, `/research` |
 | **Session** | `/clear`, `/resume`, `/rename`, `/session`, `/usage` |
 | **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` |
 | **Context** | `/context`, `/compact` |
@@ -146,7 +146,7 @@ Type **`/help`** to see them all
 | **Extensibility** | `/skills`, `/plugin`, `/agent` |
 | **Sharing** | `/share`, `/feedback` |
 | **Account** | `/login`, `/logout`, `/user` |
-| **System** | `/help`, `/exit`, `/init`, `/tasks`, `/lsp`, `/update` |
+| **System** | `/help`, `/exit`, `/init`, `/tasks`, `/lsp`, `/update`, `/chronicle` |
 
 ---
 
@@ -155,16 +155,19 @@ Type **`/help`** to see them all
 | Shortcut | Action |
 |----------|--------|
 | `@` | Mention files — include as context |
+| `#` | Reference GitHub issues, PRs, discussions (v0.0.420+) |
 | `!` | Run shell commands directly (only way to access shell since v0.0.410) |
-| `Shift+Tab` | Cycle between suggest ⟷ normal mode (v0.0.410+) |
+| `Shift+Tab` | Cycle between chat ⟷ edit mode (v0.0.410+) |
 | `Esc` | Cancel current operation |
 | `ctrl+t` | Toggle reasoning display |
 | `ctrl+x → /` | Quick slash command |
 | `ctrl+c` | Cancel / clear input / exit |
 | `ctrl+d` | Shutdown on empty prompt (v0.0.410+) |
 | `ctrl+y` | Edit plan in terminal editor (v0.0.412+) |
+| `ctrl+f` / `ctrl+b` | Page forward / back in alt-screen (v0.0.419+) |
+| `ctrl+g` | Open prompt in external editor (v0.0.419+) |
 
-> See workshop for 20+ additional shortcuts including text editing and alt-screen navigation
+> See workshop for 25+ additional shortcuts including text editing and alt-screen navigation
 
 ---
 

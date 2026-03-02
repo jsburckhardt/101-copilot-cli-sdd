@@ -28,7 +28,7 @@ REPO_STRUCTURE: TEXT
 
 WORKSHOP_FLOW: "Installation (01) -> Core Concepts (02-05) -> Advanced (06-12)"
 WORKSHOP_DURATION: "~4 hours"
-TESTED_VERSION: "GitHub Copilot CLI v0.0.412"
+TESTED_VERSION: "GitHub Copilot CLI v0.0.420"
 RELEASES_URL: "https://github.com/github/copilot-cli/releases"
 
 DOCKER_SETUP: TEXT

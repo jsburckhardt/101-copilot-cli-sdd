@@ -53,6 +53,8 @@ Every potentially destructive action requires approval:
 2. **Session-wide** - Approve this tool for the entire session
 3. **Deny** - Reject and provide alternative guidance
 
+> ⚠️ **FEEDBACK** — v0.0.416+: Undo operations now always require user confirmation before applying — they no longer auto-apply. This safety improvement prevents accidental reversions.
+
 ## Hands-On Exercises
 
 ### Exercise 1: Understanding Tool Prompts
