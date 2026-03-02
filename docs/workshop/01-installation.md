@@ -16,6 +16,9 @@
 
 ## Concepts
 
+> [!NOTE]
+> 🎉 **Generally Available** — As of v0.0.418, GitHub Copilot CLI is Generally Available. No preview or beta opt-in is required.
+
 ### Subscription Requirements
 
 Before installing, ensure you have one of:
@@ -47,6 +50,8 @@ Copilot CLI supports multiple installation methods:
 > ```bash
 > copilot update
 > ```
+>
+> As of v0.0.420, `copilot update` replaces the full binary executable, not just the JS package.
 
 ## Hands-On Exercises
 
@@ -79,8 +84,10 @@ Copilot CLI supports multiple installation methods:
 **Expected Outcome:**
 
 ```
-GitHub Copilot CLI 0.0.415
+GitHub Copilot CLI 0.0.420
 ```
+
+> **Note:** The exact version number will reflect whichever release is current when you install. The format is the same regardless of installation method.
 
 ### Exercise 1b: Install via npm option
 
@@ -121,7 +128,7 @@ GitHub Copilot CLI 0.0.415
 **Expected Outcome:**
 
 ```
-GitHub Copilot CLI 0.0.415
+GitHub Copilot CLI 0.0.420
 ```
 
 ### Exercise 1c: Install via Homebrew (macOS/Linux) option
@@ -151,7 +158,35 @@ GitHub Copilot CLI 0.0.415
 **Expected Outcome:**
 
 ```
-@github/copilot version X.X.X
+GitHub Copilot CLI 0.0.420
+```
+
+### Exercise 1d: Windows Installation (WinGet)
+
+**Goal:** Install Copilot CLI on Windows.
+
+**Steps:**
+
+1. Open PowerShell or Windows Terminal.
+
+2. Install via WinGet:
+
+   ```powershell
+   winget install GitHub.Copilot
+   ```
+
+3. Restart your terminal.
+
+4. Verify installation:
+
+   ```powershell
+   copilot --version
+   ```
+
+**Expected Outcome:**
+
+```
+GitHub Copilot CLI 0.0.420
 ```
 
 ### Exercise 2: Authenticate with GitHub
@@ -205,34 +240,6 @@ Interactive session starts with `>` prompt ready for input.
 
 **Expected Outcome:**
 Copilot correctly identifies your working directory and shows available commands.
-
-### Exercise 1d: Windows Installation (WinGet)
-
-**Goal:** Install Copilot CLI on Windows.
-
-**Steps:**
-
-1. Open PowerShell or Windows Terminal.
-
-2. Install via WinGet:
-
-   ```powershell
-   winget install GitHub.Copilot
-   ```
-
-3. Restart your terminal.
-
-4. Verify installation:
-
-   ```powershell
-   copilot --version
-   ```
-
-**Expected Outcome:**
-
-```
-@github/copilot version X.X.X
-```
 
 ## Troubleshooting
 

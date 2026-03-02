@@ -104,6 +104,7 @@ Plugins are configured as **MCP servers** in `~/.copilot/mcp-config.json`
 {
   "mcpServers": {
     "brave-search": {
+      "type": "local",
       "command": "npx",
       "args": ["-y", "@anthropic/mcp-server-brave-search"],
       "env": {

@@ -106,6 +106,17 @@ Lives at **`~/.copilot/mcp-config.json`**
 **Local** → `"type": "local"` + `command`/`args` | **Remote** → `"type": "http"` + `url`
 Optional: `"tools": ["*"]` (default), `"env": {}`, `"headers": {}`
 
+> Server names support npm-style identifiers like `@modelcontextprotocol/server` (v0.0.419+)
+> Env vars in `command`/`args`/`cwd` are auto-inherited from your shell (v0.0.419+)
+
+---
+
+## Enterprise Security
+
+> **Policy Enforcement (v0.0.416+):**
+> Org admins can **block third-party MCP servers** via policy.
+> Blocked servers won't start or connect. Requires Copilot Business/Enterprise.
+
 ---
 
 ## Built-in GitHub MCP
