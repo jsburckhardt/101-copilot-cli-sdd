@@ -53,6 +53,9 @@ You can create agent files manually, or use the **`/agent`** slash command in in
 4. Configure tool access (default is all tools).
 5. **Restart the CLI** to load your new custom agent.
 
+> [!NOTE]
+> Manually created `.agent.md` files require a CLI restart to take effect. However, agents installed via `/plugin install` are **hot-loaded** and available immediately without restarting (v0.0.417+). See [Module 8](08-plugins.md).
+
 ### Invoking Agents
 
 Custom agents can be invoked in four ways:
@@ -624,7 +627,7 @@ Complex workflows coordinated across multiple agents.
    | Wrong behavior | Check YAML frontmatter syntax |
    | Tools not working | Verify tools list in frontmatter |
    | Description missing | Add description field |
-   | Agent not loading | Restart the CLI after creating the agent file |
+   | Agent not loading | Restart the CLI after creating/editing `.agent.md` files (plugin-installed agents load immediately — v0.0.417+) |
 
 4. Validate YAML frontmatter:
    ```bash
@@ -700,7 +703,7 @@ tools:                        # Optional, defaults to all
 - ✅ Tool restrictions limit what agents can do
 - ✅ Organization agents provide team-wide standards
 - ✅ Agents can delegate to other agents for complex workflows
-- ✅ Restart the CLI after creating new agents
+- ✅ Restart the CLI after creating new `.agent.md` files (plugin-installed agents hot-load without restart — v0.0.417+)
 
 ## Next Steps
 

@@ -73,12 +73,12 @@ Slash commands are prefixed with `/` and provide quick access to CLI features wi
 | **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` | Control directory scope |
 | **Context** | `/context`, `/compact` | Monitor and optimize token usage |
 | **Tools** | `/allow-all`, `/yolo`, `/reset-allowed-tools` | Manage tool permissions at runtime |
-| **Review** | `/diff`, `/review`, `/plan` | Code review and planning workflows |
+| **Review** | `/diff`, `/review`, `/plan`, `/research` | Code review, planning, and research workflows |
 | **Configuration** | `/model`, `/mcp`, `/theme`, `/terminal-setup`, `/experimental` | Customize CLI behavior |
 | **Extensibility** | `/skills`, `/plugin`, `/agent` | Manage skills, plugins, and agents |
 | **Sharing** | `/share`, `/feedback` | Export sessions and submit feedback |
 | **Account** | `/login`, `/logout`, `/user` | Authentication and user management |
-| **System** | `/help`, `/exit`, `/quit`, `/init`, `/tasks`, `/lsp`, `/update`, `/changelog` | General utilities |
+| **System** | `/help`, `/exit`, `/quit`, `/init`, `/tasks`, `/lsp`, `/update`, `/changelog`, `/chronicle` | General utilities and productivity |
 
 #### Keyboard Shortcuts
 
@@ -87,6 +87,7 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 | Shortcut | Action |
 | --- | --- |
 | `@` | Mention files — include file contents in context |
+| `#` | Reference GitHub issues, PRs, and discussions (v0.0.420+) |
 | `!` | Execute a shell command directly (bypass Copilot; also the only way to access shell mode since v0.0.410) |
 | `Esc` | Cancel the current operation |
 | `ctrl+x → /` | Run a slash command |
@@ -96,7 +97,8 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 | `ctrl+n` | Navigate down (alternative to down arrow, v0.0.410+) |
 | `ctrl+p` | Navigate up (alternative to up arrow, v0.0.410+) |
 | `ctrl+o` | Expand recent timeline (when no input) |
-| `ctrl+e` | Expand all timeline (when no input); or cycle to end of visual/logical line (v0.0.413+ overrides in edit mode) |
+| `ctrl+e` (no input) | Expand all timeline |
+| `ctrl+e` (editing) | Cycle to end of visual/logical line (v0.0.413+) |
 | `ctrl+t` | Toggle model reasoning display |
 | `ctrl+a` | Cycle to beginning of visual line; repeated press goes to beginning of logical line (v0.0.413+) |
 | `ctrl+u` | Delete to beginning of logical line (v0.0.413+) |
@@ -104,9 +106,12 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 | `ctrl+x → ctrl+e` | Edit prompt in terminal editor (v0.0.412+) |
 | `ctrl+z` | Suspend/resume CLI (Unix platforms only, v0.0.410+) |
 | `ctrl+insert` | Copy selected text in alt-screen mode (v0.0.413+) |
-| `Home` / `End` | Navigate within visual line (v0.0.415+) |
+| `ctrl+f` | Page forward in alt-screen mode (v0.0.419+) |
+| `ctrl+b` | Page back in alt-screen mode (v0.0.419+) |
+| `ctrl+g` | Open current prompt in external editor; or dismiss dialog (v0.0.419+) |
+| `Home` / `End` | Navigate within visual line; jump to top/bottom of scroll buffer in alt-screen mode (v0.0.415+; alt-screen v0.0.419+) |
 | `ctrl+Home` / `ctrl+End` | Jump to text boundaries (v0.0.415+) |
-| `Shift+Tab` | Cycle through modes — (suggest) ⟷ (normal) since v0.0.410; use `!` for shell mode |
+| `Shift+Tab` | Cycle through modes — (chat) ⟷ (edit) since v0.0.410; use `!` for shell mode |
 | `Shift+Enter` | Insert newline in prompt (requires kitty keyboard protocol, v0.0.410+) |
 | `Page Up` / `Page Down` | Scroll in alt-screen mode (v0.0.410+) |
 | `Double-click` | Select word in alt-screen mode (v0.0.412+) |
@@ -117,7 +122,7 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 > - **Shift+Enter** for newlines requires terminals with kitty keyboard protocol support
 > - **Ctrl+Z** suspend/resume works on Unix platforms only
 > - **Page Up/Down**, **Double/Triple-click** require alt-screen mode support
-> - **Ctrl+Y** and **Ctrl+X Ctrl+E** require a terminal editor (set via `$EDITOR` or `$VISUAL`)
+> - **Ctrl+Y**, **Ctrl+X Ctrl+E**, and **Ctrl+G** require a terminal editor (set via `$EDITOR` or `$VISUAL`)
 
 #### Key Commands Not Covered in Other Modules
 
@@ -137,6 +142,10 @@ Some commands are covered in depth in later modules (`/mcp` in Module 6, `/skill
 | `/user [show\|list\|switch]` | Manage GitHub user list (multi-account support) |
 | `/update` | View update instructions for the latest Copilot CLI version |
 | `/changelog` | View the changelog for recent Copilot CLI releases |
+| `/research [prompt]` | Perform deep research with exportable reports (v0.0.417+) |
+| `/chronicle [standup\|tips\|improve]` | ⚠️ **Experimental** (v0.0.419+) — Productivity insights powered by session history |
+
+> ⚠️ **FEEDBACK**: `/research` (v0.0.417+) and `/chronicle` (v0.0.419+, experimental) are recent additions. `/chronicle` subcommands (`standup`, `tips`, `improve`) and behavior may change across versions.
 
 ## Hands-On Exercises
 
@@ -545,8 +554,8 @@ You can choose the appropriate mode for any task.
 - ✅ **Interactive mode** - Conversational, multi-step, exploratory
 - ✅ **Programmatic mode** - Single prompt, scriptable, CI/CD friendly
 - ✅ **Delegate mode** - Hands off to cloud agent for heavy tasks
-- ✅ **Slash commands** - `/plan`, `/review`, `/diff`, `/init`, and 25+ others for CLI control
-- ✅ **Keyboard shortcuts** - `@` for files, `!` for shell, `ctrl+x → /` for commands
+- ✅ **Slash commands** - `/plan`, `/review`, `/diff`, `/research`, `/init`, and 30+ others for CLI control
+- ✅ **Keyboard shortcuts** - `@` for files, `#` for issues/PRs, `!` for shell, `ctrl+x → /` for commands
 - ✅ Tool approval has one-time and session-wide options
 - ✅ Be cautious with session-wide approval for destructive commands
 

@@ -63,6 +63,13 @@ MCP servers are configured in:
 - Default: `~/.copilot/mcp-config.json`
 - Custom: Set via `XDG_CONFIG_HOME`
 
+### Enterprise Policy Enforcement
+
+> [!IMPORTANT]
+> Organization administrators can block third-party MCP servers via policy enforcement (v0.0.416+). When a policy is active, users in the organization will be prevented from connecting to MCP servers that are not on the allow-list. This is enforced at the CLI level — blocked servers will not start or connect.
+
+⚠️ **FEEDBACK**: MCP policy enforcement requires a Copilot Enterprise or Business subscription with organization-level policy management. Behavior may vary depending on how your org admin has configured the policy.
+
 ## Hands-On Exercises
 
 ### Exercise 1: Explore the GitHub MCP Server
@@ -202,7 +209,7 @@ Remote Exa MCP server configured. Copilot can now perform web searches, code sea
    EOF
    ```
 
-   > **Note:** The `PATH` environment variable is automatically inherited from your shell. All other environment variables must be configured in the `"env"` field.
+   > **Note:** Environment variables referenced in the `command`, `args`, or `cwd` fields are automatically inherited from your shell (v0.0.419+). Previously, only `PATH` was auto-inherited. Other variables that are not referenced in those fields must still be configured in the `"env"` field.
 
 3. Restart Copilot to load the new server:
    ```bash
@@ -423,6 +430,24 @@ Additional MCP servers can be loaded per-session without modifying base config.
 
 ## MCP Configuration Reference
 
+### Server Naming
+
+MCP server names (the keys in `"mcpServers"`) support dots (`.`), slashes (`/`), and `@` characters (v0.0.419+). This enables npm-style names directly as server identifiers:
+
+```json
+{
+  "mcpServers": {
+    "@modelcontextprotocol/server-memory": {
+      "type": "local",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    }
+  }
+}
+```
+
+⚠️ **FEEDBACK**: npm-style server names (v0.0.419) — verify with your installed version. Earlier versions only support alphanumeric names and hyphens.
+
 ### Remote Server Schema
 
 ```json
@@ -459,7 +484,7 @@ Additional MCP servers can be loaded per-session without modifying base config.
 }
 ```
 
-> **Note:** The `PATH` variable is automatically inherited. All other environment variables must be configured in `"env"`. The `"tools"` field defaults to `["*"]` (all tools) if omitted. You can restrict to specific tools with a list of tool names.
+> **Note:** Environment variables referenced in `command`, `args`, or `cwd` are automatically inherited from your shell (v0.0.419+). Previously, only `PATH` was auto-inherited; other variables had to be set in `"env"`. Variables not referenced in those fields must still be configured explicitly. The `"tools"` field defaults to `["*"]` (all tools) if omitted. You can restrict to specific tools with a list of tool names.
 
 ### Common MCP Servers
 
@@ -497,6 +522,9 @@ Additional MCP servers can be loaded per-session without modifying base config.
 - ✅ Tilde (`~`) expansion works in `cwd` paths (v0.0.410+)
 - ✅ MCP server errors surface in session output for easier debugging (v0.0.410+)
 - ✅ Giant single-line MCP tool results are now truncated correctly (v0.0.415)
+- ✅ Org admins can block third-party MCP servers via policy enforcement (v0.0.416+)
+- ✅ Server names support npm-style identifiers with `.`, `/`, `@` (v0.0.419+)
+- ✅ Env vars referenced in `command`/`args`/`cwd` are auto-inherited (v0.0.419+)
 - ✅ `--additional-mcp-config` loads temporary servers
 
 ## Next Steps

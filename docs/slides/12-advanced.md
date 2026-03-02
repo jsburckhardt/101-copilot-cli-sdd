@@ -68,6 +68,7 @@ style: |
 | **CI/CD** | Pipeline integration |
 | **Environment** | Config, env vars, `--bash-env` |
 | **LSP** | Language server timeout config |
+| **Research & Chronicle** | Deep research, session insights |
 | **Team workflows** | Standardization patterns |
 
 ---
@@ -173,6 +174,36 @@ alias cop-resume='copilot --resume'
 
 ---
 
+## /research & /chronicle
+
+**`/research`** (v0.0.417) — deep-research workflow with exportable reports:
+```
+/research "Compare REST vs GraphQL for mobile backends"
+```
+
+**`/chronicle`** (v0.0.419, experimental) — session-history insights:
+```
+/chronicle standup    # what you accomplished
+/chronicle tips       # feature suggestions
+/chronicle improve    # workflow improvements
+```
+
+> ⚠️ `/chronicle` is experimental — subcommands may change
+
+---
+
+## New Flags & Commands (v0.0.416–v0.0.419)
+
+| What | Details |
+|------|---------|
+| `--help` (v0.0.416) | Now shows descriptions, examples, sorted flags |
+| Status line (v0.0.416) | Auto two-line layout on narrow terminals |
+| `/diagnose` (v0.0.419) | Troubleshooting: session & environment diagnostics |
+| `--mouse` / `--no-mouse` (v0.0.419) | Alt-screen mouse control (also `mouse` config) |
+| `--disable-parallel-tools-execution` | **Removed** in v0.0.418 |
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 12** in `docs/workshop/12-advanced.md`
@@ -185,6 +216,7 @@ Open **Module 12** in `docs/workshop/12-advanced.md`
 - **Exercise 4–5** — Autopilot mode & fleet command
 - **Exercise 6–7** — Shell config & LSP setup
 - **Exercise 8–11** — Config, troubleshooting & team workflows
+- **Exercise 12** — `/research` deep research & `/chronicle` insights
 
 ⏱️ You have **~24 minutes**
 

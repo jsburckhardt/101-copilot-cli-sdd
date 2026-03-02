@@ -350,6 +350,9 @@ You can run multiple focused sessions simultaneously.
    cat session-export.md
    ```
 
+> [!TIP]
+> If you're already inside an interactive session, you can use the `/share` slash command instead of the CLI flags above. It provides the same export functionality without leaving the session.
+
 **Expected Outcome:**
 Session transcript saved for future reference or sharing.
 
@@ -365,6 +368,7 @@ Session transcript saved for future reference or sharing.
 | `/list-dirs` | List accessible directories | `/list-dirs` |
 | `/clear` | Clear conversation history | `/clear` |
 | `/exit` | End session | `/exit` |
+| `/share` | Export session transcript (interactive alternative to `--share` flag) | `/share` |
 | `/model` | Switch AI model | `/model gpt-4` |
 
 ## Command Line Flags

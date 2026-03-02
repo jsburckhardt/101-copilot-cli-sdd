@@ -97,6 +97,8 @@ Session Overrides (flags)
    copilot --help | head -50
    ```
 
+   > **Note (v0.0.416):** `copilot --help` now shows comprehensive output with descriptions, examples, and sorted flags.
+
 **Expected Outcome:**
 Environment variables customize Copilot behavior.
 
@@ -243,6 +245,12 @@ Copilot CLI integrated into automated workflows.
    ```bash
    copilot --help
    ```
+
+   > **Note (v0.0.416):** `copilot --help` now provides comprehensive output with descriptions, usage examples, and sorted flags — much more detailed than earlier versions.
+
+6. **Deprecated flag — `--disable-parallel-tools-execution` (removed v0.0.418):**
+
+   > ⚠️ **FEEDBACK**: The `--disable-parallel-tools-execution` flag and its corresponding config option were **removed** in v0.0.418. If you relied on this flag, parallel tool execution is now always enabled. Remove any references from your scripts or config files.
 
 **Expected Outcome:**
 Full command-line control over Copilot behavior.
@@ -513,13 +521,13 @@ Complex tasks are completed faster through parallel sub-agent execution with qua
    **Old behavior (< v0.0.410):**
 
    ```
-   Shift+Tab: cycle through (chat) → (command) → (shell)
+   Shift+Tab: cycle through (chat) → (edit) → (shell)
    ```
 
    **New behavior (≥ v0.0.410):**
 
    ```
-   Shift+Tab: cycle through (chat) ⟷ (command) only
+   Shift+Tab: cycle through (chat) ⟷ (edit) only
    ! (exclamation): direct access to shell mode
    ```
 
@@ -810,8 +818,19 @@ Custom configuration for your workflow, including LSP settings from Exercise 7.
    cat ~/.copilot/mcp-config.json | jq .
    ```
 
+7. **Use `/diagnose` for quick troubleshooting (v0.0.419):**
+
+   The `/diagnose` command provides a diagnostic summary of your current session and environment:
+
+   ```bash
+   copilot
+   /diagnose
+   ```
+
+   > **Note**: If no session has been started yet, `/diagnose` shows a helpful message guiding you to start one first. Run it inside an active session for full diagnostics.
+
 **Expected Outcome:**
-You can diagnose and resolve common problems, including LSP timeouts and shell mode access.
+You can diagnose and resolve common problems using `/diagnose`, LSP timeout tuning, and shell mode access.
 
 ### Exercise 10: Team Workflow Patterns
 
@@ -974,6 +993,70 @@ Team-wide standardization on Copilot usage, including shared LSP and environment
 **Expected Outcome:**
 Maximum performance from Copilot CLI using parallelization, autopilot, and fleet features.
 
+### Exercise 12: Deep Research and Session Insights
+
+**Goal:** Use `/research` for deep research with exportable reports, and explore `/chronicle` for session-history insights.
+
+**Steps:**
+
+1. **Deep research with `/research` (v0.0.417):**
+
+   The `/research` command launches a deep-research workflow that investigates a topic thoroughly and produces an exportable report:
+
+   ```bash
+   copilot
+   /research "Compare the trade-offs of REST vs GraphQL for mobile backends"
+   ```
+
+   Copilot will:
+   - Break the topic into sub-questions
+   - Investigate each area using available tools (web fetch, file reads, etc.)
+   - Synthesize findings into a structured report
+   - Offer to export the report as a markdown file
+
+2. **Export research output:**
+
+   ```bash
+   # After /research completes, export the report
+   /share ./research-report.md
+   ```
+
+3. **Combine with tool restrictions:**
+
+   ```bash
+   copilot --allow-tool 'web_fetch' --deny-tool 'write'
+   /research "What are the latest best practices for Node.js error handling?"
+
+   # Read-only research — Copilot can fetch web content but won't modify files
+   ```
+
+4. **Session insights with `/chronicle` (v0.0.419):**
+
+   > ⚠️ **FEEDBACK**: `/chronicle` is experimental (v0.0.419). Subcommands and behavior may change in future releases.
+
+   The `/chronicle` command analyzes your session history to provide actionable insights:
+
+   ```bash
+   copilot
+
+   # Generate a standup summary from recent sessions
+   /chronicle standup
+
+   # Get tips based on your usage patterns
+   /chronicle tips
+
+   # Get suggestions to improve your workflow
+   /chronicle improve
+   ```
+
+   `/chronicle` subcommands:
+   - **`standup`** — Summarizes what you accomplished across recent sessions (useful for daily standups)
+   - **`tips`** — Suggests Copilot features you may not be using effectively
+   - **`improve`** — Analyzes patterns and recommends workflow improvements
+
+**Expected Outcome:**
+You can run deep-research workflows and extract insights from your session history.
+
 ## Configuration Reference
 
 ### Configuration Files
@@ -1013,6 +1096,7 @@ Maximum performance from Copilot CLI using parallelization, autopilot, and fleet
 | `--autopilot` | Enable autonomous multi-step execution | v0.0.411 |
 | `--bash-env` | Source BASH_ENV in shell sessions | v0.0.412 |
 | `--experimental` | Enable experimental features (alt-screen by default since v0.0.413) | v0.0.413 |
+| `--mouse` / `--no-mouse` | Enable or disable alt-screen mouse behavior (also configurable via `mouse` config option) | v0.0.419 |
 
 ### Slash Commands
 
@@ -1027,6 +1111,9 @@ Maximum performance from Copilot CLI using parallelization, autopilot, and fleet
 | `/delegate` | Hand off to cloud agent | Base |
 | `/fleet` | Launch parallel sub-agents for complex tasks | v0.0.411 |
 | `/autopilot on\|off` | Toggle autopilot mode | v0.0.411 |
+| `/research` | Launch deep-research workflow with exportable reports | v0.0.417 |
+| `/chronicle` | Session-history insights (standup, tips, improve) — experimental | v0.0.419 |
+| `/diagnose` | Show diagnostic summary of session and environment | v0.0.419 |
 | `/mcp` | Manage MCP servers | Base |
 
 ### Shell Mode Access
@@ -1036,8 +1123,8 @@ Maximum performance from Copilot CLI using parallelization, autopilot, and fleet
 | Method | Description | Version |
 | -------- | ------------- | --------- |
 | `!` | Direct access to shell mode | v0.0.410+ |
-| `Shift+Tab` | Cycle (chat) ⟷ (command) only | v0.0.410+ |
-| `Shift+Tab` | Cycle (chat) → (command) → (shell) | < v0.0.410 (deprecated) |
+| `Shift+Tab` | Cycle (chat) ⟷ (edit) only | v0.0.410+ |
+| `Shift+Tab` | Cycle (chat) → (edit) → (shell) | < v0.0.410 (deprecated) |
 
 ### Useful Aliases
 
@@ -1071,6 +1158,13 @@ alias cop-resume='copilot --resume'
 - ✅ **--experimental** enables alt-screen mode by default (v0.0.413)
 - ✅ **Configurable status line** displays dynamic session info via custom shell scripts (v0.0.413)
 - ✅ **Environment loading indicator** shows skills, MCPs, and plugins being loaded at startup (v0.0.415)
+- ✅ **Status line responsive layout** auto-switches to two-line layout on narrow terminals (v0.0.416)
+- ✅ **Expanded `--help` output** with descriptions, examples, and sorted flags (v0.0.416)
+- ✅ **`/research` command** for deep-research workflows with exportable reports (v0.0.417)
+- ✅ **`--disable-parallel-tools-execution` removed** — parallel tool execution is now always enabled (v0.0.418)
+- ✅ **`/chronicle` command** (experimental) for session-history insights: standup, tips, improve (v0.0.419)
+- ✅ **`--mouse`/`--no-mouse` flag** controls alt-screen mouse behavior (v0.0.419)
+- ✅ **`/diagnose` command** for troubleshooting session and environment issues (v0.0.419)
 - ✅ **LSP configuration** controls language server timeouts; default request timeout is 90s (v0.0.412-v0.0.413)
 - ✅ **Shell mode access** via `!` command (v0.0.410)
 - ✅ config.json and lsp.json persist preferences
@@ -1094,7 +1188,7 @@ Congratulations on completing the GitHub Copilot CLI Workshop!
 9. **Custom Agents** - Building specialized personas
 10. **Hooks** - Lifecycle automation and security
 11. **Context** - Monitoring and optimization
-12. **Advanced** - Autopilot, Fleet, CI/CD, LSP config, environment, and team practices
+12. **Advanced** - Autopilot, Fleet, CI/CD, LSP config, `/research`, `/chronicle`, environment, and team practices
 
 ### Next Steps
 
@@ -1102,19 +1196,6 @@ Congratulations on completing the GitHub Copilot CLI Workshop!
 - Create custom agents for your workflow
 - Share skills with your team
 - Contribute to the Copilot ecosystem
-
-### Resources
-
-- [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
-- [Copilot CLI Blog Posts](https://github.blog/tag/copilot/)
-- [GitHub Community Discussions](https://github.com/orgs/community/discussions)
-- [agentskills.io](https://agentskills.io/)
-
----
-
-**Thank you for participating in this workshop!**
-
-→ Return to [Workshop Index](00-index.md)
 
 ## References
 
@@ -1124,3 +1205,9 @@ Congratulations on completing the GitHub Copilot CLI Workshop!
 - [Copilot CLI Blog Posts](https://github.blog/tag/copilot/)
 - [GitHub Community Discussions](https://github.com/orgs/community/discussions)
 - [agentskills.io](https://agentskills.io/)
+
+---
+
+**Thank you for participating in this workshop!**
+
+→ Return to [Workshop Index](00-index.md)

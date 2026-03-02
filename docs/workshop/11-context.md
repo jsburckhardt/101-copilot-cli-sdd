@@ -39,21 +39,19 @@ Context is everything Copilot "remembers" during a session:
 
 ### Token Limits
 
-| Model | Approximate Limit |
+> ⚠️ **FEEDBACK**: The model names and token limits below are **illustrative examples**. Actual available models change over time — run `/model` in your session to see the current list.
+
+| Model (example) | Approximate Limit |
 |-------|-------------------|
 | GPT-4 | ~128K tokens |
 | GPT-4.1 | ~128K tokens |
-| Claude Sonnet 4.6 | ~200K tokens |
+| Claude Sonnet 4 | ~200K tokens |
 
 > [!NOTE]
 > **Model auto-migration (v0.0.413):** Users previously on `claude-sonnet-4.5` are automatically migrated to the current default model on startup.
 
 > [!NOTE]
-> Use `/model` to select a model and `/context` to see context window usage. Current models include:
-> - Claude Opus 4.6
-> - Gemini 3 Pro
-> - GPT-5.3-Codex
-> - GPT-5 mini
+> Use `/model` to select a model and `/context` to see context window usage. The model list changes frequently; examples at the time of writing include GPT-4.1, Claude Sonnet 4, and others.
 >
 > Model availability may vary by Copilot subscription tier.
 
@@ -69,6 +67,21 @@ Fix the bug in @src/app.js
 ```
 
 When you start typing a file path after `@`, matching paths are displayed below the prompt box. Use the arrow keys to select a path and press Tab to complete it.
+
+### Referencing GitHub Issues, PRs & Discussions with `#`
+
+Similar to `@` for files, you can type `#` followed by a number to pull a GitHub issue, pull request, or discussion directly into context:
+
+```
+Summarize the discussion in #42
+```
+```
+What's the status of #150 and are there related PRs?
+```
+
+When you type `#`, matching issues and PRs from the current repository are displayed below the prompt box. Use the arrow keys to select and press Tab to complete.
+
+> ⚠️ **FEEDBACK**: The `#` reference shortcut was introduced in **v0.0.420**. If your version is older, this feature may not be available.
 
 ### Auto-Compaction
 
@@ -440,6 +453,7 @@ Systematic workflow keeps context under control.
 | `/cwd` or `/cd` | Change working directory (affects context scope) |
 | `/add-dir` | Add directory to accessible scope |
 | `@path/to/file` | Include specific file contents in your prompt |
+| `#<number>` | Include a GitHub issue, PR, or discussion in your prompt (v0.0.420+) |
 
 ### Context Categories
 
@@ -459,6 +473,7 @@ Systematic workflow keeps context under control.
 | `/compact` | Long session, need to continue |
 | Explore agent | Codebase overview without context cost |
 | `@path/to/file` | Include specific files without broad reads |
+| `#<number>` | Pull issue/PR/discussion context directly (v0.0.420+) |
 | Selective reading | Large files, specific needs |
 | Summarization | Preserve knowledge, reduce tokens |
 
@@ -468,6 +483,7 @@ Systematic workflow keeps context under control.
 
 - Check `/context` and `/usage` regularly
 - Use `@path/to/file` to include specific files
+- Use `#<number>` to reference GitHub issues, PRs, or discussions
 - Compact before running out
 - Clear when switching topics
 - Use targeted queries
@@ -488,6 +504,7 @@ Systematic workflow keeps context under control.
 - ✅ `/clear` resets for topic changes
 - ✅ Auto-compaction triggers at ~95% capacity
 - ✅ Use `@path/to/file` to include specific files in prompts
+- ✅ Use `#<number>` to pull GitHub issues, PRs, or discussions into context (v0.0.420+)
 - ✅ Efficient prompting extends useful session length
 - ✅ Explore agent preserves main context
 
