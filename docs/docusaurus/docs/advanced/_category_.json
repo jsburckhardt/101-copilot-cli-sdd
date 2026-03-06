@@ -1,0 +1,12 @@
+{
+  "label": "Advanced",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Advanced",
+    "description": "Hooks, automation patterns, and team workflows",
+    "slug": "/category/advanced"
+  }
+}
