@@ -321,6 +321,6 @@ Examples:
 - "Add a new exercise about --yolo mode to module 05"
 - "Update the MCP server examples in module 06 with the latest syntax"
 - "Remove the deprecated --share flag references from module 03"
-- "Upgrade from version 0.0.412-1 to latest — check changelogs for new features"
-- "What changed between version 0.0.400 and 0.0.412-1?"
+- "Upgrade from version 1.0.2 to latest — check changelogs for new features"
+- "What changed between version 1.0.0 and 1.0.2?"
 </input>

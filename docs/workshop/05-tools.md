@@ -25,7 +25,7 @@ Copilot CLI includes several built-in tools:
 | `shell` | Execute shell commands | ⚠️ High |
 | `write` | Create/modify files | ⚠️ High |
 | `read` | Read file contents | Low |
-| `show_file` | Present code/diffs to user in a prominent view (v0.0.415+) | Low |
+| `show_file` | Present code/diffs to user in a prominent view | Low |
 | `web_fetch` | Fetch web content | Medium |
 | `mcp` | Use MCP server tools | Varies |
 
@@ -34,17 +34,17 @@ Copilot CLI includes several built-in tools:
 Every potentially destructive action requires approval:
 
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│ Copilot     │────▶│ Permission   │────▶│ Execute     │
-│ wants to    │     │ Prompt       │     │ Action      │
-│ use tool    │     │              │     │             │
-└─────────────┘     └──────────────┘     └─────────────┘
-                           │
-                           ▼
-                    ┌──────────────┐
-                    │ User         │
-                    │ Decides      │
-                    └──────────────┘
+┌─────────────┐ ┌──────────────┐ ┌─────────────┐
+│ Copilot │────▶│ Permission │────▶│ Execute │
+│ wants to │ │ Prompt │ │ Action │
+│ use tool │ │ │ │ │
+└─────────────┘ └──────────────┘ └─────────────┘
+ │
+ ▼
+ ┌──────────────┐
+ │ User │
+ │ Decides │
+ └──────────────┘
 ```
 
 ### Approval Levels
@@ -53,7 +53,7 @@ Every potentially destructive action requires approval:
 2. **Session-wide** - Approve this tool for the entire session
 3. **Deny** - Reject and provide alternative guidance
 
-> ⚠️ **FEEDBACK** — v0.0.416+: Undo operations now always require user confirmation before applying — they no longer auto-apply. This safety improvement prevents accidental reversions.
+> ⚠️ **FEEDBACK** — Undo operations now always require user confirmation before applying — they no longer auto-apply. This safety improvement prevents accidental reversions.
 
 ## Hands-On Exercises
 
@@ -64,54 +64,54 @@ Every potentially destructive action requires approval:
 **Steps:**
 
 1. Create a test directory:
-   ```bash
-   mkdir -p ~/copilot-tools-lab && cd ~/copilot-tools-lab
-   git init
-   ```
+ ```bash
+ mkdir -p ~/copilot-tools-lab && cd ~/copilot-tools-lab
+ git init
+ ```
 
 2. Start Copilot:
-   ```bash
-   copilot
-   ```
+ ```bash
+ copilot
+ ```
 
 3. Request a file operation:
-   ```
-   Create a file called test.txt with "Hello World"
-   ```
+ ```
+ Create a file called test.txt with "Hello World"
+ ```
 
 4. Observe the tool approval prompt. It shows:
-   - Tool name: `write`
-   - File path: `test.txt`
-   - Content preview
-   - Three approval options
+ - Tool name: `write`
+ - File path: `test.txt`
+ - Content preview
+ - Three approval options
 
 5. Select **Yes** (one-time approval).
 
 6. Now request another file:
-   ```
-   Create another file called test2.txt
-   ```
+ ```
+ Create another file called test2.txt
+ ```
 
 7. Notice you're prompted again (one-time didn't persist).
 
 8. This time select **Yes, and approve write for the rest of the session**.
 
 9. Request a third file:
-   ```
-   Create test3.txt
-   ```
+ ```
+ Create test3.txt
+ ```
 
 10. No prompt this time - session approval persists.
 
 11. To reset all approved tools for the session, use:
-    ```
-    /reset-allowed-tools
-    ```
+ ```
+ /reset-allowed-tools
+ ```
 
 12. Now request another file operation:
-    ```
-    Create test4.txt
-    ```
+ ```
+ Create test4.txt
+ ```
 
 13. Notice you're prompted again - the reset cleared all session approvals.
 
@@ -125,31 +125,31 @@ You understand the difference between one-time and session-wide approval, and ca
 **Steps:**
 
 1. In the same session:
-   ```
-   List all files in the current directory
-   ```
+ ```
+ List all files in the current directory
+ ```
 
 2. If Copilot requests `shell(ls)`, approve for session.
-   > Note: In some managed environments, `ls` may already be allowed and run without a prompt.
+ > Note: In some managed environments, `ls` may already be allowed and run without a prompt.
 
 3. Now try:
-   ```
-   Show me the disk usage of this directory
-   ```
+ ```
+ Show me the disk usage of this directory
+ ```
 
 4. If prompted, Copilot requests `shell(du)`. This is a different command.
 
 5. Approve `du` for session as well (if prompted).
 
 6. Request something more dangerous:
-   ```
-   Delete the test.txt file
-   ```
+ ```
+ Delete the test.txt file
+ ```
 
 7. Copilot requests `shell(rm)` (or blocks it by policy). **Select No** and explain:
-   ```
-   I don't want to delete files right now. Just show me what would be deleted.
-   ```
+ ```
+ I don't want to delete files right now. Just show me what would be deleted.
+ ```
 
 8. Copilot adjusts its approach without executing `rm` (or reports that `rm` is blocked).
 
@@ -165,26 +165,26 @@ Low-risk shell commands may already be pre-approved in some environments, while 
 1. Exit the interactive session.
 
 2. Run with specific tool allowance:
-   ```bash
-   copilot -p "Show me all .txt files" --allow-tool 'shell(ls)'
-   ```
+ ```bash
+ copilot -p "Show me all .txt files" --allow-tool 'shell(ls)'
+ ```
 
 3. Allow multiple read-only commands:
-   ```bash
-   copilot -p "Show git status and recent commits" \
-     --allow-tool 'shell(git status)' \
-     --allow-tool 'shell(git log)'
-   ```
+ ```bash
+ copilot -p "Show git status and recent commits" \
+ --allow-tool 'shell(git status)' \
+ --allow-tool 'shell(git log)'
+ ```
 
 4. Allow all shell commands (be careful!):
-   ```bash
-   copilot -p "Analyze this directory structure" --allow-tool 'shell'
-   ```
+ ```bash
+ copilot -p "Analyze this directory structure" --allow-tool 'shell'
+ ```
 
 5. Allow file writing:
-   ```bash
-   copilot -p "Create a README.md with project description" --allow-tool 'write'
-   ```
+ ```bash
+ copilot -p "Create a README.md with project description" --allow-tool 'write'
+ ```
 
 **Expected Outcome:**
 Commands execute without interactive prompts.
@@ -196,37 +196,37 @@ Commands execute without interactive prompts.
 **Steps:**
 
 1. Allow all tools but block dangerous ones:
-   ```bash
-   copilot -p "Help me clean up this project" \
-     --allow-all-tools \
-     --deny-tool 'shell(rm)' \
-     --deny-tool 'shell(rm -rf)'
-   ```
+ ```bash
+ copilot -p "Help me clean up this project" \
+ --allow-all-tools \
+ --deny-tool 'shell(rm)' \
+ --deny-tool 'shell(rm -rf)'
+ ```
 
 2. Block git push while allowing other git:
-   ```bash
-   copilot -p "Commit these changes with a good message" \
-     --allow-tool 'shell(git:*)' \
-     --deny-tool 'shell(git push)'
-   ```
+ ```bash
+ copilot -p "Commit these changes with a good message" \
+ --allow-tool 'shell(git:*)' \
+ --deny-tool 'shell(git push)'
+ ```
 
 3. Block file modifications:
-   ```bash
-   copilot -p "Review this codebase" \
-     --allow-tool 'shell' \
-     --deny-tool 'write'
-   ```
+ ```bash
+ copilot -p "Review this codebase" \
+ --allow-tool 'shell' \
+ --deny-tool 'write'
+ ```
 
 4. Create a safe analysis mode:
-   ```bash
-   copilot -p "Analyze security issues" \
-     --allow-tool 'shell(cat)' \
-     --allow-tool 'shell(grep)' \
-     --allow-tool 'shell(find)' \
-     --deny-tool 'shell(rm)' \
-     --deny-tool 'shell(mv)' \
-     --deny-tool 'write'
-   ```
+ ```bash
+ copilot -p "Analyze security issues" \
+ --allow-tool 'shell(cat)' \
+ --allow-tool 'shell(grep)' \
+ --allow-tool 'shell(find)' \
+ --deny-tool 'shell(rm)' \
+ --deny-tool 'shell(mv)' \
+ --deny-tool 'write'
+ ```
 
 **Expected Outcome:**
 Deny rules take precedence over allow rules.
@@ -240,28 +240,28 @@ Deny rules take precedence over allow rules.
 ⚠️ **WARNING:** Only use `--yolo` in safe, isolated environments!
 
 1. Create an isolated test directory:
-   ```bash
-   mkdir -p ~/yolo-test && cd ~/yolo-test
-   echo "test content" > safe-file.txt
-   ```
+ ```bash
+ mkdir -p ~/yolo-test && cd ~/yolo-test
+ echo "test content" > safe-file.txt
+ ```
 
 2. Run with yolo mode on a safe task:
-   ```bash
-   copilot --yolo -p "Create a Python hello world script"
-   ```
+ ```bash
+ copilot --yolo -p "Create a Python hello world script"
+ ```
 
 3. Notice: No prompts, file created directly.
 
 4. More complex autonomous task:
-   ```bash
-   copilot --yolo -p "Create a Node.js project with package.json and a simple server"
-   ```
+ ```bash
+ copilot --yolo -p "Create a Node.js project with package.json and a simple server"
+ ```
 
 5. Review what was created:
-   ```bash
-   ls -la
-   cat package.json
-   ```
+ ```bash
+ ls -la
+ cat package.json
+ ```
 
 **When to Use YOLO:**
 - ✅ Inside Docker containers
@@ -294,56 +294,56 @@ You understand YOLO mode's power and risks.
 #### Part A: Startup Trust
 
 1. Start Copilot in a new directory:
-   ```bash
-   mkdir -p ~/trusted-test && cd ~/trusted-test
-   copilot
-   ```
+ ```bash
+ mkdir -p ~/trusted-test && cd ~/trusted-test
+ copilot
+ ```
 
 2. When prompted about trusting the folder:
-   - **Yes, proceed** — Trust for this session only
-   - **Yes, and remember** — Permanently add to `trusted_folders`
-   - **No, exit** — Don't trust
+ - **Yes, proceed** — Trust for this session only
+ - **Yes, and remember** — Permanently add to `trusted_folders`
+ - **No, exit** — Don't trust
 
 3. Select **Yes, proceed** for now.
 
 4. In a side terminal, check the config:
-   ```bash
-   cat ~/.copilot/config.json
-   ```
-   Notice that `trusted_folders` was **not** updated (you chose session-only trust).
+ ```bash
+ cat ~/.copilot/config.json
+ ```
+ Notice that `trusted_folders` was **not** updated (you chose session-only trust).
 
 5. To permanently skip the prompt for specific directories, add them to your config:
-   ```bash
-   # Edit config.json to add:
-   {
-     "trusted_folders": [
-       "/home/user/projects",
-       "/home/user/copilot-workshop"
-     ]
-   }
-   ```
-   Next time you launch Copilot from those directories, it won't ask for trust confirmation.
+ ```bash
+ # Edit config.json to add:
+ {
+ "trusted_folders": [
+ "/home/user/projects",
+ "/home/user/copilot-workshop"
+ ]
+ }
+ ```
+ Next time you launch Copilot from those directories, it won't ask for trust confirmation.
 
 #### Part B: Runtime File Access
 
 6. Back in your Copilot session, check which paths the agent can access:
-   ```
-   /list-dirs
-   ```
-   You'll see only the **working directory** and `/tmp` — not the `trusted_folders` entries.
+ ```
+ /list-dirs
+ ```
+ You'll see only the **working directory** and `/tmp` — not the `trusted_folders` entries.
 
 7. Grant runtime access to an additional directory:
-   > Note: Create the directory first (e.g., `mkdir -p /tmp/safe-dir`).
-   ```
-   /add-dir /tmp/safe-dir
-   ```
+ > Note: Create the directory first (e.g., `mkdir -p /tmp/safe-dir`).
+ ```
+ /add-dir /tmp/safe-dir
+ ```
 
 8. Verify with `/list-dirs` — the new path now appears.
 
 9. To grant runtime access at launch instead, use the `--allow-path` flag:
-   ```bash
-   copilot --allow-path /home/user/projects --allow-path /home/user/copilot-workshop
-   ```
+ ```bash
+ copilot --allow-path /home/user/projects --allow-path /home/user/copilot-workshop
+ ```
 
 **Expected Outcome:**
 You understand that `trusted_folders` controls the **startup trust prompt**, while `/add-dir`, `/list-dirs`, and `--allow-path` control **runtime file access** — and that these are two independent permission layers.
@@ -355,49 +355,49 @@ You understand that `trusted_folders` controls the **startup trust prompt**, whi
 **Steps:**
 
 1. Create a script `analyze-project.sh`:
-   ```bash
-   #!/bin/bash
-   set -e
+ ```bash
+ #!/bin/bash
+ set -e
 
-   PROJECT_DIR="${1:-.}"
+ PROJECT_DIR="${1:-.}"
 
-   echo "🔍 Analyzing project in: $PROJECT_DIR"
-   echo "=================================="
+ echo "🔍 Analyzing project in: $PROJECT_DIR"
+ echo "=================================="
 
-   # Safe analysis - read-only operations only
-   copilot -p "Analyze the code quality and suggest improvements" \
-     --allow-tool 'shell(find)' \
-     --allow-tool 'shell(wc)' \
-     --allow-tool 'shell(grep)' \
-     --allow-tool 'shell(cat)' \
-     --allow-tool 'shell(head)' \
-     --allow-tool 'shell(tail)' \
-     --deny-tool 'write' \
-     --deny-tool 'shell(rm)' \
-     --deny-tool 'shell(mv)' \
-     --deny-tool 'shell(chmod)' \
-     --silent
-   ```
+ # Safe analysis - read-only operations only
+ copilot -p "Analyze the code quality and suggest improvements" \
+ --allow-tool 'shell(find)' \
+ --allow-tool 'shell(wc)' \
+ --allow-tool 'shell(grep)' \
+ --allow-tool 'shell(cat)' \
+ --allow-tool 'shell(head)' \
+ --allow-tool 'shell(tail)' \
+ --deny-tool 'write' \
+ --deny-tool 'shell(rm)' \
+ --deny-tool 'shell(mv)' \
+ --deny-tool 'shell(chmod)' \
+ --silent
+ ```
 
 2. Create a code review script:
-   ```bash
-   #!/bin/bash
+ ```bash
+ #!/bin/bash
 
-   # Review changes but don't modify anything
-   copilot -p "Review the git diff and provide feedback" \
-     --allow-tool 'shell(git diff)' \
-     --allow-tool 'shell(git log)' \
-     --allow-tool 'shell(git status)' \
-     --deny-tool 'shell(git push)' \
-     --deny-tool 'shell(git commit)' \
-     --deny-tool 'write'
-   ```
+ # Review changes but don't modify anything
+ copilot -p "Review the git diff and provide feedback" \
+ --allow-tool 'shell(git diff)' \
+ --allow-tool 'shell(git log)' \
+ --allow-tool 'shell(git status)' \
+ --deny-tool 'shell(git push)' \
+ --deny-tool 'shell(git commit)' \
+ --deny-tool 'write'
+ ```
 
 3. Make executable and test:
-   ```bash
-   chmod +x analyze-project.sh
-   ./analyze-project.sh
-   ```
+ ```bash
+ chmod +x analyze-project.sh
+ ./analyze-project.sh
+ ```
 
 **Expected Outcome:**
 Safe, repeatable automation with explicit permissions.
@@ -422,8 +422,78 @@ Safe, repeatable automation with explicit permissions.
 # Allow MCP server
 --allow-tool 'mcp-server-name'
 
+# Allow specific MCP tool
+--allow-tool 'MyMCP(my_tool)'
+
+# URL access matching (v1.0.x)
+--allow-tool 'url(https://github.com)'
+--allow-tool 'url(https://*.github.com)'
+
 # Deny takes precedence
 --allow-all-tools --deny-tool 'shell(rm)'
+```
+
+### URL Permissions
+
+> ⚠️ **FEEDBACK**: URL permission flags (`--allow-url`, `--deny-url`, `--allow-all-urls`, `--disallow-temp-dir`) are available in **v1.0.x**.
+
+Copilot CLI provides granular URL access control. All URL permissions are protocol-aware — approving `https://example.com` does NOT allow `http://example.com`.
+
+```bash
+# Allow access to a specific domain (defaults to HTTPS)
+copilot --allow-url github.com
+
+# Allow HTTP access explicitly
+copilot --allow-url http://localhost:3000
+
+# Deny access to a specific domain (takes precedence over allow)
+copilot --deny-url https://malicious-site.com
+
+# Allow all URLs without confirmation
+copilot --allow-all-urls
+```
+
+URL permissions can also be set via the `url` pattern in `--allow-tool`/`--deny-tool`:
+
+```bash
+# Allow URL access via tool permission pattern
+copilot --allow-tool 'url(https://api.github.com)'
+copilot --deny-tool 'url(http://example.com)'
+```
+
+### Path Permissions
+
+By default, file access is restricted to the current working directory and subdirectories, plus the system temp directory. Additional controls:
+
+```bash
+# Allow access to any path on the filesystem
+copilot --allow-all-paths
+
+# Add additional directories
+copilot --add-dir ~/other-project --add-dir /tmp/data
+
+# Prevent automatic access to the system temp directory
+copilot --disallow-temp-dir
+```
+
+### Secret Environment Variables
+
+> ⚠️ **FEEDBACK**: `--secret-env-vars` is available in **v1.0.x**.
+
+Strip sensitive environment variable values from shell/MCP server environments and redact them from output:
+
+```bash
+copilot --secret-env-vars MY_API_KEY DATABASE_PASSWORD
+```
+
+### Autonomous Mode (No User Questions)
+
+> ⚠️ **FEEDBACK**: `--no-ask-user` is available in **v1.0.x**.
+
+Disable the `ask_user` tool so the agent works autonomously without asking questions. Useful for CI/CD pipelines where no human is available to respond:
+
+```bash
+copilot -p "Fix all linting errors" --allow-all-tools --no-ask-user
 ```
 
 ### Risk Categories
@@ -442,8 +512,16 @@ Safe, repeatable automation with explicit permissions.
 | Flag | Equivalent |
 |------|------------|
 | `--yolo` | `--allow-all-tools --allow-all-paths --allow-all-urls` |
+| `--allow-all` | Same as `--yolo` |
+| `--allow-url` | Allow specific URLs/domains |
+| `--deny-url` | Deny specific URLs/domains (takes precedence) |
+| `--allow-all-urls` | Allow all URLs without confirmation |
+| `--allow-all-paths` | Disable file path verification |
+| `--disallow-temp-dir` | Revoke auto-access to system temp directory |
 | `--available-tools` | Allowlist specific tools |
 | `--excluded-tools` | Denylist specific tools |
+| `--secret-env-vars` | Redact env var values from output |
+| `--no-ask-user` | Disable agent questions (fully autonomous) |
 
 ### Runtime Slash Commands
 
@@ -460,8 +538,12 @@ Safe, repeatable automation with explicit permissions.
 - ✅ Use `/reset-allowed-tools` to clear session approvals
 - ✅ `--allow-tool` and `--deny-tool` enable automation
 - ✅ Deny rules take precedence over allow rules
-- ✅ `--yolo` enables full autonomy - use only in safe environments
+- ✅ `--yolo` / `--allow-all` enables full autonomy - use only in safe environments
 - ✅ Trusted directories control Copilot's file access scope
+- ✅ URL permissions (`--allow-url`, `--deny-url`) control network access
+- ✅ `url` pattern enables tool-level URL matching
+- ✅ `--secret-env-vars` protects sensitive values from leaking
+- ✅ `--no-ask-user` enables fully autonomous operation
 
 ## Next Steps
 
@@ -469,6 +551,6 @@ Safe, repeatable automation with explicit permissions.
 
 ## References
 
-- [About Copilot CLI - GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)
+- [Copilot CLI - GitHub Docs](https://docs.github.com/copilot/how-tos/copilot-cli)
 - [Responsible Use of Copilot CLI](https://docs.github.com/en/copilot/responsible-use/copilot-cli)
 - [Use Copilot CLI - GitHub Docs](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli)

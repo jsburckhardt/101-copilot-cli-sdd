@@ -5,57 +5,57 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
-  .columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1em;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
+ .columns {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 1em;
+ }
 ---
 
 # Module 2: Operating Modes & Commands
@@ -69,6 +69,7 @@ style: |
 | Mode | Command | Best for |
 |------|---------|----------|
 | **Interactive** | `copilot` | Exploration, debugging, multi-step |
+| **Interactive+Prompt** | `copilot -i "..."` | Start with task, continue chatting |
 | **Programmatic** | `copilot -p "..."` | CI/CD, scripts, one-shot tasks |
 | **Delegate** | `/delegate` | Long-running, heavy-lifting tasks |
 
@@ -141,11 +142,12 @@ Type **`/help`** to see them all
 | **Session** | `/clear`, `/resume`, `/rename`, `/session`, `/usage` |
 | **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` |
 | **Context** | `/context`, `/compact` |
-| **Config** | `/model`, `/mcp`, `/theme`, `/terminal-setup` |
+| **Config** | `/model`, `/mcp`, `/theme`, `/terminal-setup`, `/streamer-mode`, `/instructions` |
 | **Tools** | `/allow-all`, `/yolo`, `/reset-allowed-tools` |
-| **Extensibility** | `/skills`, `/plugin`, `/agent` |
-| **Sharing** | `/share`, `/feedback` |
+| **Extensibility** | `/skills`, `/plugin`, `/agent`, `/fleet` |
+| **Sharing** | `/share`, `/feedback`, `/copy` |
 | **Account** | `/login`, `/logout`, `/user` |
+| **IDE** | `/ide` |
 | **System** | `/help`, `/exit`, `/init`, `/tasks`, `/lsp`, `/update`, `/chronicle` |
 
 ---
@@ -155,17 +157,17 @@ Type **`/help`** to see them all
 | Shortcut | Action |
 |----------|--------|
 | `@` | Mention files — include as context |
-| `#` | Reference GitHub issues, PRs, discussions (v0.0.420+) |
-| `!` | Run shell commands directly (only way to access shell since v0.0.410) |
-| `Shift+Tab` | Cycle between chat ⟷ edit mode (v0.0.410+) |
+| `#` | Reference GitHub issues, PRs, discussions |
+| `!` | Run shell commands directly (only way to access shell) |
+| `Shift+Tab` | Cycle between chat ⟷ edit mode |
 | `Esc` | Cancel current operation |
 | `ctrl+t` | Toggle reasoning display |
 | `ctrl+x → /` | Quick slash command |
 | `ctrl+c` | Cancel / clear input / exit |
-| `ctrl+d` | Shutdown on empty prompt (v0.0.410+) |
-| `ctrl+y` | Edit plan in terminal editor (v0.0.412+) |
-| `ctrl+f` / `ctrl+b` | Page forward / back in alt-screen (v0.0.419+) |
-| `ctrl+g` | Open prompt in external editor (v0.0.419+) |
+| `ctrl+d` | Shutdown on empty prompt |
+| `ctrl+y` | Edit plan in terminal editor |
+| `ctrl+f` / `ctrl+b` | Page forward / back in alt-screen |
+| `ctrl+g` | Open prompt in external editor |
 
 > See workshop for 25+ additional shortcuts including text editing and alt-screen navigation
 

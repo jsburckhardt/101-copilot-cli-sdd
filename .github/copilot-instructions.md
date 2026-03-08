@@ -26,9 +26,9 @@ REPO_STRUCTURE: TEXT
 - .github/agents/ — Custom agents for workshop management and execution
 >>
 
-WORKSHOP_FLOW: "Installation (01) -> Core Concepts (02-05) -> Advanced (06-12)"
-WORKSHOP_DURATION: "~4 hours"
-TESTED_VERSION: "GitHub Copilot CLI v0.0.420"
+WORKSHOP_FLOW: "Installation (01) -> Core Concepts (02-05) -> Advanced (06-13)"
+WORKSHOP_DURATION: "~4.5 hours"
+TESTED_VERSION: "GitHub Copilot CLI v1.0.2"
 RELEASES_URL: "https://github.com/github/copilot-cli/releases"
 
 DOCKER_SETUP: TEXT

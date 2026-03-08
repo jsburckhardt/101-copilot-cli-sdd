@@ -1,6 +1,6 @@
 # GitHub Copilot CLI Workshop
 
-> **Tested against:** GitHub Copilot CLI **v0.0.420** (Generally Available as of v0.0.418). Check [releases](https://github.com/github/copilot-cli/releases) for newer versions — some features may change or new ones may be added.
+> **Tested against:** GitHub Copilot CLI **v1.0.2** (Generally Available, version 1.0 since v1.0.0). Check [releases](https://github.com/github/copilot-cli/releases) for newer versions — some features may change or new ones may be added.
 
 Welcome to this hands-on workshop for mastering GitHub Copilot CLI! This workshop will take you from installation to advanced automation techniques.
 
@@ -17,17 +17,18 @@ Welcome to this hands-on workshop for mastering GitHub Copilot CLI! This worksho
 By the end of this workshop, you will be able to:
 
 - Install and configure Copilot CLI on any platform
-- Use interactive and programmatic modes effectively, including slash commands
+- Use interactive, interactive-with-prompt, and programmatic modes effectively, including slash commands
 - Manage sessions and delegate tasks to cloud agents
 - Create custom instructions with AGENTS.md and llm.txt
-- Control tool permissions and use `--yolo` mode safely
-- Configure and use MCP servers
+- Control tool permissions, URL access, and use `--yolo` mode safely
+- Configure and use MCP servers, including the built-in GitHub MCP server
 - Create and use skills from agentskills.io
 - Build custom agents for specialized workflows
 - Set up hooks for lifecycle automation
 - Manage context effectively with `/context` and `/compact`
 - Use autopilot mode for autonomous task execution
 - Leverage fleet command for parallel multi-agent workflows
+- Configure IDE integration, accessibility, and team standardization
 
 ## Workshop Modules
 
@@ -44,17 +45,18 @@ By the end of this workshop, you will be able to:
 | 09 | [Custom Agents](09-custom-agents.md) | 25 min | Build specialized agents and subagents |
 | 10 | [Hooks](10-hooks.md) | 20 min | Lifecycle hooks and automation |
 | 11 | [Context Management](11-context.md) | 15 min | `/context`, `/compact`, token optimization |
-| 12 | [Advanced Topics](12-advanced.md) | 30 min | Autopilot, Fleet, environment, CI/CD, LSP config, tips |
+| 12 | [Advanced Topics](12-advanced.md) | 30 min | Autopilot, Fleet, ACP, environment, CI/CD, LSP config, tips |
+| 13 | [Configuration & Environment](13-configuration.md) | 20 min | Config options, env vars, IDE integration, accessibility |
 
-**Total estimated time: ~4.25 hours**
+**Total estimated time: ~4.5 hours**
 
 ## Workshop Flow
 
 ```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  Installation   │────▶│  Core Concepts  │────▶│    Advanced     │
-│   (Module 1)    │     │  (Modules 2-5)  │     │  (Modules 6-12) │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+│ Installation │────▶│ Core Concepts │────▶│ Advanced │
+│ (Module 1) │ │ (Modules 2-5) │ │ (Modules 6-13) │
+└─────────────────┘ └─────────────────┘ └─────────────────┘
 ```
 
 ## How to Use This Workshop
@@ -71,6 +73,9 @@ By the end of this workshop, you will be able to:
 ```bash
 # Start interactive session
 copilot
+
+# Interactive mode with auto-executed prompt
+copilot -i "Fix the bug in main.js"
 
 # Programmatic mode (single prompt)
 copilot -p "your prompt here"
@@ -103,6 +108,9 @@ copilot --resume
 | `/instructions` | View and toggle custom instruction files |
 | `/cwd` | Change working directory |
 | `/research` | Deep research with exportable reports |
+| `/copy` | Copy last response to clipboard |
+| `/ide` | Connect to IDE workspace |
+| `/streamer-mode` | Toggle streamer mode |
 
 ## Environment Setup Check
 

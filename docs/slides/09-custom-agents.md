@@ -5,52 +5,52 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
 ---
 
 # Module 9: Custom Agents
@@ -80,11 +80,11 @@ Create with **`/agent`** slash command or manually
 ---
 name: test-agent
 description: Writes tests following TDD principles
-model: claude-sonnet-4.6          # optional
-tools:                             # optional (default = all)
-  - shell
-  - read
-  - write
+model: claude-sonnet-4.6 # optional
+tools: # optional (default = all)
+ - shell
+ - read
+ - write
 ---
 
 # Test Writing Agent
@@ -117,7 +117,7 @@ Invoked automatically — not listed in `/agent` menu
 
 | Agent | What it does | Trigger |
 |-------|-------------|---------|
-| **Explore** | Fast codebase Q&A; uses GitHub MCP tools (v0.0.414+) | Codebase analysis prompts |
+| **Explore** | Fast codebase Q&A; uses GitHub MCP tools | Codebase analysis prompts |
 | **Task** | Run commands smartly | Command execution prompts |
 | **Plan** | Implementation planning | Planning prompts |
 | **Code-review** | High-signal reviews | Review prompts |
@@ -127,15 +127,15 @@ Invoked automatically — not listed in `/agent` menu
 ## Agent Hierarchy
 
 ```
-User agents          (~/.config/copilot/agents/)  ← highest priority
-       ↓
-Enterprise agents    (.github-private repo)
-       ↓
-Organization agents  (.github-private repo)
-       ↓
-Repository agents    (.github/agents/)
-       ↓
-AGENTS.md            (root or subdirectory)
+User agents (~/.config/copilot/agents/) ← highest priority
+ ↓
+Enterprise agents (.github-private repo)
+ ↓
+Organization agents (.github-private repo)
+ ↓
+Repository agents (.github/agents/)
+ ↓
+AGENTS.md (root or subdirectory)
 ```
 
 User-level agents **override** repo-level agents with the same name

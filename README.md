@@ -1,6 +1,6 @@
 # 101-copilot-cli-sdd
 
-A quick guide to use copilot cli (Generally Available as of v0.0.418) + a sample SDD (Specification-Driven Development) project
+A quick guide to use GitHub Copilot CLI (tested with **v1.0.2**) + a sample SDD (Specification-Driven Development) project
 
 ## Workshop
 

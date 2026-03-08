@@ -5,52 +5,52 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
 ---
 
 # Module 6: MCP Servers
@@ -64,10 +64,10 @@ style: |
 **Model Context Protocol** — an open standard that gives Copilot **plugins**
 
 ```
-┌─────────────┐     ┌─────────────┐     ┌─────────────────┐
-│ Copilot CLI │────>│ MCP Server  │────>│ External Tools  │
-│             │<────│             │<────│ & Resources     │
-└─────────────┘     └─────────────┘     └─────────────────┘
+┌─────────────┐ ┌─────────────┐ ┌─────────────────┐
+│ Copilot CLI │────>│ MCP Server │────>│ External Tools │
+│ │<────│ │<────│ & Resources │
+└─────────────┘ └─────────────┘ └─────────────────┘
 ```
 
 Connect Copilot to: databases, APIs, file systems, search, Slack, and more
@@ -92,28 +92,28 @@ Lives at **`~/.copilot/mcp-config.json`**
 
 ```json
 {
-  "mcpServers": {
-    "memory": {
-      "type": "local",
-      "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"]
-    },
-    "exa": { "type": "http", "url": "https://mcp.exa.ai/mcp" }
-  }
+ "mcpServers": {
+ "memory": {
+ "type": "local",
+ "command": "npx",
+ "args": ["-y", "@modelcontextprotocol/server-memory"]
+ },
+ "exa": { "type": "http", "url": "https://mcp.exa.ai/mcp" }
+ }
 }
 ```
 
 **Local** → `"type": "local"` + `command`/`args` | **Remote** → `"type": "http"` + `url`
 Optional: `"tools": ["*"]` (default), `"env": {}`, `"headers": {}`
 
-> Server names support npm-style identifiers like `@modelcontextprotocol/server` (v0.0.419+)
-> Env vars in `command`/`args`/`cwd` are auto-inherited from your shell (v0.0.419+)
+> Server names support npm-style identifiers like `@modelcontextprotocol/server`
+> Env vars in `command`/`args`/`cwd` are auto-inherited from your shell
 
 ---
 
 ## Enterprise Security
 
-> **Policy Enforcement (v0.0.416+):**
+> **Policy Enforcement:**
 > Org admins can **block third-party MCP servers** via policy.
 > Blocked servers won't start or connect. Requires Copilot Business/Enterprise.
 
@@ -152,15 +152,32 @@ All from inside a Copilot session:
 
 | Command | Action |
 |---------|--------|
-| `/mcp show` | List all servers (grouped by source, v0.0.415) |
+| `/mcp show` | List all servers (grouped by source) |
 | `/mcp show NAME` | View details and tools for a specific server |
 | `/mcp add` | Interactive setup (available immediately) |
 | `/mcp edit NAME` | Edit an existing server |
 | `/mcp delete NAME` | Remove a server |
-| `/mcp reload` | Reload config without restart (v0.0.412+) |
+| `/mcp reload` | Reload config without restart |
 | `/mcp disable/enable` | Toggle server on/off |
 
 > Use `--additional-mcp-config "$(cat file.json)"` for session-only servers
+
+---
+
+## GitHub MCP Server Controls (v1.0.x)
+
+```bash
+# Add specific tools/toolsets
+copilot --add-github-mcp-tool "create_issue"
+copilot --add-github-mcp-toolset "repos"
+
+# Enable ALL GitHub MCP tools
+copilot --enable-all-github-mcp-tools
+
+# Disable built-in servers
+copilot --disable-builtin-mcps
+copilot --disable-mcp-server "my-server"
+```
 
 ---
 

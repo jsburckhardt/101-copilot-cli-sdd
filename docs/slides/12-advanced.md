@@ -5,52 +5,52 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
 ---
 
 # Module 12: Advanced Topics
@@ -65,6 +65,7 @@ style: |
 |-------|------------------|
 | **Autopilot** | Autonomous multi-step execution |
 | **Fleet** | Parallel sub-agents |
+| **ACP** | Agent Client Protocol server |
 | **CI/CD** | Pipeline integration |
 | **Environment** | Config, env vars, `--bash-env` |
 | **LSP** | Language server timeout config |
@@ -79,6 +80,12 @@ style: |
 
 ```bash
 copilot --autopilot -p "Create an Express API with auth, tests, and docs"
+
+# Limit continuation rounds (v1.0.x)
+copilot --autopilot --max-autopilot-continues 10
+
+# Fully autonomous — no questions (v1.0.x)
+copilot --autopilot --no-ask-user --allow-all-tools
 ```
 
 Or toggle mid-session:
@@ -87,8 +94,8 @@ Or toggle mid-session:
 /autopilot off
 ```
 
-- **Permission elevation** (v0.0.414) — shows dialog to prevent auto-denied tool errors
-- **Plan approval menu** (v0.0.415) — model-curated actions incl. **autopilot+fleet** option
+- **Permission elevation** — shows dialog to prevent auto-denied tool errors
+- **Plan approval menu** — model-curated actions incl. **autopilot+fleet** option
 
 > ✅ Boilerplate, well-defined tasks
 > ❌ High-risk ops, exploratory work
@@ -105,17 +112,17 @@ Or toggle mid-session:
 
 ```
 Your Prompt → Orchestrator
-                  ↓
-    ┌──────┬──────┬──────┬──────┐
-    │ Ag 1 │ Ag 2 │ Ag 3 │ Ag 4 │  parallel!
-    └──────┴──────┴──────┴──────┘
-                  ↓
-         Orchestrator validates       ← v0.0.412+
-                  ↓
-         Consolidated output
+ ↓
+ ┌──────┬──────┬──────┬──────┐
+ │ Ag 1 │ Ag 2 │ Ag 3 │ Ag 4 │ parallel!
+ └──────┴──────┴──────┴──────┘
+ ↓
+ Orchestrator validates
+ ↓
+ Consolidated output
 ```
 
-> v0.0.412: Orchestrator validates sub-agent work, parallel dispatch (9+ concurrent agents)
+> Orchestrator validates sub-agent work, parallel dispatch (9+ concurrent agents)
 
 ---
 
@@ -124,13 +131,13 @@ Your Prompt → Orchestrator
 ```yaml
 # .github/workflows/copilot-review.yml
 - name: Run Code Review
-  env:
-    COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
-  run: |
-    copilot -p "Review PR changes" \
-      --allow-tool 'shell(git)' \
-      --deny-tool 'write' \
-      --silent
+ env:
+ COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_TOKEN }}
+ run: |
+ copilot -p "Review PR changes" \
+ --allow-tool 'shell(git)' \
+ --deny-tool 'write' \
+ --silent
 ```
 
 Key flags for automation: `--silent`, `--allow-tool`, `--deny-tool`
@@ -153,9 +160,9 @@ copilot --bash-env
 export XDG_CONFIG_HOME=/custom/path
 
 # Auth tokens (in order of precedence)
-export COPILOT_GITHUB_TOKEN="ghp_..."  # highest priority
+export COPILOT_GITHUB_TOKEN="ghp_..." # highest priority
 export GH_TOKEN="ghp_..."
-export GITHUB_TOKEN="ghp_..."          # lowest priority
+export GITHUB_TOKEN="ghp_..." # lowest priority
 ```
 
 ---
@@ -176,31 +183,31 @@ alias cop-resume='copilot --resume'
 
 ## /research & /chronicle
 
-**`/research`** (v0.0.417) — deep-research workflow with exportable reports:
+**`/research`** — deep-research workflow with exportable reports:
 ```
 /research "Compare REST vs GraphQL for mobile backends"
 ```
 
-**`/chronicle`** (v0.0.419, experimental) — session-history insights:
+**`/chronicle`** (experimental) — session-history insights:
 ```
-/chronicle standup    # what you accomplished
-/chronicle tips       # feature suggestions
-/chronicle improve    # workflow improvements
+/chronicle standup # what you accomplished
+/chronicle tips # feature suggestions
+/chronicle improve # workflow improvements
 ```
 
 > ⚠️ `/chronicle` is experimental — subcommands may change
 
 ---
 
-## New Flags & Commands (v0.0.416–v0.0.419)
+## New Flags & Commands
 
 | What | Details |
 |------|---------|
-| `--help` (v0.0.416) | Now shows descriptions, examples, sorted flags |
-| Status line (v0.0.416) | Auto two-line layout on narrow terminals |
-| `/diagnose` (v0.0.419) | Troubleshooting: session & environment diagnostics |
-| `--mouse` / `--no-mouse` (v0.0.419) | Alt-screen mouse control (also `mouse` config) |
-| `--disable-parallel-tools-execution` | **Removed** in v0.0.418 |
+| `--help` | Now shows descriptions, examples, sorted flags |
+| Status line | Auto two-line layout on narrow terminals |
+| `/diagnose` | Troubleshooting: session & environment diagnostics |
+| `--mouse` / `--no-mouse` | Alt-screen mouse control (also `mouse` config) |
+| `--disable-parallel-tools-execution` | **Removed** |
 
 ---
 

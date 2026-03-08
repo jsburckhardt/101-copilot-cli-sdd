@@ -78,7 +78,7 @@ style: |
 | WinGet | `winget install GitHub.Copilot` | Windows |
 | Dev Container | Built-in | Codespaces |
 
-> 🎉 Copilot CLI is **Generally Available** (v0.0.418+)
+> 🎉 Copilot CLI is **Generally Available** (v1.0.x)
 > 💡 Already installed? `copilot update` — now replaces the full binary
 
 ---
