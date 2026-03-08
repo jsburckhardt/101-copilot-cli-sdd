@@ -5,52 +5,52 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
 ---
 
 # Module 8: Plugins
@@ -63,15 +63,15 @@ style: |
 
 ```
 ┌─────────────────────┐
-│    Copilot CLI       │
+│ Copilot CLI │
 ├─────────────────────┤
-│  Built-in Tools     │  shell, read, write
+│ Built-in Tools │ shell, read, write
 ├─────────────────────┤
-│  MCP Servers        │  Module 6
+│ MCP Servers │ Module 6
 ├─────────────────────┤
-│  Skills             │  Module 7
+│ Skills │ Module 7
 ├─────────────────────┤
-│  Plugins            │  ← This module
+│ Plugins │ ← This module
 └─────────────────────┘
 ```
 
@@ -102,16 +102,16 @@ Plugins are configured as **MCP servers** in `~/.copilot/mcp-config.json`
 
 ```json
 {
-  "mcpServers": {
-    "brave-search": {
-      "type": "local",
-      "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-brave-search"],
-      "env": {
-        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
-      }
-    }
-  }
+ "mcpServers": {
+ "brave-search": {
+ "type": "local",
+ "command": "npx",
+ "args": ["-y", "@anthropic/mcp-server-brave-search"],
+ "env": {
+ "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+ }
+ }
+ }
 }
 ```
 
@@ -119,20 +119,20 @@ Plugins are configured as **MCP servers** in `~/.copilot/mcp-config.json`
 
 ---
 
-## Remote Plugin Sources (v0.0.413+)
+## Remote Plugin Sources
 
 ```json
 {
-  "mcpServers": {
-    "remote-plugin": {
-      "url": "https://plugin-server.example.com/mcp/",
-      "requestInit": {
-        "headers": {
-          "Authorization": "Bearer ${TOKEN}"
-        }
-      }
-    }
-  }
+ "mcpServers": {
+ "remote-plugin": {
+ "url": "https://plugin-server.example.com/mcp/",
+ "requestInit": {
+ "headers": {
+ "Authorization": "Bearer ${TOKEN}"
+ }
+ }
+ }
+ }
 }
 ```
 

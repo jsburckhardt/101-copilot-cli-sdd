@@ -5,52 +5,52 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
 ---
 
 # Module 11: Context Management
@@ -63,15 +63,15 @@ style: |
 
 ```
 ┌──────────────────────────────────────┐
-│  System Instructions (AGENTS.md)     │  fixed overhead
+│ System Instructions (AGENTS.md) │ fixed overhead
 ├──────────────────────────────────────┤
-│  Conversation History                │  grows with chat
+│ Conversation History │ grows with chat
 ├──────────────────────────────────────┤
-│  File Contents                       │  can be large
+│ File Contents │ can be large
 ├──────────────────────────────────────┤
-│  Tool Results                        │  varies
+│ Tool Results │ varies
 ├──────────────────────────────────────┤
-│  ← Space left for response →        │  shrinks!
+│ ← Space left for response → │ shrinks!
 └──────────────────────────────────────┘
 ```
 
@@ -89,7 +89,7 @@ When full → **auto-compaction** at ~95% capacity
 
 Use **`/model`** to switch models. Available models change frequently — check your session for the current list.
 
-> ⚠️ Model names above are illustrative. Availability varies by subscription tier. v0.0.413 auto-migrated users from claude-sonnet-4.5.
+> ⚠️ Model names above are illustrative. Availability varies by subscription tier. Previous versions auto-migrated users from claude-sonnet-4.5.
 
 ---
 
@@ -103,7 +103,7 @@ Use **`/model`** to switch models. Available models change frequently — check 
 | `/clear` | Reset everything | Switching topics |
 | `/cwd` or `/cd` | Change working directory | Switch project scope |
 | `@path/to/file` | Include file in prompt | Targeted context |
-| `#<number>` | Include issue/PR/discussion | GitHub context (v0.0.420+) |
+| `#<number>` | Include issue/PR/discussion | GitHub context |
 
 ---
 

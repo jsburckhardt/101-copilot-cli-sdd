@@ -5,52 +5,52 @@ paginate: true
 backgroundColor: #ffffff
 color: #242424
 style: |
-  section {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-  }
-  h1 {
-    color: #0078D4;
-    border-bottom: 3px solid #0078D4;
-    padding-bottom: 0.3em;
-  }
-  h2, h3 {
-    color: #0078D4;
-  }
-  code {
-    background: #f3f2f1;
-    color: #242424;
-  }
-  pre {
-    background: #f3f2f1 !important;
-    border-radius: 4px;
-    border-left: 4px solid #0078D4;
-  }
-  table {
-    font-size: 0.85em;
-  }
-  th {
-    background: #0078D4;
-    color: #ffffff;
-  }
-  td {
-    background: #f3f2f1;
-  }
-  strong {
-    color: #0078D4;
-  }
-  blockquote {
-    border-left: 4px solid #0078D4;
-    color: #605e5c;
-    background: #f3f2f1;
-    padding: 0.5em 1em;
-    border-radius: 4px;
-  }
-  a {
-    color: #0078D4;
-  }
-  footer {
-    color: #605e5c;
-  }
+ section {
+ font-family: 'Segoe UI', system-ui, sans-serif;
+ }
+ h1 {
+ color: #0078D4;
+ border-bottom: 3px solid #0078D4;
+ padding-bottom: 0.3em;
+ }
+ h2, h3 {
+ color: #0078D4;
+ }
+ code {
+ background: #f3f2f1;
+ color: #242424;
+ }
+ pre {
+ background: #f3f2f1 !important;
+ border-radius: 4px;
+ border-left: 4px solid #0078D4;
+ }
+ table {
+ font-size: 0.85em;
+ }
+ th {
+ background: #0078D4;
+ color: #ffffff;
+ }
+ td {
+ background: #f3f2f1;
+ }
+ strong {
+ color: #0078D4;
+ }
+ blockquote {
+ border-left: 4px solid #0078D4;
+ color: #605e5c;
+ background: #f3f2f1;
+ padding: 0.5em 1em;
+ border-radius: 4px;
+ }
+ a {
+ color: #0078D4;
+ }
+ footer {
+ color: #605e5c;
+ }
 ---
 
 # Module 5: Tools & Permissions
@@ -86,7 +86,7 @@ Three choices when Copilot wants to use a tool:
 
 > Use `/reset-allowed-tools` to clear session approvals
 
-> ⚠️ **v0.0.416+:** Undo operations now always require confirmation — they no longer auto-apply
+> ⚠️ Undo operations now always require confirmation — they no longer auto-apply
 
 ---
 
@@ -103,9 +103,9 @@ copilot -p "Create README" --allow-tool 'write'
 
 # Deny takes precedence over allow
 copilot -p "Analyze project" \
-  --allow-all-tools \
-  --deny-tool 'shell(rm)' \
-  --deny-tool 'write'
+ --allow-all-tools \
+ --deny-tool 'shell(rm)' \
+ --deny-tool 'write'
 ```
 
 ---
@@ -124,6 +124,28 @@ copilot --yolo -p "Set up a Node.js project"
 - ✅ Codespaces that can be reset
 
 **Never** in production or with important data
+
+---
+
+## URL & Path Permissions (v1.0.x)
+
+```bash
+# Allow/deny URL access
+copilot --allow-url github.com --deny-url malicious-site.com
+
+# URL pattern in tool permissions
+copilot --allow-tool 'url(https://api.github.com)'
+
+# Path controls
+copilot --add-dir ~/other-project
+copilot --disallow-temp-dir
+
+# Redact sensitive env vars
+copilot --secret-env-vars MY_API_KEY
+
+# Fully autonomous (no questions)
+copilot --no-ask-user --allow-all-tools
+```
 
 ---
 

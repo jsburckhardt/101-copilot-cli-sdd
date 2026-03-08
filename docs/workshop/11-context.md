@@ -23,17 +23,17 @@ Context is everything Copilot "remembers" during a session:
 
 ```
 ┌────────────────────────────────────────────────┐
-│                  Context Window                │
+│ Context Window │
 ├────────────────────────────────────────────────┤
-│ System Instructions (AGENTS.md, etc.)          │
+│ System Instructions (AGENTS.md, etc.) │
 ├────────────────────────────────────────────────┤
-│ Conversation History (prompts + responses)     │
+│ Conversation History (prompts + responses) │
 ├────────────────────────────────────────────────┤
-│ File Contents (read during session)            │
+│ File Contents (read during session) │
 ├────────────────────────────────────────────────┤
-│ Tool Results (command outputs, etc.)           │
+│ Tool Results (command outputs, etc.) │
 ├────────────────────────────────────────────────┤
-│ Available Space for Response                   │
+│ Available Space for Response │
 └────────────────────────────────────────────────┘
 ```
 
@@ -43,15 +43,16 @@ Context is everything Copilot "remembers" during a session:
 
 | Model (example) | Approximate Limit |
 |-------|-------------------|
-| GPT-4 | ~128K tokens |
 | GPT-4.1 | ~128K tokens |
-| Claude Sonnet 4 | ~200K tokens |
+| GPT-5.2 | ~128K tokens |
+| Claude Sonnet 4.6 | ~200K tokens |
+| Claude Opus 4.6 | ~200K tokens |
 
 > [!NOTE]
-> **Model auto-migration (v0.0.413):** Users previously on `claude-sonnet-4.5` are automatically migrated to the current default model on startup.
+> **Model auto-migration:** Users previously on older models are automatically migrated to the current default model on startup.
 
 > [!NOTE]
-> Use `/model` to select a model and `/context` to see context window usage. The model list changes frequently; examples at the time of writing include GPT-4.1, Claude Sonnet 4, and others.
+> Use `/model` to select a model and `/context` to see context window usage. The model list changes frequently; available models at the time of writing include: claude-sonnet-4.6, claude-opus-4.6, claude-opus-4.6-fast, gpt-5.4, gpt-5.2, gpt-4.1, gemini-3-pro-preview, and others.
 >
 > Model availability may vary by Copilot subscription tier.
 
@@ -81,7 +82,7 @@ What's the status of #150 and are there related PRs?
 
 When you type `#`, matching issues and PRs from the current repository are displayed below the prompt box. Use the arrow keys to select and press Tab to complete.
 
-> ⚠️ **FEEDBACK**: The `#` reference shortcut was introduced in **v0.0.420**. If your version is older, this feature may not be available.
+> ⚠️ **FEEDBACK**: The `#` reference shortcut requires Copilot CLI v1.0.x. Verify availability with `copilot --version`.
 
 ### Auto-Compaction
 
@@ -96,60 +97,60 @@ When context reaches ~95% capacity, Copilot automatically compresses history in 
 **Steps:**
 
 1. Start a fresh session:
-   ```bash
-   copilot
-   ```
+ ```bash
+ copilot
+ ```
 
 2. Check initial context:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
-   You'll see a visual overview of your current token usage.
+ You'll see a visual overview of your current token usage.
 
 3. Check session stats with `/usage`:
-   ```
-   /usage
-   ```
+ ```
+ /usage
+ ```
 
-   You'll see:
-   - Premium requests used in the current session
-   - Session duration
-   - Total lines of code edited
-   - Token usage breakdown per model
+ You'll see:
+ - Premium requests used in the current session
+ - Session duration
+ - Total lines of code edited
+ - Token usage breakdown per model
 
 4. Have a conversation that uses context:
-   ```
-   Explain the concept of dependency injection
-   ```
+ ```
+ Explain the concept of dependency injection
+ ```
 
 5. Check context again:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 6. Read some files (try using `@` to include a file):
-   ```
-   Show me the contents of package.json
-   ```
+ ```
+ Show me the contents of package.json
+ ```
 
 7. Check how file reading affects context:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 8. Continue building context:
-   ```
-   Now explain how TypeScript interfaces work
-   ```
-   ```
-   Give me examples of generics in TypeScript
-   ```
+ ```
+ Now explain how TypeScript interfaces work
+ ```
+ ```
+ Give me examples of generics in TypeScript
+ ```
 
 9. Monitor the growth:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 **Expected Outcome:**
 You understand how different actions consume context.
@@ -163,31 +164,31 @@ You understand how different actions consume context.
 1. Continue from Exercise 1 or start a session with significant history.
 
 2. Check current context:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 3. Run manual compaction:
-   ```
-   /compact
-   ```
+ ```
+ /compact
+ ```
 
 4. Check context after compaction:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 5. Notice:
-   - Token count decreased
-   - Core information preserved
-   - Detailed conversation history summarized
+ - Token count decreased
+ - Core information preserved
+ - Detailed conversation history summarized
 
 6. Verify context was preserved:
-   ```
-   What were we discussing earlier?
-   ```
+ ```
+ What were we discussing earlier?
+ ```
 
-   Copilot should remember the key topics.
+ Copilot should remember the key topics.
 
 **Expected Outcome:**
 Context reduced while preserving important information.
@@ -199,43 +200,43 @@ Context reduced while preserving important information.
 **Steps:**
 
 1. **Inefficient approach** (uses lots of context):
-   ```bash
-   copilot
-   ```
-   ```
-   Read all the files in the src directory and tell me what each one does
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ Read all the files in the src directory and tell me what each one does
+ ```
 
-   This loads all files into context at once.
+ This loads all files into context at once.
 
 2. Check context:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 3. Start a new session with efficient approach:
-   ```bash
-   copilot
-   ```
-   ```
-   List the files in src directory
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ List the files in src directory
+ ```
 
-   Then selectively:
-   ```
-   Show me just the main entry point file
-   ```
+ Then selectively:
+ ```
+ Show me just the main entry point file
+ ```
 
 4. Compare context usage:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 5. **Best practices for efficient context:**
-   - Load files on-demand, not all at once
-   - Use specific queries instead of broad exploration
-   - Compact regularly during long sessions
-   - Clear context when switching topics
+ - Load files on-demand, not all at once
+ - Use specific queries instead of broad exploration
+ - Compact regularly during long sessions
+ - Clear context when switching topics
 
 **Expected Outcome:**
 You can manage context efficiently.
@@ -247,45 +248,45 @@ You can manage context efficiently.
 **Steps:**
 
 1. **Use the Explore agent for overview:**
-   ```bash
-   copilot
-   ```
-   ```
-   Give me an overview of this codebase structure
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ Give me an overview of this codebase structure
+ ```
 
-   Copilot delegates to the Explore agent automatically, which doesn't pollute main context.
-   As of v0.0.414, it can also use GitHub MCP tools when available.
+ Copilot delegates to the Explore agent automatically, which doesn't pollute main context.
+ it can also use GitHub MCP tools when available.
 
 2. **Focus on specific areas:**
-   ```
-   I want to understand the authentication flow. What files should I look at?
-   ```
+ ```
+ I want to understand the authentication flow. What files should I look at?
+ ```
 
 3. **Read selectively:**
-   ```
-   Show me only the auth middleware file
-   ```
+ ```
+ Show me only the auth middleware file
+ ```
 
 4. **Use grep instead of reading entire files:**
-   ```
-   Search for "authenticate" in the codebase
-   ```
+ ```
+ Search for "authenticate" in the codebase
+ ```
 
 5. **Clear when switching tasks:**
-   ```
-   /clear
-   ```
-   ```
-   Now let's look at the database layer
-   ```
+ ```
+ /clear
+ ```
+ ```
+ Now let's look at the database layer
+ ```
 
 6. **Leverage file-specific questions:**
-   ```
-   In src/db/connection.ts, how is the connection pool configured?
-   ```
+ ```
+ In src/db/connection.ts, how is the connection pool configured?
+ ```
 
-   Copilot reads only what's needed.
+ Copilot reads only what's needed.
 
 **Expected Outcome:**
 Large codebases manageable without hitting limits.
@@ -297,52 +298,52 @@ Large codebases manageable without hitting limits.
 **Steps:**
 
 1. **Choose the right model:**
-   ```bash
-   copilot
-   ```
-   ```
-   /model
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ /model
+ ```
 
-   Select a model with larger context if available.
+ Select a model with larger context if available.
 
 2. **Use specific instructions:**
 
-   Instead of:
-   ```
-   Tell me everything about this file
-   ```
+ Instead of:
+ ```
+ Tell me everything about this file
+ ```
 
-   Use:
-   ```
-   What does the processPayment function in payment.ts do?
-   ```
+ Use:
+ ```
+ What does the processPayment function in payment.ts do?
+ ```
 
 3. **Batch related questions:**
 
-   Instead of:
-   ```
-   What does function A do?
-   What does function B do?
-   What does function C do?
-   ```
+ Instead of:
+ ```
+ What does function A do?
+ What does function B do?
+ What does function C do?
+ ```
 
-   Use:
-   ```
-   Explain functions A, B, and C in auth.ts
-   ```
+ Use:
+ ```
+ Explain functions A, B, and C in auth.ts
+ ```
 
 4. **Use references instead of copies:**
-   ```
-   Look at the PaymentService class - don't repeat the code, just explain the flow
-   ```
+ ```
+ Look at the PaymentService class - don't repeat the code, just explain the flow
+ ```
 
 5. **Summarize when appropriate:**
-   ```
-   Summarize what we've learned so far in 3 bullet points
-   ```
+ ```
+ Summarize what we've learned so far in 3 bullet points
+ ```
 
-   Then clear and continue with the summary as context.
+ Then clear and continue with the summary as context.
 
 **Expected Outcome:**
 Maximum utility from available context.
@@ -354,37 +355,37 @@ Maximum utility from available context.
 **Steps:**
 
 1. Start a session and fill context deliberately:
-   ```bash
-   copilot
-   ```
+ ```bash
+ copilot
+ ```
 
 2. Generate lots of content:
-   ```
-   Write a detailed explanation of microservices architecture with examples
-   ```
-   ```
-   Now explain event-driven architecture in detail
-   ```
-   ```
-   Compare REST vs GraphQL with code examples for both
-   ```
+ ```
+ Write a detailed explanation of microservices architecture with examples
+ ```
+ ```
+ Now explain event-driven architecture in detail
+ ```
+ ```
+ Compare REST vs GraphQL with code examples for both
+ ```
 
 3. Continue until you see auto-compaction trigger:
-   ```
-   Explain the CQRS pattern with implementation details
-   ```
+ ```
+ Explain the CQRS pattern with implementation details
+ ```
 
 4. Watch for the auto-compaction message.
 
 5. After compaction:
-   ```
-   /context
-   ```
+ ```
+ /context
+ ```
 
 6. Verify continuity:
-   ```
-   What architectural patterns have we discussed?
-   ```
+ ```
+ What architectural patterns have we discussed?
+ ```
 
 **Expected Outcome:**
 Auto-compaction preserves session continuity.
@@ -396,46 +397,46 @@ Auto-compaction preserves session continuity.
 **Steps:**
 
 1. **Phase 1: Discovery (low context)**
-   ```bash
-   copilot
-   ```
-   ```
-   What are the main components of this application?
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ What are the main components of this application?
+ ```
 
-   Copilot may delegate to the Explore agent, keeping main context clean.
+ Copilot may delegate to the Explore agent, keeping main context clean.
 
 2. **Phase 2: Focus (targeted context)**
-   ```
-   /clear
-   ```
-   ```
-   Let's focus on the API layer. Show me the main router file.
-   ```
+ ```
+ /clear
+ ```
+ ```
+ Let's focus on the API layer. Show me the main router file.
+ ```
 
 3. **Phase 3: Deep dive (specific context)**
-   ```
-   I want to add a new endpoint. Show me an existing endpoint as a template.
-   ```
+ ```
+ I want to add a new endpoint. Show me an existing endpoint as a template.
+ ```
 
 4. **Phase 4: Implementation (working context)**
-   ```
-   Create a new endpoint for user preferences based on that pattern
-   ```
+ ```
+ Create a new endpoint for user preferences based on that pattern
+ ```
 
 5. **Phase 5: Cleanup (compact)**
-   ```
-   /compact
-   ```
-   ```
-   Now let's write tests for the new endpoint
-   ```
+ ```
+ /compact
+ ```
+ ```
+ Now let's write tests for the new endpoint
+ ```
 
 6. **Monitor throughout:**
-   After each phase:
-   ```
-   /context
-   ```
+ After each phase:
+ ```
+ /context
+ ```
 
 **Expected Outcome:**
 Systematic workflow keeps context under control.
@@ -453,7 +454,7 @@ Systematic workflow keeps context under control.
 | `/cwd` or `/cd` | Change working directory (affects context scope) |
 | `/add-dir` | Add directory to accessible scope |
 | `@path/to/file` | Include specific file contents in your prompt |
-| `#<number>` | Include a GitHub issue, PR, or discussion in your prompt (v0.0.420+) |
+| `#<number>` | Include a GitHub issue, PR, or discussion in your prompt |
 
 ### Context Categories
 
@@ -473,7 +474,7 @@ Systematic workflow keeps context under control.
 | `/compact` | Long session, need to continue |
 | Explore agent | Codebase overview without context cost |
 | `@path/to/file` | Include specific files without broad reads |
-| `#<number>` | Pull issue/PR/discussion context directly (v0.0.420+) |
+| `#<number>` | Pull issue/PR/discussion context directly |
 | Selective reading | Large files, specific needs |
 | Summarization | Preserve knowledge, reduce tokens |
 
@@ -504,7 +505,7 @@ Systematic workflow keeps context under control.
 - ✅ `/clear` resets for topic changes
 - ✅ Auto-compaction triggers at ~95% capacity
 - ✅ Use `@path/to/file` to include specific files in prompts
-- ✅ Use `#<number>` to pull GitHub issues, PRs, or discussions into context (v0.0.420+)
+- ✅ Use `#<number>` to pull GitHub issues, PRs, or discussions into context
 - ✅ Efficient prompting extends useful session length
 - ✅ Explore agent preserves main context
 
