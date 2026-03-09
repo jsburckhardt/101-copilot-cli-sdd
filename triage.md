@@ -1,7 +1,7 @@
 # Workshop FEEDBACK Triage
 
 > Auto-generated from all `⚠️ **FEEDBACK**` callouts across workshop modules.
-> Workshop version: **v0.0.412**
+> Workshop version: **v1.0.2**
 
 ### How to use this file
 - Set **Status** to one of: `pending` · `fix` · `skip` · `done`
@@ -22,9 +22,9 @@
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 3 | [L109](docs/workshop/02-modes.md#L109) | New keyboard shortcuts (v0.0.410–v0.0.412) require specific terminal capabilities: Shift+Enter needs kitty keyboard protocol; Ctrl+Z is Unix only; Page Up/Down and double/triple-click require alt-screen mode; Ctrl+Y/Ctrl+X Ctrl+E require `$EDITOR`/`$VISUAL` set. | 📅 Version-specific | done | WARNING |
-| 4 | [L115](docs/workshop/02-modes.md#L115) | Shell mode removed from Shift+Tab cycle in v0.0.410 — now **only accessible via `!`** (e.g., `! ls -la`). Breaking change. | 📅 Version-specific | done | remove any shift+tab cycle for shell mode - it is no longer a feature |
-| 5 | [L136](docs/workshop/02-modes.md#L136) | `/update` and `/changelog` introduced in v0.0.412. Use `/changelog` for release notes and `/update` for install instructions. | 📅 Version-specific | done | remove it - the workshop targets that version |
+| 3 | [L109](docs/workshop/02-modes.md#L109) | New keyboard shortcuts require specific terminal capabilities: Shift+Enter needs kitty keyboard protocol; Ctrl+Z is Unix only; Page Up/Down and double/triple-click require alt-screen mode; Ctrl+Y/Ctrl+X Ctrl+E require `$EDITOR`/`$VISUAL` set. | 📅 Version-specific | done | WARNING |
+| 4 | [L115](docs/workshop/02-modes.md#L115) | Shell mode removed from Shift+Tab cycle — now **only accessible via `!`** (e.g., `! ls -la`). Breaking change. | 📅 Version-specific | done | remove any shift+tab cycle for shell mode - it is no longer a feature |
+| 5 | [L136](docs/workshop/02-modes.md#L136) | `/update` and `/changelog` introduced. Use `/changelog` for release notes and `/update` for install instructions. | 📅 Version-specific | done | remove it - the workshop targets that version |
 | 6 | [L140](docs/workshop/02-modes.md#L140) | Exercises require authentication. If "not authenticated" errors appear, set `GITHUB_TOKEN`, `GH_TOKEN`, or `COPILOT_GITHUB_TOKEN`. | 🔑 Auth | done | add a Note to authenticate before running the exercies |
 | 7 | [L292](docs/workshop/02-modes.md#L292) | Always specify exact filenames in prompts for consistent results — omitting them may cause Copilot to generate varying filenames. | 💡 Prompt tip | done | make it a Tip |
 | 8 | [L339](docs/workshop/02-modes.md#L339) | Avoid referencing specific line counts for short files — Copilot may reason about file length rather than run the expected command. | 💡 Prompt tip | done | make it a Tip |
@@ -36,6 +36,8 @@
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
+| 10 | [L41](docs/workshop/03-sessions.md#L41) | Session persistence behavior unclear. Each `copilot` invocation starts a **fresh session** — auto-resume behavior unverified. `--resume` flag is always required to restore a previous session. | 🐛 Bug/Unclear | done | make it clear - here are the help details: Session /resume /rename /context /usage /session /compact /share |
+| 11 | [L313](docs/workshop/03-sessions.md#L313) | `--share` and `--share-gist` flags not visible in `copilot --help` — may be version-gated or preview only. | 📅 Version-specific | done | delete, we shouldn't use any version specific details |
 | 12 | [L60](docs/workshop/03-instructions.md#L60) | Module exercises can be simulated without a live auth session (file creation only). Full testing requires auth. | 🔑 Auth | done| delete |
 
 ---
@@ -57,6 +59,7 @@
 | 16 | [L319](docs/workshop/05-mcps.md#L319) | `/mcp reload` added in v0.0.412 — prior versions required full session restart to pick up config changes. | 📅 Version-specific | done| delete |
 | 17 | [L436](docs/workshop/05-mcps.md#L436) | Tilde `~` expansion in `cwd` field added in v0.0.410 — use `~/projects/my-server` instead of absolute paths for portability. | 📅 Version-specific | done| delete |
 | 18 | [L461](docs/workshop/05-mcps.md#L461) | Duplicate callout for `/mcp reload` (v0.0.412) in Exercise 5 — consider consolidating with [L319](docs/workshop/05-mcps.md#L319). | 🧹 Cleanup | done| remove duplicate |
+| 13 | [L145](docs/workshop/05-tools.md#L145) | `--allow-tool` and `--deny-tool` flags not visible in `copilot --help` — may be version-gated. Verify with `copilot --help`. | 📅 Version-specific | done | should not write version specific |
 
 ---
 
@@ -66,6 +69,11 @@
 |---|------|-------|----------|--------|-------|
 | 19 | [L408](docs/workshop/06-skills.md#L408) | Exercise relies on external URL `https://agentskills.io` — verify site is live before running exercise; may need a fallback. | 🌐 External dependency | done| delete |
 | 20 | [L566](docs/workshop/06-skills.md#L566) | `/skill list` command may not exist in all versions — verify with `/help` before using. | 📅 Version-specific | done| delete |
+| 14 | [L50](docs/workshop/06-mcps.md#L50) | MCP error visibility in timeline added — errors were silently ignored in earlier versions. | 📅 Version-specific | done| make it a warning |
+| 15 | [L103](docs/workshop/06-mcps.md#L103) | Always validate JSON syntax in `~/.copilot/mcp-config.json` before restarting Copilot to avoid silent failures. | 💡 Tip | done| make it a tip |
+| 16 | [L319](docs/workshop/06-mcps.md#L319) | `/mcp reload` added — prior versions required full session restart to pick up config changes. | 📅 Version-specific | done| delete |
+| 17 | [L436](docs/workshop/06-mcps.md#L436) | Tilde `~` expansion in `cwd` field added — use `~/projects/my-server` instead of absolute paths for portability. | 📅 Version-specific | done| delete |
+| 18 | [L461](docs/workshop/06-mcps.md#L461) | Duplicate callout for `/mcp reload` in Exercise 5 — consider consolidating with [L319](docs/workshop/06-mcps.md#L319). | 🧹 Cleanup | done| remove duplicate |
 
 ---
 
@@ -108,6 +116,8 @@
 |---|------|-------|----------|--------|-------|
 | 10 | [L41](docs/workshop/11-sessions.md#L41) | Session persistence behavior unclear. Each `copilot` invocation starts a **fresh session** — auto-resume behavior unverified. `--resume` flag is always required to restore a previous session. | 🐛 Bug/Unclear | done | make it clear - here are the help details: Session /resume /rename /context /usage /session /compact /share |
 | 11 | [L313](docs/workshop/11-sessions.md#L313) | `--share` and `--share-gist` flags not visible in `copilot --help` for v0.0.400 — may be version-gated or preview only. | 📅 Version-specific | done | delete, we shouldn't use any version specific details |
+| 24 | [L48](docs/workshop/11-context.md#L48) | Claude Sonnet 4.6 added; GPT-5 mini deprecated. Model availability varies by Copilot subscription tier. | 📅 Version-specific | done| use the flag /model select the model and then /context to see what's the context. DON'T USE VERSION SPECIFIC DETAILS update and use opus-46, Gemini 3 Pro ,GPT-5.3-Codex and GPT-5 mini |
+| 25 | [L56](docs/workshop/11-context.md#L56) | Token usage and compaction behavior cannot be fully verified without a live authenticated session. | 🔑 Auth | done| delete |
 
 ---
 
@@ -115,12 +125,12 @@
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 26 | [L45](docs/workshop/12-advanced.md#L45) | `COPILOT_TOKEN` env var usage is unclear — may be script-local only. Prefer `GITHUB_TOKEN`, `GH_TOKEN`, or `COPILOT_GITHUB_TOKEN`. | 🐛 Bug/Unclear | done| put a Important ->  `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN` (in order of precedence): an authentication token that takes precedence over previously stored credentials.|
+| 26 | [L45](docs/workshop/12-advanced.md#L45) | `COPILOT_TOKEN` env var usage is unclear — may be script-local only. Prefer `GITHUB_TOKEN`, `GH_TOKEN`, or `COPILOT_GITHUB_TOKEN`. | 🐛 Bug/Unclear | done| put a Important -> `COPILOT_GITHUB_TOKEN`, `GH_TOKEN`, `GITHUB_TOKEN` (in order of precedence): an authentication token that takes precedence over previously stored credentials.|
 | 27 | [L202](docs/workshop/12-advanced.md#L202) | `--available-tools` and `--excluded-tools` may be synonyms/replacements for `--allow-tool`/`--deny-tool` — documentation inconsistency. Verify with `copilot --help`. | 🐛 Bug/Unclear | done| delete -> they aren't synonyms they are different |
-| 28 | [L240](docs/workshop/12-advanced.md#L240) | Autopilot mode introduced in v0.0.411 — verify availability with `copilot --help`. | 📅 Version-specific | done| delete |
-| 29 | [L324](docs/workshop/12-advanced.md#L324) | `/fleet` introduced in v0.0.411; orchestrator validation and parallel dispatch added in v0.0.412 — verify with `/help`. | 📅 Version-specific | done| delete |
-| 30 | [L434](docs/workshop/12-advanced.md#L434) | `--bash-env` flag introduced in v0.0.412; shell mode `!`-only access change from v0.0.410. Verify with `copilot --help`. | 📅 Version-specific | done| delete |
-| 31 | [L531](docs/workshop/12-advanced.md#L531) | LSP timeout configuration via `lsp.json` added in v0.0.412 — advanced users only. | 📅 Version-specific | done| delete |
+| 28 | [L240](docs/workshop/12-advanced.md#L240) | Autopilot mode introduced — verify availability with `copilot --help`. | 📅 Version-specific | done| delete |
+| 29 | [L324](docs/workshop/12-advanced.md#L324) | `/fleet` introduced; orchestrator validation and parallel dispatch added — verify with `/help`. | 📅 Version-specific | done| delete |
+| 30 | [L434](docs/workshop/12-advanced.md#L434) | `--bash-env` flag introduced; shell mode `!`-only access change. Verify with `copilot --help`. | 📅 Version-specific | done| delete |
+| 31 | [L531](docs/workshop/12-advanced.md#L531) | LSP timeout configuration via `lsp.json` added — advanced users only. | 📅 Version-specific | done| delete |
 | 32 | [L709](docs/workshop/12-advanced.md#L709) | General troubleshooting note: flag availability varies by version — always cross-check with `copilot --version` and `--help`. | 💡 Tip | done| delete |
 
 ---

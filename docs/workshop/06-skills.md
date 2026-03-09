@@ -11,7 +11,7 @@
 - Understand the Agent Skills framework
 - Create project-specific skills
 - Create personal skills for cross-project use
-- Discover skills from agentskills.io
+- Discover and install community skills
 - Use progressive disclosure for efficient context
 
 ## Concepts
@@ -36,9 +36,9 @@ Skills are specialized capabilities that:
 ### Skill Discovery Levels
 
 ```
-Level 1: Discovery      → Copilot reads name/description (always)
-Level 2: Instructions   → Copilot loads SKILL.md body (when relevant)
-Level 3: Resources      → Copilot accesses supporting files (as needed)
+Level 1: Discovery → Copilot reads name/description (always)
+Level 2: Instructions → Copilot loads SKILL.md body (when relevant)
+Level 3: Resources → Copilot accesses supporting files (as needed)
 ```
 
 ## Hands-On Exercises
@@ -50,86 +50,84 @@ Level 3: Resources      → Copilot accesses supporting files (as needed)
 **Steps:**
 
 1. Create the skills directory:
-   ```bash
-   mkdir -p .github/skills/api-docs
-   ```
+ ```bash
+ mkdir -p .github/skills/api-docs
+ ```
 
-2. Create the skill definition:
-   ```bash
-   cat > .github/skills/api-docs/SKILL.md << 'EOF'
-   ---
-   name: api-docs
-   description: Generates comprehensive API documentation from source code. Use when asked to document APIs, create OpenAPI specs, or write endpoint documentation.
-   ---
+2. Create the skill definition file at `.github/skills/api-docs/SKILL.md` with the following contents:
+ ~~~markdown
+ ---
+ name: api-docs
+ description: Generates comprehensive API documentation from source code. Use when asked to document APIs, create OpenAPI specs, or write endpoint documentation.
+ ---
 
-   # API Documentation Generator
+ # API Documentation Generator
 
-   You are an expert technical writer specializing in API documentation.
+ You are an expert technical writer specializing in API documentation.
 
-   ## Capabilities
-   - Generate OpenAPI/Swagger specifications
-   - Write human-readable API guides
-   - Create request/response examples
-   - Document authentication flows
+ ## Capabilities
+ - Generate OpenAPI/Swagger specifications
+ - Write human-readable API guides
+ - Create request/response examples
+ - Document authentication flows
 
-   ## Documentation Style
-   - Use clear, concise language
-   - Include code examples in multiple languages
-   - Document all parameters with types and descriptions
-   - Include error responses and status codes
+ ## Documentation Style
+ - Use clear, concise language
+ - Include code examples in multiple languages
+ - Document all parameters with types and descriptions
+ - Include error responses and status codes
 
-   ## Output Format
+ ## Output Format
 
-   ### For OpenAPI specs:
-   ```yaml
-   openapi: 3.0.0
-   info:
-     title: API Name
-     version: 1.0.0
-   paths:
-     /resource:
-       get:
-         summary: Short description
-         parameters: []
-         responses:
-           '200':
-             description: Success
-   ```
+ ### For OpenAPI specs:
+ ```yaml
+ openapi: 3.0.0
+ info:
+ title: API Name
+ version: 1.0.0
+ paths:
+ /resource:
+ get:
+ summary: Short description
+ parameters: []
+ responses:
+ '200':
+ description: Success
+ ```
 
-   ### For Markdown documentation:
-   ```markdown
-   ## Endpoint Name
+ ### For Markdown documentation:
+ ````markdown
+ ## Endpoint Name
 
-   `METHOD /path`
+ `METHOD /path`
 
-   ### Description
-   Brief description of what this endpoint does.
+ ### Description
+ Brief description of what this endpoint does.
 
-   ### Parameters
-   | Name | Type | Required | Description |
-   |------|------|----------|-------------|
+ ### Parameters
+ | Name | Type | Required | Description |
+ |------|------|----------|-------------|
 
-   ### Response
-   ```json
-   { "example": "response" }
-   ```
-   ```
+ ### Response
+ ```json
+ { "example": "response" }
+ ```
+ ````
 
-   ## Instructions
-   1. First, examine the source code to understand the API structure
-   2. Identify all endpoints, parameters, and response types
-   3. Generate documentation following the style guide above
-   4. Include practical examples that users can copy-paste
-   EOF
-   ```
+ ## Instructions
+ 1. First, examine the source code to understand the API structure
+ 2. Identify all endpoints, parameters, and response types
+ 3. Generate documentation following the style guide above
+ 4. Include practical examples that users can copy-paste
+ ~~~
 
 3. Test the skill:
-   ```bash
-   copilot
-   ```
-   ```
-   Document the API endpoints in this project
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ Document the API endpoints in this project
+ ```
 
 4. Copilot should use the api-docs skill automatically.
 
@@ -143,134 +141,133 @@ API documentation generated following your skill's style guide.
 **Steps:**
 
 1. Create the skill directory:
-   ```bash
-   mkdir -p .github/skills/test-writer
-   ```
+ ```bash
+ mkdir -p .github/skills/test-writer
+ ```
 
-2. Create the main skill file:
-   ```bash
-   cat > .github/skills/test-writer/SKILL.md << 'EOF'
-   ---
-   name: test-writer
-   description: Writes comprehensive unit and integration tests. Use when asked to create tests, improve test coverage, or write test cases.
-   ---
+2. Create the skill file at `.github/skills/test-writer/SKILL.md` with the following contents:
 
-   # Test Writing Specialist
+ ~~~markdown
+ ---
+ name: test-writer
+ description: Writes comprehensive unit and integration tests. Use when asked to create tests, improve test coverage, or write test cases.
+ ---
 
-   You are a QA engineer who writes thorough, maintainable tests.
+ # Test Writing Specialist
 
-   ## Testing Philosophy
-   - Test behavior, not implementation
-   - One assertion concept per test
-   - Use descriptive test names
-   - Follow the AAA pattern (Arrange, Act, Assert)
+ You are a QA engineer who writes thorough, maintainable tests.
 
-   ## Framework Detection
-   Detect the testing framework from:
-   - `package.json` dependencies (Jest, Mocha, Vitest)
-   - `pytest.ini` or `pyproject.toml` (pytest)
-   - `Cargo.toml` (Rust tests)
-   - Existing test files
+ ## Testing Philosophy
+ - Test behavior, not implementation
+ - One assertion concept per test
+ - Use descriptive test names
+ - Follow the AAA pattern (Arrange, Act, Assert)
 
-   ## Test Categories
-   1. **Unit tests** - Test individual functions in isolation
-   2. **Integration tests** - Test component interactions
-   3. **Edge cases** - Test boundaries and error conditions
+ ## Framework Detection
+ Detect the testing framework from:
+ - `package.json` dependencies (Jest, Mocha, Vitest)
+ - `pytest.ini` or `pyproject.toml` (pytest)
+ - `Cargo.toml` (Rust tests)
+ - Existing test files
 
-   ## Examples
-   See `examples/` directory for framework-specific templates.
+ ## Test Categories
+ 1. **Unit tests** - Test individual functions in isolation
+ 2. **Integration tests** - Test component interactions
+ 3. **Edge cases** - Test boundaries and error conditions
 
-   ## Commands
-   - Run tests: Check `package.json` scripts or use framework defaults
-   - Coverage: Look for coverage configuration
+ ## Examples
+ See `examples/` directory for framework-specific templates.
 
-   ## DO NOT
-   - Remove failing tests without understanding why
-   - Skip edge cases
-   - Create tests that depend on external services without mocking
-   EOF
-   ```
+ ## Commands
+ - Run tests: Check `package.json` scripts or use framework defaults
+ - Coverage: Look for coverage configuration
+
+ ## DO NOT
+ - Remove failing tests without understanding why
+ - Skip edge cases
+ - Create tests that depend on external services without mocking
+ ~~~
 
 3. Add example templates:
-   ```bash
-   mkdir -p .github/skills/test-writer/examples
+ ```bash
+ mkdir -p .github/skills/test-writer/examples
 
-   cat > .github/skills/test-writer/examples/jest.ts << 'EOF'
-   import { describe, it, expect, beforeEach } from 'jest';
-   import { MyService } from '../src/my-service';
+ cat > .github/skills/test-writer/examples/jest.ts << 'EOF'
+ import { describe, it, expect, beforeEach } from 'jest';
+ import { MyService } from '../src/my-service';
 
-   describe('MyService', () => {
-     let service: MyService;
+ describe('MyService',  => {
+ let service: MyService;
 
-     beforeEach(() => {
-       service = new MyService();
-     });
+ beforeEach( => {
+ service = new MyService;
+ });
 
-     describe('methodName', () => {
-       it('should return expected value for valid input', () => {
-         // Arrange
-         const input = 'valid';
+ describe('methodName',  => {
+ it('should return expected value for valid input',  => {
+ // Arrange
+ const input = 'valid';
 
-         // Act
-         const result = service.methodName(input);
+ // Act
+ const result = service.methodName(input);
 
-         // Assert
-         expect(result).toBe('expected');
-       });
+ // Assert
+ expect(result).toBe('expected');
+ });
 
-       it('should throw error for invalid input', () => {
-         // Arrange
-         const input = null;
+ it('should throw error for invalid input',  => {
+ // Arrange
+ const input = null;
 
-         // Act & Assert
-         expect(() => service.methodName(input)).toThrow('Invalid input');
-       });
-     });
-   });
-   EOF
+ // Act & Assert
+ expect( => service.methodName(input)).toThrow('Invalid input');
+ });
+ });
+ });
+ EOF
 
-   cat > .github/skills/test-writer/examples/pytest.py << 'EOF'
-   import pytest
-   from src.my_service import MyService
+ cat > .github/skills/test-writer/examples/pytest.py << 'EOF'
+ import pytest
+ from src.my_service import MyService
 
 
-   class TestMyService:
-       @pytest.fixture
-       def service(self):
-           return MyService()
+ class TestMyService:
+ @pytest.fixture
+ def service(self):
+ return MyService
 
-       def test_method_returns_expected_for_valid_input(self, service):
-           # Arrange
-           input_value = "valid"
+ def test_method_returns_expected_for_valid_input(self, service):
+ # Arrange
+ input_value = "valid"
 
-           # Act
-           result = service.method_name(input_value)
+ # Act
+ result = service.method_name(input_value)
 
-           # Assert
-           assert result == "expected"
+ # Assert
+ assert result == "expected"
 
-       def test_method_raises_for_invalid_input(self, service):
-           # Arrange
-           input_value = None
+ def test_method_raises_for_invalid_input(self, service):
+ # Arrange
+ input_value = None
 
-           # Act & Assert
-           with pytest.raises(ValueError, match="Invalid input"):
-               service.method_name(input_value)
-   EOF
-   ```
+ # Act & Assert
+ with pytest.raises(ValueError, match="Invalid input"):
+ service.method_name(input_value)
+ EOF
+ ```
 
 4. Test the skill with examples:
-   ```bash
-   copilot
-   ```
-   ```
-   Write tests for the user authentication module
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ Write tests for the user authentication module
+ ```
 
 5. Ask specifically about examples:
-   ```
-   Show me a pytest example for testing the API client
-   ```
+ ```
+ Show me a pytest example for testing the API client
+ ```
 
 **Expected Outcome:**
 Skill uses example files to generate framework-appropriate tests.
@@ -279,167 +276,177 @@ Skill uses example files to generate framework-appropriate tests.
 
 **Goal:** Create skills that work across all your projects.
 
+> [!NOTE]
+> In Exercises 1-2 we created skills under `.github/skills/` — those are **project skills**, scoped to a single repository and shared with your team via Git. In this exercise we use `~/.copilot/skills/` — these are **personal skills**, stored in your home directory and available in every project you open with Copilot CLI. Use project skills for repo-specific tasks; use personal skills for workflows you want everywhere.
+
 **Steps:**
 
 1. Create personal skills directory:
-   ```bash
-   mkdir -p ~/.copilot/skills/git-workflow
-   ```
+ ```bash
+ mkdir -p ~/.copilot/skills/git-workflow
+ ```
 
-2. Create a Git workflow skill:
-   ```bash
-   cat > ~/.copilot/skills/git-workflow/SKILL.md << 'EOF'
-   ---
-   name: git-workflow
-   description: Manages Git operations following best practices. Use for commits, branches, PRs, and Git troubleshooting.
-   ---
+2. Create a Git workflow skill at `~/.copilot/skills/git-workflow/SKILL.md`:
 
-   # Git Workflow Assistant
+ ~~~markdown
+ ---
+ name: git-workflow
+ description: Manages Git operations following best practices. Use for commits, branches, PRs, and Git troubleshooting.
+ ---
 
-   You help with Git operations following established conventions.
+ # Git Workflow Assistant
 
-   ## Commit Messages
-   Follow Conventional Commits:
-   ```
-   <type>(<scope>): <description>
+ You help with Git operations following established conventions.
 
-   [optional body]
+ ## Commit Messages
+ Follow Conventional Commits:
+ ```
+ <type>(<scope>): <description>
 
-   [optional footer(s)]
-   ```
+ [optional body]
 
-   Types: feat, fix, docs, style, refactor, test, chore
+ [optional footer(s)]
+ ```
 
-   ## Branching Strategy
-   - `main` - Production-ready code
-   - `develop` - Integration branch
-   - `feature/xxx` - New features
-   - `fix/xxx` - Bug fixes
-   - `hotfix/xxx` - Urgent production fixes
+ Types: feat, fix, docs, style, refactor, test, chore
 
-   ## PR Workflow
-   1. Create feature branch from develop
-   2. Make atomic commits with clear messages
-   3. Push and create PR
-   4. Address review feedback
-   5. Squash and merge when approved
+ ## Branching Strategy
+ - `main` - Production-ready code
+ - `develop` - Integration branch
+ - `feature/xxx` - New features
+ - `fix/xxx` - Bug fixes
+ - `hotfix/xxx` - Urgent production fixes
 
-   ## Common Tasks
+ ## PR Workflow
+ 1. Create feature branch from develop
+ 2. Make atomic commits with clear messages
+ 3. Push and create PR
+ 4. Address review feedback
+ 5. Squash and merge when approved
 
-   ### Undo last commit (keep changes)
-   ```bash
-   git reset --soft HEAD~1
-   ```
+ ## Common Tasks
 
-   ### Interactive rebase last N commits
-   ```bash
-   git rebase -i HEAD~N
-   ```
+ ### Undo last commit (keep changes)
+ ```bash
+ git reset --soft HEAD~1
+ ```
 
-   ### Clean up merged branches
-   ```bash
-   git branch --merged | grep -v "main\|develop" | xargs git branch -d
-   ```
-   EOF
-   ```
+ ### Interactive rebase last N commits
+ ```bash
+ git rebase -i HEAD~N
+ ```
 
-3. Create a code review skill:
-   ```bash
-   mkdir -p ~/.copilot/skills/code-review
+ ### Clean up merged branches
+ ```bash
+ git branch --merged | grep -v "main\|develop" | xargs git branch -d
+ ```
+ ~~~
 
-   cat > ~/.copilot/skills/code-review/SKILL.md << 'EOF'
-   ---
-   name: code-review
-   description: Performs thorough code reviews focusing on quality, security, and maintainability. Use when reviewing PRs or code changes.
-   ---
+3. Create a code review skill at `~/.copilot/skills/code-review/SKILL.md`:
 
-   # Code Review Expert
+ ```bash
+ mkdir -p ~/.copilot/skills/code-review
+ ```
 
-   You provide constructive, actionable code review feedback.
+ ~~~markdown
+ ---
+ name: code-review
+ description: Performs thorough code reviews focusing on quality, security, and maintainability. Use when reviewing PRs or code changes.
+ ---
 
-   ## Review Checklist
-   1. **Correctness** - Does it work as intended?
-   2. **Security** - Any vulnerabilities?
-   3. **Performance** - Efficient algorithms and queries?
-   4. **Maintainability** - Clear and well-structured?
-   5. **Testing** - Adequate test coverage?
+ # Code Review Expert
 
-   ## Feedback Style
-   - Be specific and actionable
-   - Explain the "why" behind suggestions
-   - Distinguish between blocking issues and suggestions
-   - Acknowledge good patterns
+ You provide constructive, actionable code review feedback.
 
-   ## Categories
-   - 🔴 **Blocking** - Must fix before merge
-   - 🟡 **Suggestion** - Recommended improvement
-   - 🟢 **Nitpick** - Optional style preference
-   - 💡 **Question** - Needs clarification
+ ## Review Checklist
+ 1. **Correctness** - Does it work as intended?
+ 2. **Security** - Any vulnerabilities?
+ 3. **Performance** - Efficient algorithms and queries?
+ 4. **Maintainability** - Clear and well-structured?
+ 5. **Testing** - Adequate test coverage?
 
-   ## Example Feedback
+ ## Feedback Style
+ - Be specific and actionable
+ - Explain the "why" behind suggestions
+ - Distinguish between blocking issues and suggestions
+ - Acknowledge good patterns
 
-   🔴 **Blocking**: SQL injection vulnerability
-   ```javascript
-   // Current (vulnerable)
-   db.query(`SELECT * FROM users WHERE id = ${userId}`);
+ ## Categories
+ - 🔴 **Blocking** - Must fix before merge
+ - 🟡 **Suggestion** - Recommended improvement
+ - 🟢 **Nitpick** - Optional style preference
+ - 💡 **Question** - Needs clarification
 
-   // Suggested (safe)
-   db.query('SELECT * FROM users WHERE id = ?', [userId]);
-   ```
+ ## Example Feedback
 
-   🟡 **Suggestion**: Consider extracting to a helper function for reuse.
-   EOF
-   ```
+ 🔴 **Blocking**: SQL injection vulnerability
+ ```javascript
+ // Current (vulnerable)
+ db.query(`SELECT * FROM users WHERE id = ${userId}`);
+
+ // Suggested (safe)
+ db.query('SELECT * FROM users WHERE id = ?', [userId]);
+ ```
+
+ 🟡 **Suggestion**: Consider extracting to a helper function for reuse.
+ ~~~
 
 4. Test personal skills in any project:
-   ```bash
-   cd ~/any-project
-   copilot
-   ```
-   ```
-   Review the changes in my last commit
-   ```
+ ```bash
+ cd ~/any-project
+ copilot
+ ```
+ ```
+ Review the changes in my last commit
+ ```
 
 **Expected Outcome:**
 Personal skills are available in all projects.
 
-### Exercise 4: Discover Skills from agentskills.io
+### Exercise 4: Discover and Install Community Skills
 
 **Goal:** Find and use community-created skills.
 
 **Steps:**
 
-1. Visit https://agentskills.io
+1. The [Agent Skills specification](https://agentskills.io/) defines the open standard for skills. Example skills are hosted at [github.com/anthropics/skills](https://github.com/anthropics/skills).
 
-2. Browse available skills by category:
-   - Documentation
-   - Testing
-   - Security
-   - DevOps
-   - Data processing
+2. Browse the example skills repository:
+ ```bash
+ # View available skills
+ curl -s https://api.github.com/repos/anthropics/skills/contents/skills | jq '.[].name'
+ ```
 
-3. Install a skill (example: security-review):
-   ```bash
-   # Download skill to project
-   mkdir -p .github/skills/security-review
-   curl -o .github/skills/security-review/SKILL.md \
-     https://agentskills.io/skills/security-review/SKILL.md
-   ```
+3. Install a skill from the repository (example: `mcp-builder`):
+ ```bash
+ # Download skill to project
+ mkdir -p .github/skills/mcp-builder
+ curl -o .github/skills/mcp-builder/SKILL.md \
+ https://raw.githubusercontent.com/anthropics/skills/main/skills/mcp-builder/SKILL.md
+ ```
 
-4. Or install to personal skills:
-   ```bash
-   mkdir -p ~/.copilot/skills/security-review
-   curl -o ~/.copilot/skills/security-review/SKILL.md \
-     https://agentskills.io/skills/security-review/SKILL.md
-   ```
+4. Or install to personal skills so it works across all projects:
+ ```bash
+ mkdir -p ~/.copilot/skills/mcp-builder
+ curl -o ~/.copilot/skills/mcp-builder/SKILL.md \
+ https://raw.githubusercontent.com/anthropics/skills/main/skills/mcp-builder/SKILL.md
+ ```
 
-5. Test the installed skill:
-   ```bash
-   copilot
-   ```
-   ```
-   Review this code for security vulnerabilities
-   ```
+5. Verify the skill was downloaded:
+ ```bash
+ cat .github/skills/mcp-builder/SKILL.md | head -10
+ ```
+
+6. Test the installed skill:
+ ```bash
+ copilot
+ ```
+ ```
+ Build a simple MCP server in TypeScript that provides a calculator tool with add, subtract, multiply, and divide operations
+ ```
+
+> [!TIP]
+> Skills follow the open [Agent Skills](https://agentskills.io/) format and work across multiple AI agents — not just Copilot CLI. Any SKILL.md file from the community can be dropped into `.github/skills/` or `~/.copilot/skills/`.
 
 **Expected Outcome:**
 Community skills enhance your Copilot capabilities.
@@ -451,123 +458,121 @@ Community skills enhance your Copilot capabilities.
 **Steps:**
 
 1. Create a deployment skill:
-   ```bash
-   mkdir -p .github/skills/deploy
-   ```
+ ```bash
+ mkdir -p .github/skills/deploy
+ ```
 
-2. Create the skill with script references:
-   ```bash
-   cat > .github/skills/deploy/SKILL.md << 'EOF'
-   ---
-   name: deploy
-   description: Handles deployment tasks including build, test, and deploy to various environments. Use for deployment operations.
-   ---
+2. Create the skill file at `.github/skills/deploy/SKILL.md` with the following contents:
 
-   # Deployment Assistant
+ ~~~markdown
+ ---
+ name: deploy
+ description: Handles deployment tasks including build, test, and deploy to various environments. Use for deployment operations.
+ ---
 
-   You manage deployments following this project's CI/CD pipeline.
+ # Deployment Assistant
 
-   ## Environments
-   - `development` - Auto-deploy on merge to develop
-   - `staging` - Manual trigger, production-like
-   - `production` - Manual trigger with approval
+ You manage deployments following this project's CI/CD pipeline.
 
-   ## Deployment Steps
-   1. Run tests: `./scripts/test.sh`
-   2. Build: `./scripts/build.sh`
-   3. Deploy: `./scripts/deploy.sh <environment>`
+ ## Environments
+ - `development` - Auto-deploy on merge to develop
+ - `staging` - Manual trigger, production-like
+ - `production` - Manual trigger with approval
 
-   ## Scripts
-   See `scripts/` directory for deployment scripts.
+ ## Deployment Steps
+ 1. Run tests: `./scripts/test.sh`
+ 2. Build: `./scripts/build.sh`
+ 3. Deploy: `./scripts/deploy.sh <environment>`
 
-   ## Pre-deployment Checklist
-   - [ ] All tests passing
-   - [ ] No security vulnerabilities
-   - [ ] Database migrations reviewed
-   - [ ] Feature flags configured
-   - [ ] Rollback plan documented
+ ## Scripts
+ See `scripts/` directory for deployment scripts.
 
-   ## Common Commands
+ ## Pre-deployment Checklist
+ - [ ] All tests passing
+ - [ ] No security vulnerabilities
+ - [ ] Database migrations reviewed
+ - [ ] Feature flags configured
+ - [ ] Rollback plan documented
 
-   ### Deploy to staging
-   ```bash
-   ./scripts/deploy.sh staging
-   ```
+ ## Common Commands
 
-   ### Check deployment status
-   ```bash
-   ./scripts/status.sh <environment>
-   ```
-   EOF
-   ```
+ ### Deploy to staging
+ ```bash
+ ./scripts/deploy.sh staging
+ ```
+
+ ### Check deployment status
+ ```bash
+ ./scripts/status.sh <environment>
+ ```
+ ~~~
 
 3. Add helper scripts:
-   ```bash
-   mkdir -p .github/skills/deploy/scripts
+ ```bash
+ mkdir -p .github/skills/deploy/scripts
 
-   cat > .github/skills/deploy/scripts/deploy.sh << 'EOF'
-   #!/bin/bash
-   ENV=${1:-staging}
-   echo "Deploying to $ENV..."
-   # Add actual deployment logic
-   EOF
+ cat > .github/skills/deploy/scripts/deploy.sh << 'EOF'
+ #!/bin/bash
+ ENV=${1:-staging}
+ echo "Deploying to $ENV..."
+ # Add actual deployment logic
+ EOF
 
-   chmod +x .github/skills/deploy/scripts/deploy.sh
-   ```
+ chmod +x .github/skills/deploy/scripts/deploy.sh
+ ```
 
 4. Test:
-   ```bash
-   copilot
-   ```
-   ```
-   Deploy the current build to staging
-   ```
+ ```bash
+ copilot
+ ```
+ ```
+ Deploy the current build to staging
+ ```
 
 **Expected Outcome:**
 Skill provides deployment guidance and can reference scripts.
 
-### Exercise 6: Skill Invocation
+### Exercise 6: Understanding Skill Auto-Selection
 
-**Goal:** Understand how Copilot invokes skills.
+**Goal:** Observe how Copilot automatically selects skills based on your prompt.
 
 **Steps:**
 
-1. Create multiple skills in your project.
+1. Ensure you have multiple skills from earlier exercises (api-docs, test-writer, deploy).
 
-2. Start Copilot and observe skill selection:
-   ```bash
-   copilot
-   ```
+2. Start Copilot:
+ ```bash
+ copilot
+ ```
 
-3. Ask a general question:
-   ```
-   Help me with the user authentication
-   ```
+3. Ask a question that matches the **test-writer** skill:
+ ```
+ Write unit tests for a function that validates email addresses
+ ```
+ Observe: the output should follow AAA pattern (Arrange, Act, Assert) as defined in the test-writer skill.
 
-4. Ask questions that match specific skills:
-   ```
-   Write tests for the payment service
-   ```
-   (Should trigger test-writer skill)
+4. Ask a question that matches the **api-docs** skill:
+ ```
+ Document a REST endpoint POST /users that creates a new user
+ ```
+ Observe: the output should follow the OpenAPI/Markdown format from the api-docs skill.
 
-5. Ask about documentation:
-   ```
-   Document the REST API endpoints
-   ```
-   (Should trigger api-docs skill)
+5. Ask a question that matches the **deploy** skill:
+ ```
+ What are the steps to deploy to staging?
+ ```
+ Observe: the output should reference the deployment checklist and scripts from the deploy skill.
 
-6. Use the `/skill` command (if available):
-   ```
-   /skill list
-   ```
+6. Explicitly reference a skill by name to ensure it's used:
+ ```
+ Using the api-docs skill, generate OpenAPI specs for a todo list API
+ ```
 
-7. Explicitly invoke a skill:
-   ```
-   Using the test-writer skill, create tests for utils.ts
-   ```
+> [!TIP]
+> Copilot selects skills by matching your prompt against the `name` and `description` in each SKILL.md frontmatter. Write clear, specific descriptions to improve auto-selection accuracy.
 
 **Expected Outcome:**
-Copilot selects appropriate skills based on your request.
+Different prompts trigger different skills, producing output that follows each skill's specific guidelines and format.
 
 ## Skill Structure Reference
 
@@ -576,7 +581,7 @@ Copilot selects appropriate skills based on your request.
 ```
 .github/skills/
 └── skill-name/
-    └── SKILL.md          # Required: Skill definition
+ └── SKILL.md # Required: Skill definition
 ```
 
 ### Optional Files
@@ -584,23 +589,23 @@ Copilot selects appropriate skills based on your request.
 ```
 .github/skills/
 └── skill-name/
-    ├── SKILL.md          # Required
-    ├── examples/         # Example code
-    │   ├── example1.ts
-    │   └── example2.py
-    ├── templates/        # Code templates
-    │   └── template.ts
-    └── scripts/          # Helper scripts
-        └── helper.sh
+ ├── SKILL.md # Required
+ ├── examples/ # Example code
+ │ ├── example1.ts
+ │ └── example2.py
+ ├── templates/ # Code templates
+ │ └── template.ts
+ └── scripts/ # Helper scripts
+ └── helper.sh
 ```
 
 ### SKILL.md Frontmatter
 
 ```yaml
 ---
-name: skill-name          # Required: lowercase, hyphens, max 64 chars
-description: What this skill does and when to use it  # Required: max 1024 chars
-license: MIT              # Optional: License identifier
+name: skill-name # Required: lowercase, hyphens, max 64 chars
+description: What this skill does and when to use it # Required: max 1024 chars
+license: MIT # Optional: License identifier
 ---
 ```
 
@@ -618,10 +623,10 @@ license: MIT              # Optional: License identifier
 - ✅ Progressive disclosure loads only relevant content
 - ✅ Project skills in `.github/skills/`, personal in `~/.copilot/skills/`
 - ✅ Include examples and templates for better output quality
-- ✅ agentskills.io provides community-created skills
+- ✅ Community skills available at [github.com/anthropics/skills](https://github.com/anthropics/skills)
 - ✅ Copilot auto-selects skills based on your request
-- ✅ YAML array syntax for `allowed-tools` in skill files now loads correctly (v0.0.413 fix)
-- ✅ Skill files saved with UTF-8 BOM (common on Windows) now load correctly (v0.0.415 fix)
+- ✅ YAML array syntax for `allowed-tools` in skill files now loads correctly
+- ✅ Skill files saved with UTF-8 BOM (common on Windows) now load correctly
 
 ## Next Steps
 
@@ -631,4 +636,5 @@ license: MIT              # Optional: License identifier
 
 - [Agent Skills - VS Code Docs](https://code.visualstudio.com/docs/copilot/customization/agent-skills)
 - [About Agent Skills - GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
-- [agentskills.io](https://agentskills.io/)
+- [Agent Skills Specification](https://agentskills.io/)
+- [Example Skills Repository](https://github.com/anthropics/skills)

@@ -57,6 +57,25 @@ This displays all discovered instruction files (AGENTS.md, copilot-instructions.
 
 This is especially helpful when multiple instruction files interact and you need to isolate which one is causing unexpected behavior.
 
+### Disabling Custom Instructions
+
+> ⚠️ **FEEDBACK**: The `--no-custom-instructions` flag and `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` env var are available in **v1.0.x**.
+
+You can completely disable loading of custom instructions from AGENTS.md and related files:
+
+```bash
+# Start without any custom instructions
+copilot --no-custom-instructions
+```
+
+To add extra directories for instruction discovery (beyond the git root and cwd):
+
+```bash
+# Search additional directories for instruction files
+export COPILOT_CUSTOM_INSTRUCTIONS_DIRS="/path/to/shared-instructions,/path/to/team-standards"
+copilot
+```
+
 ## Hands-On Exercises
 
 ### Exercise 1: Create Repository Instructions
@@ -446,6 +465,8 @@ Commit messages follow Conventional Commits format.
 - ✅ `llm.txt` provides LLM-optimized project context
 - ✅ Nested AGENTS.md files enable directory-specific behavior
 - ✅ Commit conventions should be explicitly documented
+- ✅ `--no-custom-instructions` disables all instruction file loading
+- ✅ `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` adds extra instruction search paths
 
 ## Next Steps
 
