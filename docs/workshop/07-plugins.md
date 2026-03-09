@@ -1,10 +1,10 @@
-# Module 8: Plugins
+# Module 7: Plugins
 
 ## Prerequisites
 
-- Completed Modules 1-7
+- Completed Modules 1-6
 - GitHub account
-- Understanding of MCP concepts (Module 6)
+- Understanding of MCP concepts (Module 5)
 
 ## Learning Objectives
 
@@ -26,9 +26,9 @@ Plugins extend Copilot's capabilities beyond built-in features:
 ├─────────────────┤
 │  Built-in Tools │
 ├─────────────────┤
-│   MCP Servers   │  ← Module 6
+│   MCP Servers   │  ← Module 5
 ├─────────────────┤
-│     Skills      │  ← Module 7
+│     Skills      │  ← Module 6
 ├─────────────────┤
 │    Plugins      │  ← This Module
 └─────────────────┘
@@ -483,7 +483,7 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 
 ## Next Steps
 
-→ Continue to [Module 9: Custom Agents](09-custom-agents.md)
+→ Continue to [Module 8: Custom Agents](08-custom-agents.md)
 
 ## References
 

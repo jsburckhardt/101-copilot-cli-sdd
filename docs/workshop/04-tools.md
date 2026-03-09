@@ -1,4 +1,4 @@
-# Module 5: Tools & Permissions
+# Module 4: Tools & Permissions
 
 ## Prerequisites
 
@@ -463,7 +463,7 @@ Safe, repeatable automation with explicit permissions.
 
 ## Next Steps
 
-→ Continue to [Module 6: MCP Servers](06-mcps.md)
+→ Continue to [Module 5: MCP Servers](05-mcps.md)
 
 ## References
 

@@ -58,15 +58,15 @@ MODULE_MAP: JSON<<
 {
   "01": "01-installation.md",
   "02": "02-modes.md",
-  "03": "03-sessions.md",
-  "04": "04-instructions.md",
-  "05": "05-tools.md",
-  "06": "06-mcps.md",
-  "07": "07-skills.md",
-  "08": "08-plugins.md",
-  "09": "09-custom-agents.md",
-  "10": "10-hooks.md",
-  "11": "11-context.md",
+  "03": "03-instructions.md",
+  "04": "04-tools.md",
+  "05": "05-mcps.md",
+  "06": "06-skills.md",
+  "07": "07-plugins.md",
+  "08": "08-custom-agents.md",
+  "09": "09-hooks.md",
+  "10": "10-context.md",
+  "11": "11-sessions.md",
   "12": "12-advanced.md"
 }
 >>

@@ -1,4 +1,4 @@
-# Module 6: MCP Servers
+# Module 5: MCP Servers
 
 ## Prerequisites
 
@@ -479,7 +479,7 @@ Additional MCP servers can be loaded per-session without modifying base config.
 
 ## Next Steps
 
-→ Continue to [Module 7: Agent Skills](07-skills.md)
+→ Continue to [Module 6: Agent Skills](06-skills.md)
 
 ## References
 

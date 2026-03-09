@@ -10,11 +10,11 @@ The following issues have been addressed with inline `⚠️ **FEEDBACK**` notes
 - ✅ Module 1: Container/CI authentication troubleshooting
 - ✅ Module 2: Auth requirement warning
 - ✅ Module 2: Exercise prompt clarity (filename, line count, pipe wording)
-- ✅ Module 3: Session persistence clarification
-- ✅ Module 3: `--share`/`--share-gist` version availability
-- ✅ Module 5: `--allow-tool`/`--deny-tool` version availability
-- ✅ Module 7: agentskills.io external URL dependency
-- ✅ Module 7: `/skill list` command availability
+- ✅ Module 11: Session persistence clarification
+- ✅ Module 11: `--share`/`--share-gist` version availability
+- ✅ Module 4: `--allow-tool`/`--deny-tool` version availability
+- ✅ Module 6: agentskills.io external URL dependency
+- ✅ Module 6: `/skill list` command availability
 - ✅ Module 12: `COPILOT_TOKEN` vs standard env vars clarification
 - ✅ Module 12: `--available-tools`/`--excluded-tools` flag consistency
 - ✅ Module 12: Autopilot mode section (v0.0.411 feature) with feedback callout
@@ -30,14 +30,14 @@ The following issues have been addressed with inline `⚠️ **FEEDBACK**` notes
 1. **Module 01 Exercise 1d placement**: Exercise 1d (WinGet) appears after Exercises 2-3 in the file. Ideally all installation alternatives (1a-1d) should be grouped together before Exercise 2 (Authenticate). Consider reordering.
 2. **Module 02 `ctrl+e` dual function**: `ctrl+e` has two functions depending on context — "expand all timeline" (when no input) vs "cycle to end of line" (v0.0.413+ in edit mode). Merged into single row with contextual note. Users may still find this confusing.
 3. **Module 02 `Shift+Tab` mode names**: Module 02 uses "(suggest) ⟷ (normal)" while Module 12 uses "(chat) ⟷ (command)". Both describe the same behavior from v0.0.410+ but use different terminology. Consider standardizing.
-4. **Module 04 example links**: `llm.txt` exercise contains example links (`/docs/api.md`, `/docs/adr/`, `/CONTRIBUTING.md`) that point to non-existent files. These are intentionally example content but trigger false positives in automated link checkers.
-5. **Module 03 Exercise 7**: Uses `copilot --share` and `copilot --share-gist` CLI flags to export sessions. The in-session `/share` slash command (documented in Exercise 1 note) may be more intuitive for users already in a session.
+4. **Module 03 example links**: `llm.txt` exercise contains example links (`/docs/api.md`, `/docs/adr/`, `/CONTRIBUTING.md`) that point to non-existent files. These are intentionally example content but trigger false positives in automated link checkers.
+5. **Module 11 Exercise 7**: Uses `copilot --share` and `copilot --share-gist` CLI flags to export sessions. The in-session `/share` slash command (documented in Exercise 1 note) may be more intuitive for users already in a session.
 6. **Module 12**: Has `### Resources` subsection under the completion section instead of a top-level `## References` section. A `## References` section was added for structural consistency, but the `### Resources` subsection remains as well.
 
 ## Recent Changes
 
 - ✅ Version bump: Workshop updated from v0.0.412 to v0.0.415
-- ✅ Module 4: Added `/instructions` command section (v0.0.407 feature) with feedback callout
+- ✅ Module 3: Added `/instructions` command section (v0.0.407 feature) with feedback callout
 - ✅ Index: Added `/instructions` to slash commands quick reference table
 - ✅ README: Expanded SDD acronym, added Dev Container guidance, reframed install options as alternatives
 - ✅ Module 1: Added container/CI auth troubleshooting section and table row
@@ -54,7 +54,7 @@ The following issues have been addressed with inline `⚠️ **FEEDBACK**` notes
   - Renumbered remaining exercises (8-11)
   - Updated workshop duration from 20min to 30min
   - Updated index to reflect new features and learning objectives
-- ✅ **Module 5**: Added `/reset-allowed-tools` slash command documentation (v0.0.412 feature)
+- ✅ **Module 4**: Added `/reset-allowed-tools` slash command documentation (v0.0.412 feature)
   - Added to Exercise 1 as steps 11-13 demonstrating session approval reset
   - Created new "Runtime Slash Commands" reference section
   - Updated Summary section to include the command

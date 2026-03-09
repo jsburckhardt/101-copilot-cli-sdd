@@ -1,9 +1,9 @@
-# Module 9: Custom Agents
+# Module 8: Custom Agents
 
 ## Prerequisites
 
 - Completed Modules 1-8
-- Understanding of AGENTS.md (Module 4)
+- Understanding of AGENTS.md (Module 3)
 - A repository to experiment with
 
 ## Learning Objectives
@@ -643,7 +643,7 @@ tools:                        # Optional, defaults to all
 
 ## Next Steps
 
-→ Continue to [Module 10: Hooks](10-hooks.md)
+→ Continue to [Module 9: Hooks](09-hooks.md)
 
 ## References
 

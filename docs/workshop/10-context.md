@@ -1,4 +1,4 @@
-# Module 11: Context Management
+# Module 10: Context Management
 
 ## Prerequisites
 
@@ -465,7 +465,7 @@ Systematic workflow keeps context under control.
 
 ## Next Steps
 
-→ Continue to [Module 12: Advanced Topics](12-advanced.md)
+→ Continue to [Module 11: Session Management](11-sessions.md)
 
 ## References
 

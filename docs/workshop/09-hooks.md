@@ -1,4 +1,4 @@
-# Module 10: Hooks
+# Module 9: Hooks
 
 ## Prerequisites
 
@@ -572,7 +572,7 @@ Writes restricted to allowed directories.
 
 ## Next Steps
 
-→ Continue to [Module 11: Context Management](11-context.md)
+→ Continue to [Module 10: Context Management](10-context.md)
 
 ## References
 

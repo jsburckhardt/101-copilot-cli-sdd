@@ -62,15 +62,15 @@ MODULES: JSON<<
 [
   {"id": "01", "file": "docs/workshop/01-installation.md", "name": "Installation"},
   {"id": "02", "file": "docs/workshop/02-modes.md", "name": "Operating Modes"},
-  {"id": "03", "file": "docs/workshop/03-sessions.md", "name": "Session Management"},
-  {"id": "04", "file": "docs/workshop/04-instructions.md", "name": "Custom Instructions"},
-  {"id": "05", "file": "docs/workshop/05-tools.md", "name": "Tools & Permissions"},
-  {"id": "06", "file": "docs/workshop/06-mcps.md", "name": "MCP Servers"},
-  {"id": "07", "file": "docs/workshop/07-skills.md", "name": "Agent Skills"},
-  {"id": "08", "file": "docs/workshop/08-plugins.md", "name": "Plugins"},
-  {"id": "09", "file": "docs/workshop/09-custom-agents.md", "name": "Custom Agents"},
-  {"id": "10", "file": "docs/workshop/10-hooks.md", "name": "Hooks"},
-  {"id": "11", "file": "docs/workshop/11-context.md", "name": "Context Management"},
+  {"id": "03", "file": "docs/workshop/03-instructions.md", "name": "Custom Instructions"},
+  {"id": "04", "file": "docs/workshop/04-tools.md", "name": "Tools & Permissions"},
+  {"id": "05", "file": "docs/workshop/05-mcps.md", "name": "MCP Servers"},
+  {"id": "06", "file": "docs/workshop/06-skills.md", "name": "Agent Skills"},
+  {"id": "07", "file": "docs/workshop/07-plugins.md", "name": "Plugins"},
+  {"id": "08", "file": "docs/workshop/08-custom-agents.md", "name": "Custom Agents"},
+  {"id": "09", "file": "docs/workshop/09-hooks.md", "name": "Hooks"},
+  {"id": "10", "file": "docs/workshop/10-context.md", "name": "Context Management"},
+  {"id": "11", "file": "docs/workshop/11-sessions.md", "name": "Session Management"},
   {"id": "12", "file": "docs/workshop/12-advanced.md", "name": "Advanced Topics"}
 ]
 >>

@@ -1,8 +1,8 @@
-# Module 3: Session Management
+# Module 11: Session Management
 
 ## Prerequisites
 
-- Completed Modules 1-2
+- Completed Modules 1-10
 - Copilot CLI installed and authenticated
 
 ## Learning Objectives
@@ -387,7 +387,7 @@ Session transcript saved for future reference or sharing.
 
 ## Next Steps
 
-→ Continue to [Module 4: Custom Instructions](04-instructions.md)
+→ Continue to [Module 12: Advanced Topics](12-advanced.md)
 
 ## References
 
