@@ -1,0 +1,12 @@
+{
+  "label": "Extensibility",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Extensibility",
+    "description": "Build skills, install plugins, and create custom agents",
+    "slug": "/category/extensibility"
+  }
+}
