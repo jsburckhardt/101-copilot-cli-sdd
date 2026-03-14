@@ -32,35 +32,43 @@
 
 ---
 
-## Module 03 — Sessions
+## Module 03 — Instructions
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
 | 10 | [L41](docs/workshop/03-sessions.md#L41) | Session persistence behavior unclear. Each `copilot` invocation starts a **fresh session** — auto-resume behavior unverified. `--resume` flag is always required to restore a previous session. | 🐛 Bug/Unclear | done | make it clear - here are the help details: Session /resume /rename /context /usage /session /compact /share |
 | 11 | [L313](docs/workshop/03-sessions.md#L313) | `--share` and `--share-gist` flags not visible in `copilot --help` — may be version-gated or preview only. | 📅 Version-specific | done | delete, we shouldn't use any version specific details |
+| 12 | [L60](docs/workshop/03-instructions.md#L60) | Module exercises can be simulated without a live auth session (file creation only). Full testing requires auth. | 🔑 Auth | done| delete |
 
 ---
 
-## Module 04 — Instructions
+## Module 04 — Tools
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 12 | [L60](docs/workshop/04-instructions.md#L60) | Module exercises can be simulated without a live auth session (file creation only). Full testing requires auth. | 🔑 Auth | done| delete |
+| 13 | [L145](docs/workshop/04-tools.md#L145) | `--allow-tool` and `--deny-tool` flags not visible in `copilot --help` for v0.0.400 — may be version-gated. Verify with `copilot --help`. | 📅 Version-specific | done | should not write version specific |
 
 ---
 
-## Module 05 — Tools
+## Module 05 — MCP Servers
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
+| 14 | [L50](docs/workshop/05-mcps.md#L50) | MCP error visibility in timeline added in v0.0.410 — errors were silently ignored in earlier versions. | 📅 Version-specific | done| make it a warning |
+| 15 | [L103](docs/workshop/05-mcps.md#L103) | Always validate JSON syntax in `~/.copilot/mcp-config.json` before restarting Copilot to avoid silent failures. | 💡 Tip | done| make it a tip |
+| 16 | [L319](docs/workshop/05-mcps.md#L319) | `/mcp reload` added in v0.0.412 — prior versions required full session restart to pick up config changes. | 📅 Version-specific | done| delete |
+| 17 | [L436](docs/workshop/05-mcps.md#L436) | Tilde `~` expansion in `cwd` field added in v0.0.410 — use `~/projects/my-server` instead of absolute paths for portability. | 📅 Version-specific | done| delete |
+| 18 | [L461](docs/workshop/05-mcps.md#L461) | Duplicate callout for `/mcp reload` (v0.0.412) in Exercise 5 — consider consolidating with [L319](docs/workshop/05-mcps.md#L319). | 🧹 Cleanup | done| remove duplicate |
 | 13 | [L145](docs/workshop/05-tools.md#L145) | `--allow-tool` and `--deny-tool` flags not visible in `copilot --help` — may be version-gated. Verify with `copilot --help`. | 📅 Version-specific | done | should not write version specific |
 
 ---
 
-## Module 06 — MCP Servers
+## Module 06 — Skills
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
+| 19 | [L408](docs/workshop/06-skills.md#L408) | Exercise relies on external URL `https://agentskills.io` — verify site is live before running exercise; may need a fallback. | 🌐 External dependency | done| delete |
+| 20 | [L566](docs/workshop/06-skills.md#L566) | `/skill list` command may not exist in all versions — verify with `/help` before using. | 📅 Version-specific | done| delete |
 | 14 | [L50](docs/workshop/06-mcps.md#L50) | MCP error visibility in timeline added — errors were silently ignored in earlier versions. | 📅 Version-specific | done| make it a warning |
 | 15 | [L103](docs/workshop/06-mcps.md#L103) | Always validate JSON syntax in `~/.copilot/mcp-config.json` before restarting Copilot to avoid silent failures. | 💡 Tip | done| make it a tip |
 | 16 | [L319](docs/workshop/06-mcps.md#L319) | `/mcp reload` added — prior versions required full session restart to pick up config changes. | 📅 Version-specific | done| delete |
@@ -69,43 +77,45 @@
 
 ---
 
-## Module 07 — Skills
+## Module 07 — Plugins
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 19 | [L408](docs/workshop/07-skills.md#L408) | Exercise relies on external URL `https://agentskills.io` — verify site is live before running exercise; may need a fallback. | 🌐 External dependency | done| delete |
-| 20 | [L566](docs/workshop/07-skills.md#L566) | `/skill list` command may not exist in all versions — verify with `/help` before using. | 📅 Version-specific | done| delete |
+| 21 | [L222](docs/workshop/07-plugins.md#L222) | Code snippet uses CommonJS `require` without `module.exports` or type in `package.json` — works as-is but may confuse learners expecting explicit exports. | 🧹 Cleanup | done| make it a tip |
 
 ---
 
-## Module 08 — Plugins
+## Module 08 — Custom Agents
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 21 | [L222](docs/workshop/08-plugins.md#L222) | Code snippet uses CommonJS `require` without `module.exports` or type in `package.json` — works as-is but may confuse learners expecting explicit exports. | 🧹 Cleanup | done| make it a tip |
+| 22 | [L66](docs/workshop/08-custom-agents.md#L66) | Testing agent behavior requires an authenticated session — config file creation can be done without auth, but live testing cannot. | 🔑 Auth | done| delete |
 
 ---
 
-## Module 09 — Custom Agents
+## Module 09 — Hooks
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 22 | [L66](docs/workshop/09-custom-agents.md#L66) | Testing agent behavior requires an authenticated session — config file creation can be done without auth, but live testing cannot. | 🔑 Auth | done| delete |
+| 23 | [L47](docs/workshop/09-hooks.md#L47) | Hook scripts require `jq` for JSON parsing — must be installed before exercises (`apt install jq` / `brew install jq`). | 🔧 Prerequisite | done| delete |
 
 ---
 
-## Module 10 — Hooks
+## Module 10 — Context Management
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
-| 23 | [L47](docs/workshop/10-hooks.md#L47) | Hook scripts require `jq` for JSON parsing — must be installed before exercises (`apt install jq` / `brew install jq`). | 🔧 Prerequisite | done| delete |
+| 24 | [L48](docs/workshop/10-context.md#L48) | Claude Sonnet 4.6 added in v0.0.411; GPT-5 mini deprecated in v0.0.412. Model availability varies by Copilot subscription tier. | 📅 Version-specific | done| use the flag /model select the model and then /context to see what's the context. DON'T USE VERSION SPECIFIC DETAILS update and use opus-46,  Gemini 3 Pro ,GPT-5.3-Codex  and GPT-5 mini |
+| 25 | [L56](docs/workshop/10-context.md#L56) | Token usage and compaction behavior cannot be fully verified without a live authenticated session. | 🔑 Auth | done| delete |
 
 ---
 
-## Module 11 — Context Management
+## Module 11 — Sessions
 
 | # | Line | Issue | Category | Status | Notes |
 |---|------|-------|----------|--------|-------|
+| 10 | [L41](docs/workshop/11-sessions.md#L41) | Session persistence behavior unclear. Each `copilot` invocation starts a **fresh session** — auto-resume behavior unverified. `--resume` flag is always required to restore a previous session. | 🐛 Bug/Unclear | done | make it clear - here are the help details: Session /resume /rename /context /usage /session /compact /share |
+| 11 | [L313](docs/workshop/11-sessions.md#L313) | `--share` and `--share-gist` flags not visible in `copilot --help` for v0.0.400 — may be version-gated or preview only. | 📅 Version-specific | done | delete, we shouldn't use any version specific details |
 | 24 | [L48](docs/workshop/11-context.md#L48) | Claude Sonnet 4.6 added; GPT-5 mini deprecated. Model availability varies by Copilot subscription tier. | 📅 Version-specific | done| use the flag /model select the model and then /context to see what's the context. DON'T USE VERSION SPECIFIC DETAILS update and use opus-46, Gemini 3 Pro ,GPT-5.3-Codex and GPT-5 mini |
 | 25 | [L56](docs/workshop/11-context.md#L56) | Token usage and compaction behavior cannot be fully verified without a live authenticated session. | 🔑 Auth | done| delete |
 

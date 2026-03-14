@@ -1,4 +1,4 @@
-# Module 4: Custom Instructions
+# Module 3: Custom Instructions
 
 ## Prerequisites
 
@@ -470,7 +470,7 @@ Commit messages follow Conventional Commits format.
 
 ## Next Steps
 
-→ Continue to [Module 5: Tools & Permissions](05-tools.md)
+→ Continue to [Module 4: Tools & Permissions](04-tools.md)
 
 ## References
 

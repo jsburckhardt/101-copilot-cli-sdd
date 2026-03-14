@@ -36,16 +36,16 @@ By the end of this workshop, you will be able to:
 | --- | --- | --- | --- |
 | 01 | [Installation](01-installation.md) | 15 min | Install via npm, Homebrew, or script |
 | 02 | [Operating Modes & Commands](02-modes.md) | 30 min | Interactive chat, slash commands, programmatic, and `/delegate` |
-| 03 | [Session Management](03-sessions.md) | 15 min | Continue, resume, clear, and track sessions |
-| 04 | [Custom Instructions](04-instructions.md) | 25 min | AGENTS.md, llm.txt, copilot-instructions.md |
-| 05 | [Tools & Permissions](05-tools.md) | 20 min | Built-in tools, allow/deny, `--yolo` mode |
-| 06 | [MCP Servers](06-mcps.md) | 25 min | Configure remote and local MCP servers |
-| 07 | [Agent Skills](07-skills.md) | 20 min | Create and use skills, agentskills.io |
-| 08 | [Plugins](08-plugins.md) | 15 min | Plugins and the marketplace ecosystem |
-| 09 | [Custom Agents](09-custom-agents.md) | 25 min | Build specialized agents and subagents |
-| 10 | [Hooks](10-hooks.md) | 20 min | Lifecycle hooks and automation |
-| 11 | [Context Management](11-context.md) | 15 min | `/context`, `/compact`, token optimization |
-| 12 | [Advanced Topics](12-advanced.md) | 30 min | Autopilot, Fleet, ACP, environment, CI/CD, LSP config, tips |
+| 03 | [Custom Instructions](03-instructions.md) | 25 min | AGENTS.md, llm.txt, copilot-instructions.md |
+| 04 | [Tools & Permissions](04-tools.md) | 20 min | Built-in tools, allow/deny, `--yolo` mode |
+| 05 | [MCP Servers](05-mcps.md) | 25 min | Configure remote and local MCP servers |
+| 06 | [Agent Skills](06-skills.md) | 20 min | Create and use skills, agentskills.io |
+| 07 | [Plugins](07-plugins.md) | 15 min | Plugins and the marketplace ecosystem |
+| 08 | [Custom Agents](08-custom-agents.md) | 25 min | Build specialized agents and subagents |
+| 09 | [Hooks](09-hooks.md) | 20 min | Lifecycle hooks and automation |
+| 10 | [Context Management](10-context.md) | 15 min | `/context`, `/compact`, token optimization |
+| 11 | [Session Management](11-sessions.md) | 15 min | Continue, resume, clear, and track sessions |
+| 12 | [Advanced Topics](12-advanced.md) | 30 min | Autopilot, Fleet, environment, CI/CD, LSP config, tips |
 | 13 | [Configuration & Environment](13-configuration.md) | 20 min | Config options, env vars, IDE integration, accessibility |
 
 **Total estimated time: ~4.5 hours**

@@ -147,7 +147,7 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 
 #### Key Commands Not Covered in Other Modules
 
-Some commands are covered in depth in later modules (`/mcp` in Module 6, `/skills` in Module 7, `/plugin` in Module 8, `/context` and `/compact` in Module 11). The following important commands are unique to this section:
+Some commands are covered in depth in later modules (`/mcp` in Module 5, `/skills` in Module 6, `/plugin` in Module 7, `/context` and `/compact` in Module 10). The following important commands are unique to this section:
 
 | Command | Description |
 | --- | --- |
@@ -585,7 +585,7 @@ You can choose the appropriate mode for any task.
 
 ## Next Steps
 
-→ Continue to [Module 3: Session Management](03-sessions.md)
+→ Continue to [Module 3: Custom Instructions](03-instructions.md)
 
 ## References
 

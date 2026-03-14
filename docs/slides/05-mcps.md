@@ -183,7 +183,7 @@ copilot --disable-mcp-server "my-server"
 
 ## Your Turn! 🚀
 
-Open **Module 6** in `docs/workshop/06-mcps.md`
+Open **Module 5** in `docs/workshop/05-mcps.md`
 
 **Start from Exercise 1** and work through as many as you can
 

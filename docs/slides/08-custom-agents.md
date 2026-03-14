@@ -145,7 +145,7 @@ Agents can **delegate to other agents** for complex workflows
 
 ## Your Turn! 🚀
 
-Open **Module 9** in `docs/workshop/09-custom-agents.md`
+Open **Module 8** in `docs/workshop/08-custom-agents.md`
 
 **Start from Exercise 1** and work through as many as you can
 

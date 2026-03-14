@@ -1,4 +1,4 @@
-# Module 6: MCP Servers
+# Module 5: MCP Servers
 
 ## Prerequisites
 
@@ -556,7 +556,7 @@ MCP server names (the keys in `"mcpServers"`) support dots (`.`), slashes (`/`),
 
 ## Next Steps
 
-→ Continue to [Module 7: Agent Skills](07-skills.md)
+→ Continue to [Module 6: Agent Skills](06-skills.md)
 
 ## References
 

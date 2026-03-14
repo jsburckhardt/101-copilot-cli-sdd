@@ -124,7 +124,7 @@ description: Generates API documentation from source code
 
 ## Your Turn! 🚀
 
-Open **Module 7** in `docs/workshop/07-skills.md`
+Open **Module 6** in `docs/workshop/06-skills.md`
 
 **Start from Exercise 1** and work through as many as you can
 

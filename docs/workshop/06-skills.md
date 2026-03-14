@@ -1,4 +1,4 @@
-# Module 7: Agent Skills
+# Module 6: Agent Skills
 
 ## Prerequisites
 
@@ -630,7 +630,7 @@ license: MIT # Optional: License identifier
 
 ## Next Steps
 
-→ Continue to [Module 8: Plugins](08-plugins.md)
+→ Continue to [Module 7: Plugins](07-plugins.md)
 
 ## References
 

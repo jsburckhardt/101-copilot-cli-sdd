@@ -171,7 +171,7 @@ echo "[$(date -Iseconds)] $TOOL_NAME: $RESULT" >> logs/audit.log
 
 ## Your Turn! 🚀
 
-Open **Module 10** in `docs/workshop/10-hooks.md`
+Open **Module 9** in `docs/workshop/09-hooks.md`
 
 **Exercises 1-7:**
 1. **Exercise 1** — Create hooks skeleton
