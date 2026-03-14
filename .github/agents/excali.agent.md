@@ -1,6 +1,6 @@
 ---
 name: excali
-description: Generate Excalidraw diagrams from text descriptions, wireframes, or specifications
+description: "Generate Excalidraw diagrams from text descriptions, wireframes, or specifications."
 tools:
   - search/codebase
   - search/fileSearch
