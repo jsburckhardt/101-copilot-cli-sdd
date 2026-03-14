@@ -142,7 +142,7 @@ Show me just @src/auth/middleware.ts
 
 ## Your Turn! 🚀
 
-Open **Module 11** in `docs/workshop/11-context.md`
+Open **Module 10** in `docs/workshop/10-context.md`
 
 **Start from Exercise 1** and work through as many as you can
 

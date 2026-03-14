@@ -151,7 +151,7 @@ copilot --no-ask-user --allow-all-tools
 
 ## Your Turn! 🚀
 
-Open **Module 5** in `docs/workshop/05-tools.md`
+Open **Module 4** in `docs/workshop/04-tools.md`
 
 **Start from Exercise 1** and work through as many as you can
 

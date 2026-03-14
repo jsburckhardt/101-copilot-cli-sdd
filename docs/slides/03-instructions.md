@@ -168,7 +168,7 @@ Saved as `.github/instructions/tests.instructions.md`
 
 ## Your Turn! 🚀
 
-Open **Module 4** in `docs/workshop/04-instructions.md`
+Open **Module 3** in `docs/workshop/03-instructions.md`
 
 **Start from Exercise 1** and work through as many as you can
 

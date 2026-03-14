@@ -159,7 +159,7 @@ copilot --allow-tool 'plugin-name' --deny-tool 'shell(rm)'
 
 ## Your Turn! 🚀
 
-Open **Module 8** in `docs/workshop/08-plugins.md`
+Open **Module 7** in `docs/workshop/07-plugins.md`
 
 **Start from Exercise 1** and work through as many as you can
 

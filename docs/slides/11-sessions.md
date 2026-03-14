@@ -132,7 +132,7 @@ Copilot can only access directories you've allowed
 
 ## Your Turn! 🚀
 
-Open **Module 3** in `docs/workshop/03-sessions.md`
+Open **Module 11** in `docs/workshop/11-sessions.md`
 
 **Start from Exercise 1** and work through as many as you can
 
