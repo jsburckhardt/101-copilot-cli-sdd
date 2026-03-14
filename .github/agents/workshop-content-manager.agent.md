@@ -71,7 +71,8 @@ MODULE_MAP: JSON<<
   "09": "09-hooks.md",
   "10": "10-context.md",
   "11": "11-sessions.md",
-  "12": "12-advanced.md"
+  "12": "12-advanced.md",
+  "13": "13-configuration.md"
 }
 >>
 
@@ -88,7 +89,8 @@ SLIDE_MAP: JSON<<
   "09": "09-hooks.md",
   "10": "10-context.md",
   "11": "11-sessions.md",
-  "12": "12-advanced.md"
+  "12": "12-advanced.md",
+  "13": "13-configuration.md"
 }
 >>
 
