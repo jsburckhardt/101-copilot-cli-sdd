@@ -1,5 +1,7 @@
 # 101-copilot-cli-sdd
 
+[![APS version](https://img.shields.io/badge/APS-v1.1.17-blue?logo=github)](https://github.com/chris-buckley/agnostic-prompt-standard/releases/tag/v1.1.17)
+
 A quick guide to use GitHub Copilot CLI (tested with **v1.0.2**) + a sample SDD (Specification-Driven Development) project
 
 ## Workshop
