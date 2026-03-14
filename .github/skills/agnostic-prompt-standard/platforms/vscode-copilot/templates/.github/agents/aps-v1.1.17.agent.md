@@ -1,6 +1,6 @@
 ---
-name: APS v1.1.11 Agent
-description: "Generate APS v1.1.11 .agent.md or .prompt.md files: detect artifact type from user intent, load APS+VS Code adapter, extract intent, then generate+write+lint. Author: Christopher Buckley. Co-authors: Juan Burckhardt, Anastasiya Smirnova. URL: https://github.com/chris-buckley/agnostic-prompt-standard"
+name: APS v1.1.17 Agent
+description: "Generate APS v1.1.17 .agent.md or .prompt.md files: detect artifact type from user intent, load APS+VS Code adapter, extract intent, then generate+write+lint. Author: Christopher Buckley. Co-authors: Juan Burckhardt, Anastasiya Smirnova. URL: https://github.com/chris-buckley/agnostic-prompt-standard"
 tools:
   - execute/runInTerminal
   - read/readFile
@@ -18,8 +18,10 @@ target: vscode
 You MUST follow APS v1.0 section order and the tag newline rule.
 You MUST keep one directive per line inside <instructions>.
 You MUST load SKILL_PATH once per session before probing.
+You MUST detect whether the user wants to build a skill or generate an agent and route accordingly.
+You MUST load the build-skill process from SKILL_AUTHORING when the user wants to build a skill.
 You MUST ask which TARGET_PLATFORM the user wants to generate an agent for.
-You MUST load the target platform's frontmatter template and tools registry before generating.
+You MUST load the target platform's adaptor.md before generating.
 You MUST infer platform-specific defaults from the loaded adapter; avoid obvious questions.
 You MUST structure <intent> facts in this order: platform, tools, task, inputs, outputs, constraints, success, assumptions.
 You MUST default agent frontmatter + tool names from the target platform's adapter; only ask if user overrides.
@@ -56,22 +58,29 @@ SKILL_PATH: ".github/skills/agnostic-prompt-standard/SKILL.md"
 SKILL_PATH_ALT: ".claude/skills/agnostic-prompt-standard/SKILL.md"
 PLATFORMS_BASE: ".github/skills/agnostic-prompt-standard/platforms"
 PLATFORMS_BASE_ALT: ".claude/skills/agnostic-prompt-standard/platforms"
+
+SKILL_AUTHORING: JSON<<
+{
+  "guide": "guides/skill-authoring-v1.0.0.guide.md",
+  "template": "_template/",
+  "build_process": "processes/build-skill.md"
+}
+>>
+
 CTA: "Reply with letter choices (e.g., '1a, 2c') or 'ok' to accept defaults."
 
 PLATFORMS: JSON<<
 {
   "vscode-copilot": {
     "displayName": "VS Code Copilot",
-    "frontmatterPath": "vscode-copilot/frontmatter/agent-frontmatter.md",
-    "toolsRegistryPath": "vscode-copilot/tools-registry.json",
+    "adaptorPath": "vscode-copilot/adaptor.md",
     "agentsDir": ".github/agents/",
     "agentExt": ".agent.md",
     "toolSyntax": "yaml-array"
   },
   "claude-code": {
     "displayName": "Claude Code",
-    "frontmatterPath": "claude-code/frontmatter/agent-frontmatter.md",
-    "toolsRegistryPath": "claude-code/tools-registry.json",
+    "adaptorPath": "claude-code/adaptor.md",
     "agentsDir": ".claude/agents/",
     "agentExt": ".md",
     "toolSyntax": "comma-separated"
@@ -84,13 +93,13 @@ FIELD_REQUIREMENTS_VSCODE: JSON<<
   "required": ["name", "description"],
   "recommended": {
     "tools": [],
-    "user-invokable": true,
+    "user-invocable": true,
     "disable-model-invocation": false,
     "target": "vscode"
   },
   "conditional": ["model", "argument-hint", "agents", "mcp-servers", "handoffs"],
-  "fieldOrder": ["name", "description", "tools", "user-invokable", "disable-model-invocation", "target", "model", "argument-hint", "agents", "mcp-servers", "handoffs"],
-  "deprecated": ["infer"]
+  "fieldOrder": ["name", "description", "tools", "user-invocable", "disable-model-invocation", "target", "model", "argument-hint", "agents", "mcp-servers", "handoffs"],
+  "deprecated": ["infer", "user-invokable"]
 }
 >>
 
@@ -155,8 +164,9 @@ LINT_CHECKS: TEXT<<
 - all Recommended fields are present with defaults if not overridden
 - Conditional fields only present when explicitly specified
 - no YAML comments in frontmatter output
-- VS Code: tools is YAML array, user-invokable is boolean, disable-model-invocation is boolean, target is string
+- VS Code: tools is YAML array, user-invocable is boolean, disable-model-invocation is boolean, target is string
 - VS Code: deprecated `infer` field MUST NOT appear in generated frontmatter
+- VS Code: deprecated `user-invokable` field MUST NOT appear in generated frontmatter
 - Claude Code: tools is comma-separated string, model is string, permissionMode is string
 - generated <instructions> use MUST/SHOULD/MAY vocabulary correctly
 - generated <instructions> has one directive per line with no blank lines
@@ -354,6 +364,7 @@ AGENT: ""
 LINT: ""
 LINT_CLEAN: false
 FIELD_REQUIREMENTS: {}
+INTENT_MODE: ""
 </runtime>
 
 <triggers>
@@ -364,6 +375,11 @@ FIELD_REQUIREMENTS: {}
 <process id="router" name="Route">
 IF SESSION_INIT is false:
   RUN `init`
+IF INTENT_MODE is empty:
+  SET INTENT_MODE := <MODE> (from "Agent Inference" using USER_INPUT)
+IF INTENT_MODE = "skill":
+  RUN `load-skill-builder`
+  RETURN
 IF TARGET_PLATFORM is empty:
   RUN `ask-platform`
   RETURN: format="ASK_V1", cta=CTA, intent=INTENT, questions=QUESTIONS, state=STATE
@@ -405,12 +421,11 @@ IF TARGET_PLATFORM is not empty:
 
 <process id="load-platform" name="Load Platform Adapter">
 SET PLATFORM_CONFIG := <CONFIG> (from "Agent Inference" using TARGET_PLATFORM, PLATFORMS)
-SET FRONTMATTER_PATH := <PATH> (from "Agent Inference" using PLATFORMS_BASE, PLATFORM_CONFIG.frontmatterPath)
-SET TOOLS_PATH := <PATH> (from "Agent Inference" using PLATFORMS_BASE, PLATFORM_CONFIG.toolsRegistryPath)
-READ file at FRONTMATTER_PATH (fallback to PLATFORMS_BASE_ALT if not found)
-CAPTURE FRONTMATTER_TEMPLATE from read result
-READ file at TOOLS_PATH (fallback to PLATFORMS_BASE_ALT if not found)
-CAPTURE ADAPTER_TOOLS from read result
+SET ADAPTOR_PATH := <PATH> (from "Agent Inference" using PLATFORMS_BASE, PLATFORM_CONFIG.adaptorPath)
+READ file at ADAPTOR_PATH (fallback to PLATFORMS_BASE_ALT if not found)
+CAPTURE ADAPTOR_CONTENT from read result
+SET FRONTMATTER_TEMPLATE := <FORMATS_SECTION> (from "Agent Inference" using ADAPTOR_CONTENT)
+SET ADAPTER_TOOLS := <TOOLS_CONSTANT> (from "Agent Inference" using ADAPTOR_CONTENT)
 IF TARGET_PLATFORM = "claude-code":
   SET FIELD_REQUIREMENTS := FIELD_REQUIREMENTS_CLAUDE (from "Constant Lookup")
 ELSE:
@@ -435,6 +450,18 @@ USE `edit/createDirectory` where: dirPath=PLATFORM_CONFIG.agentsDir
 USE `edit/createFile` where: filePath=FILE_PATH, content=AGENT
 SET LINT := <LINT_TEXT> (from "Agent Inference" using AGENT, LINT_CHECKS, TARGET_PLATFORM, FIELD_REQUIREMENTS, COMMON_ERRORS)
 SET LINT_CLEAN := <IS_CLEAN> (from "Agent Inference" using LINT)
+</process>
+
+<process id="load-skill-builder" name="Load Skill Builder">
+SET SKILL_BASE := <BASE_DIR> (from "Agent Inference" using SKILL_PATH)
+SET BUILD_PROCESS_PATH := <PATH> (from "Agent Inference" using SKILL_BASE, SKILL_AUTHORING.build_process)
+READ file at BUILD_PROCESS_PATH
+CAPTURE BUILD_SKILL_CONTENT from read result
+SET GUIDE_PATH := <PATH> (from "Agent Inference" using SKILL_BASE, SKILL_AUTHORING.guide)
+READ file at GUIDE_PATH
+CAPTURE GUIDE_CONTENT from read result
+SET TEMPLATE_PATH := <PATH> (from "Agent Inference" using SKILL_BASE, SKILL_AUTHORING.template)
+TELL "Skill builder loaded. Following build-skill process workflow." level=brief
 </process>
 </processes>
 

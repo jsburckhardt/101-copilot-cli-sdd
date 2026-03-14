@@ -1,6 +1,6 @@
 ---
 name: module-executor
-description: Executes a single workshop module inside Docker, validates commands, auto-fixes simple errors, and returns structured results. Invoked by workshop-runner for each module.
+description: "Executes a single workshop module inside Docker, validates commands, auto-fixes simple errors, and returns structured results. Invoked by workshop-runner for each module."
 tools:
   - execute/runInTerminal
   - execute/getTerminalOutput

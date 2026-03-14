@@ -7,8 +7,8 @@ metadata:
   author: "Christopher Buckley"
   co_authors: "Juan Burckhardt; Anastasiya Smirnova"
   spec_version: "1.0"
-  framework_revision: "1.1.11"
-  last_updated: "2026-01-15"
+  framework_revision: "1.2.0"
+  last_updated: "2026-03-12"
 ---
 
 # Agnostic Prompt Standard (APS) v1.0 — Skill Entry
@@ -37,6 +37,10 @@ This `SKILL.md` is the **entrypoint** for the Agnostic Prompt Standard (APS) v1.
   - `constants/` — example constants blocks.
     - `constants-json-block-v1.0.0.example.md`
     - `constants-text-block-v1.0.0.example.md`
+    - `constants-csv-block-v1.0.0.example.md`
+  - `composites/` — combined reference examples.
+    - `gui-component-spec-v1.0.0.example.md`
+    - `mcp-tool-bridge-v1.0.0.example.md`
   - `formats/` — example format blocks.
     - `format-code-changes-full-v1.0.0.example.md`
     - `format-code-map-v1.0.0.example.md`
@@ -48,30 +52,41 @@ This `SKILL.md` is the **entrypoint** for the Agnostic Prompt Standard (APS) v1.
     - `format-markdown-table-v1.0.0.example.md`
     - `format-smeac-plan-v1.0.0.example.md`
     - `format-table-api-coverage-v1.0.0.example.md`
-- `platforms/` — **non-normative** platform adapters (file conventions, frontmatter, tool registries, templates).
+- `_template/` — minimal skill skeleton for scaffolding new skills.
+  - `SKILL.md` — stub entrypoint with placeholder frontmatter.
+  - `references/`, `assets/constants/`, `assets/formats/`, `processes/`, `scripts/`, `guides/` — empty placeholder directories.
+- `processes/` — executable APS process documents (skill-specific workflows).
+  - `build-skill.md` — process for building new APS-compliant skills.
+- `guides/` — reference documents for humans and agents.
+  - `skill-authoring-v1.0.0.guide.md` — skill authoring reference.
+  - `mcp-tool-bridge-v1.0.0.guide.md` — MCP tool bridge integration guide.
+  - `subagent-architecture-v1.0.0.guide.md` — cross-platform subagent architecture and interface mapping guide.
+- `platforms/` — **non-normative** platform adapters. Each platform has a single `adaptor.md` file.
   - `README.md` — platforms overview and contract.
-  - `_schemas/` — JSON Schemas for adapter validation.
-    - `platform-manifest.schema.json`
-    - `tools-registry.schema.json`
   - `_template/` — skeleton for new platform adapters.
-    - `README.md`, `manifest.json`, `tools-registry.json`
+    - `adaptor.md`
+  - `claude-code/` — Claude Code CLI adapter.
+    - `adaptor.md` — platform constants, tool registry, and format contracts.
+  - `generic/` — generic / external tools adapter.
+    - `adaptor.md` — neutral tool mapping guidance for MCP or other external tool layers.
+  - `opencode/` — OpenCode adapter.
+    - `adaptor.md` — platform constants.
   - `vscode-copilot/` — VS Code + GitHub Copilot adapter.
-    - `README.md` — adapter quickstart and nuances.
-    - `manifest.json` — file discovery rules.
-    - `tools-registry.json` — tool names, sets, and renames.
-    - `frontmatter/` — copy/paste YAML frontmatter templates.
+    - `adaptor.md` — platform constants, tool registry, and format contracts.
 - `scripts/` — optional build / compile / lint scripts (empty by default).
 
 ---
 
 ## Platform adapters
 
-Platform-specific details (file discovery, frontmatter dialects, tool naming) are documented in `platforms/`.
+Platform-specific details (file discovery, frontmatter dialects, tool naming, and coordinator/worker orchestration) are documented in `platforms/`.
 
 → See [platforms/README.md](platforms/README.md) for overview and how to add new adapters.
+
+→ See [guides/subagent-architecture-v1.0.0.guide.md](guides/subagent-architecture-v1.0.0.guide.md) for portable coordinator/worker authoring guidance.
 
 ### VS Code + GitHub Copilot
 
 The initial adapter for VS Code + GitHub Copilot is at `platforms/vscode-copilot/`.
 
-→ See [platforms/vscode-copilot/README.md](platforms/vscode-copilot/README.md) for quickstart, file discovery, frontmatter templates, and tool naming.
+→ See [platforms/vscode-copilot/adaptor.md](platforms/vscode-copilot/adaptor.md) for platform constants, tool registry, and format contracts.

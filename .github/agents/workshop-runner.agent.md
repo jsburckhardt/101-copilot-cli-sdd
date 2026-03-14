@@ -1,6 +1,6 @@
 ---
 name: workshop-runner
-description: Orchestrates the Copilot CLI workshop by initializing Docker, handling auth, and dispatching module-executor for each module. Collects results and produces final progress report.
+description: "Orchestrates the Copilot CLI workshop by initializing Docker, handling auth, and dispatching module-executor for each module. Collects results and produces final progress report."
 tools:
   - execute/runInTerminal
   - execute/getTerminalOutput
