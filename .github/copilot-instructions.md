@@ -9,6 +9,8 @@ You MUST check the Copilot CLI releases page before adding or updating features.
 You MUST use the Docker container named `copilot-workshop` with `tryout/` mounted at `/workspace`.
 You MUST NOT modify workshop module numbering without updating all cross-references.
 You MUST update the corresponding slide deck in docs/slides/ when modifying a workshop module's concepts, exercises, or structure.
+You MUST NOT create git commits, branches, or pull requests unless the user explicitly asks for it.
+You MUST dispatch @workshop-upgrader when the user requests a version upgrade.
 </instructions>
 
 <constants>
@@ -59,6 +61,7 @@ AGENTS: TEXT
 - @cross-reference-validator: validate links, versions, and structure across all modules
 - @slide-sync-checker: verify slide decks stay in sync with workshop modules
 - @exercise-linter: lint workshop exercises for syntax, numbering, and reference errors
+- @workshop-upgrader: orchestrate end-to-end workshop version upgrades across all agents
 >>
 </constants>
 
