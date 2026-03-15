@@ -71,7 +71,8 @@ MODULES: JSON<<
   {"id": "09", "file": "docs/workshop/09-hooks.md", "name": "Hooks"},
   {"id": "10", "file": "docs/workshop/10-context.md", "name": "Context Management"},
   {"id": "11", "file": "docs/workshop/11-sessions.md", "name": "Session Management"},
-  {"id": "12", "file": "docs/workshop/12-advanced.md", "name": "Advanced Topics"}
+  {"id": "12", "file": "docs/workshop/12-advanced.md", "name": "Advanced Topics"},
+  {"id": "13", "file": "docs/workshop/13-configuration.md", "name": "Configuration & Environment"}
 ]
 >>
 </constants>
@@ -224,7 +225,7 @@ IF result.errors is not empty:
 
 <process id="finalize" name="Finalize Workshop Run">
 USE `execute/runInTerminal` where: command="docker stop copilot-workshop && docker rm copilot-workshop"
-RETURN: format="PROGRESS", completed=MODULE_INDEX, feedback_count=FEEDBACK_LOGGED, fixed=TOTAL_FIXES, total=12
+RETURN: format="PROGRESS", completed=MODULE_INDEX, feedback_count=FEEDBACK_LOGGED, fixed=TOTAL_FIXES, total=13
 </process>
 </processes>
 
