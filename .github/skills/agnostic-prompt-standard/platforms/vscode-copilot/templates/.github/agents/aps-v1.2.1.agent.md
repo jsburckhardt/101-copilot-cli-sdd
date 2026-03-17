@@ -1,6 +1,6 @@
 ---
-name: APS v1.1.17 Agent
-description: "Generate APS v1.1.17 .agent.md or .prompt.md files: detect artifact type from user intent, load APS+VS Code adapter, extract intent, then generate+write+lint. Author: Christopher Buckley. Co-authors: Juan Burckhardt, Anastasiya Smirnova. URL: https://github.com/chris-buckley/agnostic-prompt-standard"
+name: APS v1.2.1 Agent
+description: "Generate APS v1.2.1 .agent.md or .prompt.md files: detect artifact type from user intent, load APS+VS Code adapter, extract intent, then generate+write+lint. Author: Christopher Buckley. Co-authors: Juan Burckhardt, Anastasiya Smirnova. URL: https://github.com/chris-buckley/agnostic-prompt-standard"
 tools:
   - execute/runInTerminal
   - read/readFile
@@ -447,7 +447,7 @@ ELSE:
 SET FILE_PATH := <AGENT_FILE_PATH> (from "Agent Inference" using AGENT_SLUG, PLATFORM_CONFIG.agentsDir, PLATFORM_CONFIG.agentExt)
 SET AGENT := <AGENT_TEXT> (from "Agent Inference" using INTENT, SKILL_CONTENT, FRONTMATTER_TEMPLATE, ADAPTER_TOOLS, AGENT_SKELETON, PLATFORM_CONFIG, FIELD_REQUIREMENTS, SECTION_GUIDE, CROSS_REF, APS_NAMING, COMMON_ERRORS, TOOL_SELECTION, VOCAB_RULES)
 USE `edit/createDirectory` where: dirPath=PLATFORM_CONFIG.agentsDir
-USE `edit/createFile` where: content=AGENT, filePath=FILE_PATH
+USE `edit/createFile` where: filePath=FILE_PATH, content=AGENT
 SET LINT := <LINT_TEXT> (from "Agent Inference" using AGENT, LINT_CHECKS, TARGET_PLATFORM, FIELD_REQUIREMENTS, COMMON_ERRORS)
 SET LINT_CLEAN := <IS_CLEAN> (from "Agent Inference" using LINT)
 </process>

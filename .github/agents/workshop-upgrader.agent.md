@@ -36,6 +36,8 @@ You MUST run all lightweight validators before offering the full integration tes
 You MUST NOT run workshop-runner unless the user explicitly requests it.
 You MUST NOT create git commits, branches, or pull requests unless the user explicitly asks.
 You MUST update TESTED_VERSION in copilot-instructions.md only after apply phase succeeds.
+You MUST update the version reference in README.md after apply phase succeeds.
+You MUST update the shields.io version badge URL in README.md after apply phase succeeds.
 You MUST track progress using the todo tool with one item per phase.
 You MUST produce an UPGRADE_SUMMARY format when all requested phases complete.
 You MUST NOT expose secrets or tokens in output.
@@ -46,25 +48,26 @@ You SHOULD offer to run workshop-runner after lightweight validation passes.
 <constants>
 COPILOT_INSTRUCTIONS: ".github/copilot-instructions.md"
 FEEDBACK_FILE: "FEEDBACK.md"
+README_FILE: "README.md"
 
 SUBAGENTS: JSON<<
 {
-  "drift": "@version-drift-detector",
   "content": "@workshop-content-manager",
-  "xref": "@cross-reference-validator",
-  "slides": "@slide-sync-checker",
+  "drift": "@version-drift-detector",
   "lint": "@exercise-linter",
-  "runner": "@workshop-runner"
+  "runner": "@workshop-runner",
+  "slides": "@slide-sync-checker",
+  "xref": "@cross-reference-validator"
 }
 >>
 
 PHASES: JSON<<
 [
-  {"id": "detect", "name": "Detect Drift", "agent": "drift", "gate": true},
-  {"id": "select", "name": "Select Features", "agent": null, "gate": true},
-  {"id": "apply", "name": "Apply Changes", "agent": "content", "gate": true},
-  {"id": "validate-light", "name": "Lightweight Validation", "agent": null, "gate": false},
-  {"id": "validate-full", "name": "Full Integration Test", "agent": "runner", "gate": true}
+  {"agent": "drift", "gate": true, "id": "detect", "name": "Detect Drift"},
+  {"agent": null, "gate": true, "id": "select", "name": "Select Features"},
+  {"agent": "content", "gate": true, "id": "apply", "name": "Apply Changes"},
+  {"agent": null, "gate": false, "id": "validate-light", "name": "Lightweight Validation"},
+  {"agent": "runner", "gate": true, "id": "validate-full", "name": "Full Integration Test"}
 ]
 >>
 
@@ -207,6 +210,8 @@ USE `agent/runSubagent` where: agent=SUBAGENTS.content, prompt=UPGRADE_PROMPT
 CAPTURE APPLY_RESULT from subagent result
 USE `read/readFile` where: filePath=COPILOT_INSTRUCTIONS
 USE `edit/editFiles` where: changes="update TESTED_VERSION to " + TARGET_VERSION, file=COPILOT_INSTRUCTIONS
+USE `read/readFile` where: filePath=README_FILE
+USE `edit/editFiles` where: changes="update version reference and shields.io badge to " + TARGET_VERSION, file=README_FILE
 SET CURRENT_PHASE := "validate-light" (from "Agent Inference")
 SET PHASES_COMPLETED := PHASES_COMPLETED + ["apply"] (from "Agent Inference")
 USE `todo` where: complete="Apply changes"

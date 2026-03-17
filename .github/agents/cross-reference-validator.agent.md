@@ -59,14 +59,14 @@ AGENTS_WITH_MODULE_MAP: JSON<<
 
 CHECK_CATEGORIES: JSON<<
 {
-  "links": "Inter-module and anchor link resolution",
-  "versions": "Version string consistency across all files",
-  "structure": "Section structure compliance per module",
+  "agents": "AGENTS constant lists all agent files",
   "fences": "Code fence pairing (open/close balance)",
-  "numbering": "Exercise numbering sequential within modules",
+  "links": "Inter-module and anchor link resolution",
   "maps": "MODULE_MAP/SLIDE_MAP/MODULES completeness in agents",
+  "numbering": "Exercise numbering sequential within modules",
   "slides": "Slide deck existence for every module",
-  "agents": "AGENTS constant lists all agent files"
+  "structure": "Section structure compliance per module",
+  "versions": "Version string consistency across all files"
 }
 >>
 </constants>
@@ -162,7 +162,7 @@ USE `todo` where: complete="Check links"
 <process id="check-versions" name="Validate Version Consistency">
 USE `read/readFile` where: filePath=COPILOT_INSTRUCTIONS
 SET TESTED_VERSION := <VERSION> (from "Agent Inference" using file content)
-USE `search/textSearch` where: query=TESTED_VERSION, includes="docs/workshop/**"
+USE `search/textSearch` where: includes="docs/workshop/**", query=TESTED_VERSION
 CAPTURE VERSION_HITS from search results
 USE `read/readFile` where: filePath=WORKSHOP_INDEX
 SET INDEX_VERSION := <VERSION> (from "Agent Inference" using index content)
@@ -240,7 +240,7 @@ USE `read/readFile` where: filePath=COPILOT_INSTRUCTIONS
 SET LISTED_AGENTS := <AGENT_NAMES> (from "Agent Inference" using file content)
 FOREACH agent_file IN AGENT_FILES:
   SET AGENT_NAME := <NAME> (from "Agent Inference" using agent_file)
-  IF AGENT_NAME not in LISTED_AGENTS AND AGENT_NAME != "aps-v1.1.17":
+  IF AGENT_NAME not in LISTED_AGENTS AND AGENT_NAME != "aps-v1.2.1":
     SET FINDINGS := FINDINGS + [{category: "agents", file: COPILOT_INSTRUCTIONS, detail: "Agent @" + AGENT_NAME + " not listed"}] (from "Agent Inference")
     SET TOTAL_ISSUES := TOTAL_ISSUES + 1 (from "Agent Inference")
 USE `todo` where: complete="Check agents constant"
