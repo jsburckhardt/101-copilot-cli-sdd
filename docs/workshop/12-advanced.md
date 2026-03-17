@@ -38,6 +38,36 @@ Session Overrides (flags)
 | `~/.copilot/skills/` | Personal skills |
 | `.github/` | Repository config |
 
+### New Commands & Features (v1.0.3–v1.0.7)
+
+Several commands and features have been added since v1.0.2:
+
+#### `/pr` — Pull Request Management
+
+> Since v1.0.4, `/pr open` has been replaced by `/pr view [local|web]`. In v1.0.5, the `/pr` command was expanded into a full PR management suite.
+
+| Subcommand | Description |
+| --- | --- |
+| `/pr` | Create and view PRs |
+| `/pr view local` | View PR status locally |
+| `/pr view web` | Open PR in browser |
+
+The `/pr` command can also automatically fix CI failures, address review feedback, and resolve merge conflicts.
+
+#### Background Agents & Multi-Turn Conversations
+
+> Since v1.0.3, background task notifications display in the timeline with expandable detail.
+
+Starting in v1.0.5, the `write_agent` tool enables multi-turn conversations with background agents — send follow-up messages to agents spawned via the task tool.
+
+Sub-agents launched by the task tool are assigned **human-readable IDs** based on their name (e.g., `math-helper-0`) instead of generic `agent-0` identifiers (v1.0.6).
+
+The `read_agent` output now includes inbound messages that triggered each turn in multi-turn agents (v1.0.6).
+
+#### `/experimental` Toggle
+
+> Since v1.0.5, toggling experimental mode with `/experimental on|off` automatically restarts the CLI to apply changes immediately. No manual restart needed.
+
 ## Hands-On Exercises
 
 ### Exercise 1: Environment Variables

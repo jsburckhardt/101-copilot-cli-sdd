@@ -63,6 +63,29 @@ MCP servers are configured in:
 - Default: `~/.copilot/mcp-config.json`
 - Custom: Set via `XDG_CONFIG_HOME`
 
+### DevContainer MCP Configuration
+
+> Since v1.0.3, Copilot CLI reads MCP server configuration from `.devcontainer/devcontainer.json`. This allows Dev Container and Codespaces environments to pre-configure MCP servers for all users.
+
+```json
+// .devcontainer/devcontainer.json
+{
+  "customizations": {
+    "copilot": {
+      "mcpServers": {
+        "memory": {
+          "type": "local",
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-memory"]
+        }
+      }
+    }
+  }
+}
+```
+
+MCP servers defined in `devcontainer.json` are merged with your personal `~/.copilot/mcp-config.json` configuration.
+
 ### Enterprise Policy Enforcement
 
 > [!IMPORTANT]
@@ -553,6 +576,7 @@ MCP server names (the keys in `"mcpServers"`) support dots (`.`), slashes (`/`),
 - ✅ Server names support npm-style identifiers with `.`, `/`, `@`
 - ✅ Env vars referenced in `command`/`args`/`cwd` are auto-inherited
 - ✅ `--additional-mcp-config` loads temporary servers
+- ✅ MCP config from `.devcontainer/devcontainer.json` (v1.0.3+)
 
 ## Next Steps
 

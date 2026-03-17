@@ -181,6 +181,30 @@ copilot --disable-mcp-server "my-server"
 
 ---
 
+## DevContainer MCP Config (v1.0.3+)
+
+MCP servers can be pre-configured in `.devcontainer/devcontainer.json`:
+
+```json
+{
+  "customizations": {
+    "copilot": {
+      "mcpServers": {
+        "memory": {
+          "type": "local",
+          "command": "npx",
+          "args": ["-y", "@modelcontextprotocol/server-memory"]
+        }
+      }
+    }
+  }
+}
+```
+
+Merged with personal `~/.copilot/mcp-config.json` automatically
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 5** in `docs/workshop/05-mcps.md`

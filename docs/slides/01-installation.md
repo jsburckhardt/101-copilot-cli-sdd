@@ -119,6 +119,22 @@ copilot
 
 ---
 
+## Version & Changelog (v1.0.3+)
+
+```bash
+# Check binary version without launching
+copilot --binary-version
+
+# Inside a session:
+/version        # Version + update check
+/changelog      # Latest release notes
+/changelog last 5            # Last 5 releases
+/changelog since v1.0.3      # Since a version
+/changelog summarize         # AI summary
+```
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 1** in `docs/workshop/01-installation.md`

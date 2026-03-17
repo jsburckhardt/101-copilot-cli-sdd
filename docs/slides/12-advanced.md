@@ -211,6 +211,17 @@ alias cop-resume='copilot --resume'
 
 ---
 
+## New in v1.0.3–v1.0.7
+
+- **`/pr`** — Full PR management: create, view, fix CI, review, merge conflicts (v1.0.5)
+  - `/pr view local|web` replaces old `/pr open` (v1.0.4) ⚠️
+- **`write_agent`** — Multi-turn conversations with background agents (v1.0.5)
+- **`/experimental on|off`** — Toggle with auto-restart (v1.0.5)
+- **Human-readable sub-agent IDs** (e.g., `math-helper-0`) (v1.0.6)
+- **`read_agent`** includes inbound messages for multi-turn agents (v1.0.6)
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 12** in `docs/workshop/12-advanced.md`

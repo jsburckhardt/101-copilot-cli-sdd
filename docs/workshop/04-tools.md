@@ -55,6 +55,14 @@ Every potentially destructive action requires approval:
 
 > ⚠️ **FEEDBACK** — Undo operations now always require user confirmation before applying — they no longer auto-apply. This safety improvement prevents accidental reversions.
 
+### Path Permission Approval
+
+> Since v1.0.4, the path permission dialog offers a **one-time approval** option in addition to permanently adding the path to the allowed list. This lets you grant access for the current session without modifying your persistent configuration.
+
+### Tool Search
+
+> Since v1.0.6, Claude models can **discover and use tools dynamically** with tool search. The model can find relevant tools without you explicitly specifying them, reducing the need for manual `--allow-tool` flags in some workflows.
+
 ## Hands-On Exercises
 
 ### Exercise 1: Understanding Tool Prompts
@@ -544,6 +552,8 @@ copilot -p "Fix all linting errors" --allow-all-tools --no-ask-user
 - ✅ `url` pattern enables tool-level URL matching
 - ✅ `--secret-env-vars` protects sensitive values from leaking
 - ✅ `--no-ask-user` enables fully autonomous operation
+- ✅ Path permission dialog offers one-time approval (v1.0.4+)
+- ✅ Claude models support dynamic tool search (v1.0.6+)
 
 ## Next Steps
 

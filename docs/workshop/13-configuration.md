@@ -92,6 +92,7 @@ All options below are set in ~/.copilot/config.json:
 | `allowed_urls` | array | `[]` | URLs/domains allowed without prompting (supports wildcards like `*.github.com`) |
 | `denied_urls` | array | `[]` | URLs/domains denied access (takes precedence over allowed) |
 | `companyAnnouncements` | array | `[]` | Custom startup messages (one randomly selected per session) |
+| `mergeStrategy` | string | `"merge"` | Git merge strategy for PR operations (renamed from `merge_strategy` in v1.0.3) |
 
 ### Environment Variables Reference
 
@@ -112,6 +113,10 @@ All options below are set in ~/.copilot/config.json:
 | `USE_BUILTIN_RIPGREP` | Set "false" to use PATH ripgrep instead of bundled | -- |
 | `NO_COLOR` | Disable colored output (standard convention) | -- |
 | `COLORFGBG` | Fallback for dark/light background detection ("fg;bg" format) | -- |
+| `GH_HOST` | Override GitHub API hostname (for GHEC data residency) | -- |
+| `HTTP_PROXY` | HTTP proxy URL for network requests | -- |
+| `HTTPS_PROXY` | HTTPS proxy URL for network requests | -- |
+| `NO_PROXY` | Comma-separated hosts to bypass proxy | -- |
 | `CI`, `BUILD_NUMBER`, `RUN_ID`, `SYSTEM_COLLECTIONURI` | CI environment detection (disables auto-update) | -- |
 
 ### CLI Flags Quick Reference
@@ -123,6 +128,8 @@ All options below are set in ~/.copilot/config.json:
 | `-s, --silent` | Output only agent response (no stats) |
 | `-v, --version` | Show version information |
 | `--model <model>` | Set AI model |
+| `--reasoning-effort <level>` | Set reasoning effort level for model |
+| `--binary-version` | Query CLI binary version without launching |
 | `--resume [sessionId]` | Resume previous session |
 | `--continue` | Resume most recent session |
 | `--yolo` / `--allow-all` | Enable all permissions |
@@ -435,6 +442,10 @@ You can enable detailed logging and understand the log directory structure.
 - ✅ `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` adds extra instruction search paths
 - ✅ `--log-dir` and `--log-level` enable debugging
 - ✅ `--screen-reader`, `--no-color`, `--plain-diff` for accessibility
+- ✅ Proxy support via `HTTP_PROXY`, `HTTPS_PROXY`, `NO_PROXY` environment variables
+- ✅ `--reasoning-effort` flag controls model reasoning level (v1.0.4+)
+- ✅ `mergeStrategy` replaces deprecated `merge_strategy` config key (v1.0.3+)
+- ✅ `--binary-version` checks installed version without launching (v1.0.3+)
 
 ## Workshop Complete! 🎉
 

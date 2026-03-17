@@ -98,7 +98,7 @@ Slash commands are prefixed with `/` and provide quick access to CLI features wi
 | **Sharing** | `/share`, `/feedback`, `/copy` | Export sessions, copy responses, and submit feedback |
 | **Account** | `/login`, `/logout`, `/user` | Authentication and user management |
 | **IDE** | `/ide` | Connect to IDE workspace |
-| **System** | `/help`, `/exit`, `/quit`, `/init`, `/tasks`, `/lsp`, `/update`, `/changelog`, `/chronicle` | General utilities and productivity |
+| **System** | `/help`, `/exit`, `/quit`, `/init`, `/tasks`, `/lsp`, `/update`, `/restart`, `/changelog`, `/chronicle` | General utilities and productivity |
 
 #### Keyboard Shortcuts
 
@@ -110,6 +110,7 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 | `#` | Reference GitHub issues, PRs, and discussions |
 | `!` | Execute a shell command directly (bypass Copilot; also the only way to access shell mode) |
 | `Esc` | Cancel the current operation |
+| `Double-Esc` | Clear input when text is present; trigger undo when prompt is empty |
 | `ctrl+x → /` | Run a slash command |
 | `ctrl+c` | Cancel operation / clear input / exit |
 | `ctrl+d` | Shutdown / exit CLI on empty prompt |
@@ -145,6 +146,18 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 > - **Ctrl+Y**, **Ctrl+X Ctrl+E**, and **Ctrl+G** require a terminal editor (set via `$COPILOT_EDITOR`, `$VISUAL`, or `$EDITOR`)
 > - Use `--screen-reader` to enable screen reader optimizations for accessible output
 
+#### Branch Indicator
+
+The CLI header displays a branch indicator with change status symbols:
+
+| Symbol | Meaning |
+| --- | --- |
+| `*` | Unstaged changes |
+| `+` | Staged changes |
+| `%` | Untracked files |
+
+Example: `main*+%` means you're on `main` with unstaged, staged, and untracked changes.
+
 #### Key Commands Not Covered in Other Modules
 
 Some commands are covered in depth in later modules (`/mcp` in Module 5, `/skills` in Module 6, `/plugin` in Module 7, `/context` and `/compact` in Module 10). The following important commands are unique to this section:
@@ -153,7 +166,7 @@ Some commands are covered in depth in later modules (`/mcp` in Module 5, `/skill
 | --- | --- |
 | `/plan [prompt]` | Ask Copilot to create an implementation plan before writing code |
 | `/review [prompt]` | Run a code review agent to analyze changes |
-| `/diff` | Review all changes made in the current directory during the session |
+| `/diff` | Review all changes with syntax highlighting (17 languages) |
 | `/init` | Initialize Copilot instructions and agentic features for a repository |
 | `/tasks` | View and manage background tasks (subagents, shell sessions) |
 | `/rename <name>` | Rename the current session for easy identification |
@@ -167,6 +180,8 @@ Some commands are covered in depth in later modules (`/mcp` in Module 5, `/skill
 | `/chronicle [standup\|tips\|improve]` | ⚠️ **Experimental** — Productivity insights powered by session history |
 | `/copy` | Copy the last response to the system clipboard (v1.0.x) |
 | `/ide` | Connect to an IDE workspace (VS Code, etc.) for diagnostics and diff review (v1.0.x) |
+| `/restart` | Hot restart the CLI while preserving your session |
+| `/version` | Display CLI version and check for updates |
 | `/streamer-mode` | Toggle streamer mode — hides preview model names and quota details (v1.0.x) |
 
 > ⚠️ **FEEDBACK**: `/research` and `/chronicle` (experimental) are recent additions. `/chronicle` subcommands (`standup`, `tips`, `improve`) and behavior may change across versions.
@@ -582,6 +597,8 @@ You can choose the appropriate mode for any task.
 - ✅ **Keyboard shortcuts** - `@` for files, `#` for issues/PRs, `!` for shell, `ctrl+x → /` for commands
 - ✅ Tool approval has one-time and session-wide options
 - ✅ Be cautious with session-wide approval for destructive commands
+- ✅ `/restart` hot restarts the CLI while preserving your session
+- ✅ Branch indicator shows unstaged (*), staged (+), and untracked (%) status
 
 ## Next Steps
 

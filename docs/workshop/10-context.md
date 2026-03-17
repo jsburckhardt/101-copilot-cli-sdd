@@ -69,6 +69,23 @@ Fix the bug in @src/app.js
 
 When you start typing a file path after `@`, matching paths are displayed below the prompt box. Use the arrow keys to select a path and press Tab to complete it.
 
+#### Expanded `@` Paths
+
+> Since v1.0.5, `@` file mentions support paths outside the project:
+
+| Syntax | Example | Description |
+| --- | --- | --- |
+| `@relative/path` | `@src/app.js` | Relative to project root (original) |
+| `@/absolute/path` | `@/usr/local/config.yaml` | Absolute path |
+| `@~/path` | `@~/notes/ideas.md` | Home directory path |
+| `@../path` | `@../shared-lib/utils.js` | Relative parent path |
+
+```
+Review @~/company-standards/coding-guidelines.md and apply to this project
+```
+
+This is especially useful for referencing shared configuration, documentation, or libraries outside the current repository.
+
 ### Referencing GitHub Issues, PRs & Discussions with `#`
 
 Similar to `@` for files, you can type `#` followed by a number to pull a GitHub issue, pull request, or discussion directly into context:
@@ -452,7 +469,7 @@ Systematic workflow keeps context under control.
 | `/compact` | Compress session history |
 | `/clear` | Clear all context (start fresh) |
 | `/cwd` or `/cd` | Change working directory (affects context scope) |
-| `/add-dir` | Add directory to accessible scope |
+| `/add-dir` | Add directory to accessible scope (persists across `/clear` and `/resume`) |
 | `@path/to/file` | Include specific file contents in your prompt |
 | `#<number>` | Include a GitHub issue, PR, or discussion in your prompt |
 
@@ -508,6 +525,7 @@ Systematic workflow keeps context under control.
 - ✅ Use `#<number>` to pull GitHub issues, PRs, or discussions into context
 - ✅ Efficient prompting extends useful session length
 - ✅ Explore agent preserves main context
+- ✅ `@` file mentions support absolute, home, and parent paths (v1.0.5+)
 
 ## Next Steps
 

@@ -96,6 +96,16 @@ Copilot CLI includes specialized built-in agents:
 
 > **Note:** Built-in agents are not included in the `/agent` list. They are invoked via the main agent's task tool.
 
+### Configure-Copilot Sub-Agent
+
+> Since v1.0.4, the built-in `configure-copilot` sub-agent can manage MCP servers, custom agents, and skills via the task tool. Ask Copilot to configure itself:
+
+```
+Help me set up an MCP server for my PostgreSQL database
+```
+
+Copilot delegates to the configure-copilot agent, which modifies configuration files on your behalf.
+
 ## Hands-On Exercises
 
 ### Exercise 1: Create a Repository Agent
@@ -709,6 +719,7 @@ tools: # Optional, defaults to all
 - ✅ Organization agents provide team-wide standards
 - ✅ Agents can delegate to other agents for complex workflows
 - ✅ Restart the CLI after creating new `.agent.md` files (plugin-installed agents hot-load without restart)
+- ✅ `configure-copilot` built-in sub-agent manages MCP, agents, and skills (v1.0.4+)
 
 ## Next Steps
 
