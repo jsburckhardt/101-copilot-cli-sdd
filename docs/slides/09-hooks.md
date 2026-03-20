@@ -83,6 +83,8 @@ Use cases: **logging**, **security guardrails**, **auditing**, **alerts**
 | `preToolUse` | Before tool runs | **Permission control** |
 | `postToolUse` | After tool runs | Verification, logging |
 | `errorOccurred` | Error happens | Alerts, monitoring |
+| `preCompact` | Before compaction | State saving (v1.0.5) |
+| `subagentStart` | Sub-agent spawned | Context injection (v1.0.7) |
 
 ---
 
@@ -166,6 +168,18 @@ echo "[$(date -Iseconds)] $TOOL_NAME: $RESULT" >> logs/audit.log
 ```
 
 > `resultType` is `"success"` or `"error"`
+
+---
+
+## New Hook Features (v1.0.4–v1.0.7)
+
+- **`disableAllHooks`** config flag — turn off all hooks (v1.0.4)
+- **`ask`** permission decision — prompt user for confirmation (v1.0.4):
+  ```json
+  {"permissionDecision": "ask", "permissionDecisionReason": "Confirm?"}
+  ```
+- **Cross-platform compat** — PascalCase event names, Claude Code nested structure (v1.0.6)
+- Hook config files that **omit `version`** field now accepted (v1.0.5)
 
 ---
 

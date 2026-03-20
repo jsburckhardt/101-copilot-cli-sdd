@@ -43,6 +43,33 @@ Plugins extend Copilot's capabilities beyond built-in features:
 | Capabilities | Full integration | Tools/resources | Instructions |
 | Distribution | Package registry | Config sharing | Files/git |
 
+### Extensions (Experimental)
+
+> ⚠️ **FEEDBACK**: Extensions are an experimental feature available since **v1.0.3**. API and behavior may change.
+
+Extensions let Copilot write custom tools and hooks for itself at runtime using `@github/copilot-sdk`. Unlike plugins (pre-packaged integrations), extensions are generated on-the-fly during a session.
+
+```bash
+# View, enable, and disable loaded extensions
+/extensions
+```
+
+Key capabilities:
+- Extensions can be CommonJS modules (`.cjs`) since v1.0.4
+- Extension tools integrate with the permissions system (v1.0.6)
+- Use `skipPermission` per-tool to bypass permission prompts for trusted extension tools
+- The loaded extensions count is shown in the "Environment loaded" startup message
+
+### Open Plugins Spec
+
+> Since v1.0.6, Copilot CLI supports the [Open Plugins specification](https://github.com/nichochar/open-plugins-spec):
+> - `.lsp.json` plugin manifest files
+> - PascalCase hook event names
+> - `exclusive` path mode
+> - `:` namespace separator
+>
+> This improves cross-platform compatibility with VS Code, Claude Code, and other tools.
+
 ### Plugin Sources
 
 1. **github/copilot-plugins** - Official GitHub plugins (default marketplace)
@@ -535,6 +562,9 @@ copilot --plugin-dir ./plugin-a --plugin-dir ./plugin-b
 - ✅ `owner/repo:path` installs from repository subdirectories (v1.0.x)
 - ✅ `/plugin install` and `/plugin marketplace add` now support local paths with spaces
 - ✅ `/plugin install` hot-loads agents and skills — no CLI restart needed
+- ✅ Extensions (experimental) — runtime tools via `@github/copilot-sdk` (v1.0.3+)
+- ✅ `/extensions` command to view, enable, and disable extensions (v1.0.5+)
+- ✅ Open Plugins spec support for cross-platform compatibility (v1.0.6+)
 
 > [!NOTE]
 > Local paths with spaces are supported in marketplace source configurations.

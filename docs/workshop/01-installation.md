@@ -53,6 +53,24 @@ Copilot CLI supports multiple installation methods:
 >
 > `copilot update` replaces the full binary executable, not just the JS package .
 
+### Version & Changelog Commands
+
+Check the installed binary version without launching a full session:
+
+```bash
+copilot --binary-version
+```
+
+Inside an interactive session, use these commands:
+
+| Command | Description |
+| --- | --- |
+| `/version` | Display CLI version and check for updates |
+| `/changelog` | View the latest release changelog |
+| `/changelog last 5` | Show the last 5 release changelogs |
+| `/changelog since v1.0.3` | Show changelogs since a specific version |
+| `/changelog summarize` | Get an AI-generated summary of recent changes |
+
 ## Hands-On Exercises
 
 ### Exercise 1a: Install via Script (Quick Method) - Recommended option
@@ -84,7 +102,7 @@ Copilot CLI supports multiple installation methods:
 **Expected Outcome:**
 
 ```
-GitHub Copilot CLI 1.0.2
+GitHub Copilot CLI 1.0.7
 ```
 
 > **Note:** The exact version number will reflect whichever release is current when you install. The format is the same regardless of installation method.
@@ -128,7 +146,7 @@ GitHub Copilot CLI 1.0.2
 **Expected Outcome:**
 
 ```
-GitHub Copilot CLI 1.0.2
+GitHub Copilot CLI 1.0.7
 ```
 
 ### Exercise 1c: Install via Homebrew (macOS/Linux) option
@@ -158,7 +176,7 @@ GitHub Copilot CLI 1.0.2
 **Expected Outcome:**
 
 ```
-GitHub Copilot CLI 1.0.2
+GitHub Copilot CLI 1.0.7
 ```
 
 ### Exercise 1d: Windows Installation (WinGet)
@@ -186,7 +204,7 @@ GitHub Copilot CLI 1.0.2
 **Expected Outcome:**
 
 ```
-GitHub Copilot CLI 1.0.2
+GitHub Copilot CLI 1.0.7
 ```
 
 ### Exercise 2: Authenticate with GitHub
@@ -314,6 +332,8 @@ This stores credentials separately from github.com, allowing you to connect to y
 - ✅ Organization members need admin-enabled CLI policy
 - ✅ Dev Containers and Codespaces include Copilot CLI by default
 - ✅ Auto-updates can be disabled with `--no-auto-update`
+- ✅ Use `--binary-version` to check the installed version without launching
+- ✅ Use `/version` and `/changelog` inside sessions for version info
 
 ## Next Steps
 

@@ -140,6 +140,19 @@ Show me just @src/auth/middleware.ts
 
 ---
 
+## Expanded @ Paths (v1.0.5+)
+
+| Syntax | Example | Description |
+|--------|---------|-------------|
+| `@relative` | `@src/app.js` | Project-relative (original) |
+| `@/absolute` | `@/usr/local/config.yaml` | Absolute path |
+| `@~/home` | `@~/notes/ideas.md` | Home directory |
+| `@../parent` | `@../shared-lib/utils.js` | Parent directory |
+
+> `/add-dir` directories now **persist** across `/clear` and `/resume` (v1.0.3)
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 10** in `docs/workshop/10-context.md`

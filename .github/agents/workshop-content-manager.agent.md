@@ -51,10 +51,10 @@ COPILOT_INSTRUCTIONS: ".github/copilot-instructions.md"
 
 OFFICIAL_SOURCES: JSON<<
 {
-  "docs": "https://docs.github.com/copilot/concepts/agents/about-copilot-cli",
-  "repo": "github/copilot-cli",
   "concepts": "https://docs.github.com/copilot/using-github-copilot/using-github-copilot-in-the-command-line",
-  "releases": "https://github.com/github/copilot-cli/releases"
+  "docs": "https://docs.github.com/copilot/concepts/agents/about-copilot-cli",
+  "releases": "https://github.com/github/copilot-cli/releases",
+  "repo": "github/copilot-cli"
 }
 >>
 

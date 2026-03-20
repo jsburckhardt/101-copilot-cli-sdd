@@ -174,6 +174,20 @@ Distribute via shared config templates in your repo.
 
 ---
 
+## New Config & Flags (v1.0.3–v1.0.7)
+
+| Feature | Details |
+|---------|---------|
+| `mergeStrategy` | Replaces `merge_strategy` ⚠️ (v1.0.3) |
+| `--reasoning-effort` | Control model reasoning level (v1.0.4) |
+| `--binary-version` | Check version without launching (v1.0.3) |
+| `GH_HOST` | Override GitHub API hostname |
+| `HTTP_PROXY` / `HTTPS_PROXY` | Proxy support |
+| `NO_PROXY` | Bypass proxy for specific hosts |
+| gpt-5.4-mini | New model available (v1.0.7) |
+
+---
+
 ## Your Turn!
 
 ### Recommended exercises from Module 13:

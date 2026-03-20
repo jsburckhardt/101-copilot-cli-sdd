@@ -76,6 +76,12 @@ export COPILOT_CUSTOM_INSTRUCTIONS_DIRS="/path/to/shared-instructions,/path/to/t
 copilot
 ```
 
+### System Message Customization
+
+> ⚠️ **FEEDBACK**: The "customize" mode for system message configuration is available in **v1.0.7**.
+
+You can override specific sections of the system prompt using the "customize" mode in configuration. This allows section-level control over the system message without replacing it entirely.
+
 ## Hands-On Exercises
 
 ### Exercise 1: Create Repository Instructions
@@ -257,6 +263,17 @@ Copilot acts as a senior TypeScript engineer and suggests conventional commits.
    ---
    applyTo: "**/*.ts,**/*.tsx"
    ---
+
+   > [!TIP]
+   > Since v1.0.6, `applyTo` accepts both a comma-separated string and a YAML array:
+   > ```yaml
+   > # String (original format)
+   > applyTo: "**/*.ts,**/*.tsx"
+   > # Array (v1.0.6+)
+   > applyTo:
+   >   - "**/*.ts"
+   >   - "**/*.tsx"
+   > ```
 
    # TypeScript Instructions
 
@@ -467,6 +484,7 @@ Commit messages follow Conventional Commits format.
 - ✅ Commit conventions should be explicitly documented
 - ✅ `--no-custom-instructions` disables all instruction file loading
 - ✅ `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` adds extra instruction search paths
+- ✅ `applyTo` accepts both string and array formats (v1.0.6+)
 
 ## Next Steps
 

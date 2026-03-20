@@ -36,11 +36,45 @@ User Prompt → Session Start → Pre-Tool → Tool Execution → Post-Tool → 
 | `preToolUse` | Before tool execution | Permission control, validation |
 | `postToolUse` | After tool execution | Logging, verification |
 | `errorOccurred` | Error happens | Error handling, alerts |
+| `preCompact` | Before context compaction | Pre-compaction tasks, state saving |
+| `subagentStart` | Sub-agent is spawned | Context injection, logging |
 
 ### Hook Locations
 
 - **Copilot Coding Agent**: `.github/hooks/hooks.json` (on default branch)
 - **Copilot CLI**: Hooks loaded from current working directory
+
+### Disabling All Hooks
+
+> Since v1.0.4, use the `disableAllHooks` flag in configuration to disable all hooks:
+
+```json
+{
+  "disableAllHooks": true
+}
+```
+
+This is useful for debugging or CI environments where hooks may interfere with automation.
+
+### Hook Permission Decisions
+
+Hooks support three permission decisions in `preToolUse`:
+
+| Decision | Behavior |
+| --- | --- |
+| `allow` | Allow the tool to execute |
+| `deny` | Block the tool with a reason |
+| `ask` | Prompt the user for confirmation before executing |
+
+> The `ask` decision (v1.0.4+) lets hooks request user confirmation instead of silently allowing or denying — useful for semi-automated workflows.
+
+### Cross-Platform Hook Compatibility
+
+> Since v1.0.6, hook configuration files work across **VS Code, Claude Code, and the CLI** without modification:
+> - PascalCase event names are accepted alongside camelCase (e.g., `PreToolUse` and `preToolUse` both work)
+> - Claude Code's nested `matcher/hooks` structure is supported
+> - The optional `type` field is accepted but not required
+> - Hooks config files that omit the `version` field are accepted (v1.0.5+)
 
 ## Hands-On Exercises
 
@@ -706,6 +740,11 @@ All tool executions are logged with results:
 - ✅ Session hooks enable auditing
 - ✅ Error hooks support monitoring integration
 - ✅ Hooks must return JSON for permission decisions
+- ✅ `preCompact` hook fires before context compaction (v1.0.5+)
+- ✅ `subagentStart` hook fires when a sub-agent is spawned (v1.0.7+)
+- ✅ `disableAllHooks` flag disables all hooks (v1.0.4+)
+- ✅ Hook `ask` permission decision prompts user for confirmation (v1.0.4+)
+- ✅ Cross-platform hook configs work across VS Code, Claude Code, and CLI (v1.0.6+)
 
 ## Next Steps
 

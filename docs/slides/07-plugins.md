@@ -157,6 +157,17 @@ copilot --allow-tool 'plugin-name' --deny-tool 'shell(rm)'
 
 ---
 
+## Extensions & Open Plugins (v1.0.3+)
+
+- **Extensions** (experimental) — Copilot writes custom tools at runtime via `@github/copilot-sdk`
+- **`/extensions`** command to view, enable, disable extensions (v1.0.5)
+- Extension tools integrate with **permissions system** (`skipPermission` per-tool) (v1.0.6)
+- **Open Plugins spec** support (v1.0.6):
+  - `.lsp.json` manifests, PascalCase events, `exclusive` path mode
+  - Cross-platform compatibility with VS Code and Claude Code
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 7** in `docs/workshop/07-plugins.md`

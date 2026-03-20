@@ -148,7 +148,7 @@ Type **`/help`** to see them all
 | **Sharing** | `/share`, `/feedback`, `/copy` |
 | **Account** | `/login`, `/logout`, `/user` |
 | **IDE** | `/ide` |
-| **System** | `/help`, `/exit`, `/init`, `/tasks`, `/lsp`, `/update`, `/chronicle` |
+| **System** | `/help`, `/exit`, `/init`, `/tasks`, `/lsp`, `/update`, `/restart`, `/version`, `/changelog`, `/chronicle` |
 
 ---
 
@@ -161,6 +161,7 @@ Type **`/help`** to see them all
 | `!` | Run shell commands directly (only way to access shell) |
 | `Shift+Tab` | Cycle between chat ⟷ edit mode |
 | `Esc` | Cancel current operation |
+| `Double-Esc` | Clear input or trigger undo |
 | `ctrl+t` | Toggle reasoning display |
 | `ctrl+x → /` | Quick slash command |
 | `ctrl+c` | Cancel / clear input / exit |
@@ -185,6 +186,17 @@ When Copilot wants to run a command, you choose:
 
 > ⚠️ Be careful with session-wide approval for `rm`, `git push`, `sudo`
 > ✅ Safe for `ls`, `cat`, `git status`, `git diff`
+
+---
+
+## New in v1.0.3–v1.0.7
+
+- **`/restart`** — Hot restart preserving your session
+- **`/diff`** now has **syntax highlighting** (17 languages)
+- **Branch indicator** in header: `main*+%`
+  - `*` unstaged, `+` staged, `%` untracked
+- **`quit`** works as exit alias (alongside `/exit`)
+- **Double-Esc** — clears input or triggers undo
 
 ---
 

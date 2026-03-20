@@ -166,6 +166,19 @@ Saved as `.github/instructions/tests.instructions.md`
 
 ---
 
+## New in v1.0.6–v1.0.7
+
+- **`applyTo`** now accepts **YAML arrays** (v1.0.6+):
+  ```yaml
+  applyTo:
+    - "**/*.ts"
+    - "**/*.tsx"
+  ```
+- **"Customize" mode** for system message overrides (v1.0.7)
+- **`COPILOT_CUSTOM_INSTRUCTIONS_DIRS`** for extra instruction paths
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 3** in `docs/workshop/03-instructions.md`

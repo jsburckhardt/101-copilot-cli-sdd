@@ -19,7 +19,7 @@ You MUST initialize Docker container and handle authentication before dispatchin
 You MUST dispatch @module-executor for each module sequentially.
 You MUST pass MODULE_ID and MODULE_FILE to module-executor for each dispatch.
 You MUST collect MODULE_RESULT from each dispatch and aggregate into progress.
-You MUST append complex errors to feedback.md after each module completes.
+You MUST append complex errors to FEEDBACK.md after each module completes.
 You MUST run a documentation-claim validation sweep for modules whose critical outcomes are not fully covered by executable code blocks.
 You MUST validate permissions-related claims using fresh `copilot -p` probes with default permissions (no pre-approval flags).
 You MUST treat low-risk tool behavior as valid when the command is either prompted or already pre-approved by environment policy.
@@ -33,7 +33,7 @@ You MUST produce final PROGRESS report after all modules complete.
 
 <constants>
 WORKSHOP_INDEX: "docs/workshop/00-index.md"
-FEEDBACK_FILE: "feedback.md"
+FEEDBACK_FILE: "FEEDBACK.md"
 TRYOUT_DIR: "tryout"
 MODULE_EXECUTOR: "@module-executor"
 
@@ -60,19 +60,19 @@ nvm install --lts
 
 MODULES: JSON<<
 [
-  {"id": "01", "file": "docs/workshop/01-installation.md", "name": "Installation"},
-  {"id": "02", "file": "docs/workshop/02-modes.md", "name": "Operating Modes"},
-  {"id": "03", "file": "docs/workshop/03-instructions.md", "name": "Custom Instructions"},
-  {"id": "04", "file": "docs/workshop/04-tools.md", "name": "Tools & Permissions"},
-  {"id": "05", "file": "docs/workshop/05-mcps.md", "name": "MCP Servers"},
-  {"id": "06", "file": "docs/workshop/06-skills.md", "name": "Agent Skills"},
-  {"id": "07", "file": "docs/workshop/07-plugins.md", "name": "Plugins"},
-  {"id": "08", "file": "docs/workshop/08-custom-agents.md", "name": "Custom Agents"},
-  {"id": "09", "file": "docs/workshop/09-hooks.md", "name": "Hooks"},
-  {"id": "10", "file": "docs/workshop/10-context.md", "name": "Context Management"},
-  {"id": "11", "file": "docs/workshop/11-sessions.md", "name": "Session Management"},
-  {"id": "12", "file": "docs/workshop/12-advanced.md", "name": "Advanced Topics"},
-  {"id": "13", "file": "docs/workshop/13-configuration.md", "name": "Configuration & Environment"}
+  {"file": "docs/workshop/01-installation.md", "id": "01", "name": "Installation"},
+  {"file": "docs/workshop/02-modes.md", "id": "02", "name": "Operating Modes"},
+  {"file": "docs/workshop/03-instructions.md", "id": "03", "name": "Custom Instructions"},
+  {"file": "docs/workshop/04-tools.md", "id": "04", "name": "Tools & Permissions"},
+  {"file": "docs/workshop/05-mcps.md", "id": "05", "name": "MCP Servers"},
+  {"file": "docs/workshop/06-skills.md", "id": "06", "name": "Agent Skills"},
+  {"file": "docs/workshop/07-plugins.md", "id": "07", "name": "Plugins"},
+  {"file": "docs/workshop/08-custom-agents.md", "id": "08", "name": "Custom Agents"},
+  {"file": "docs/workshop/09-hooks.md", "id": "09", "name": "Hooks"},
+  {"file": "docs/workshop/10-context.md", "id": "10", "name": "Context Management"},
+  {"file": "docs/workshop/11-sessions.md", "id": "11", "name": "Session Management"},
+  {"file": "docs/workshop/12-advanced.md", "id": "12", "name": "Advanced Topics"},
+  {"file": "docs/workshop/13-configuration.md", "id": "13", "name": "Configuration & Environment"}
 ]
 >>
 </constants>

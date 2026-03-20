@@ -149,6 +149,14 @@ copilot --no-ask-user --allow-all-tools
 
 ---
 
+## New in v1.0.4–v1.0.6
+
+- **One-time path approval** — grant path access for current session only, without modifying config (v1.0.4)
+- **Dynamic tool search** — Claude models discover and use tools automatically (v1.0.6)
+- **`/reset-allowed-tools`** now fully undoes `/allow-all` (v1.0.3)
+
+---
+
 ## Your Turn! 🚀
 
 Open **Module 4** in `docs/workshop/04-tools.md`

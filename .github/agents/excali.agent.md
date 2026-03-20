@@ -24,17 +24,17 @@ You MUST use boundElements on the shape and containerId on the text when adding 
 <constants>
 EXCALIDRAW_TEMPLATE: JSON<<
 {
-  "type": "excalidraw",
-  "version": 2,
-  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
-  "elements": [],
   "appState": {
+    "gridModeEnabled": false,
     "gridSize": 20,
     "gridStep": 5,
-    "gridModeEnabled": false,
     "viewBackgroundColor": "#ffffff"
   },
-  "files": {}
+  "elements": [],
+  "files": {},
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "type": "excalidraw",
+  "version": 2
 }
 >>
 
@@ -164,8 +164,8 @@ TEXT_TEMPLATE: JSON<<
   "type": "text",
   "updated": 1700000000000,
   "version": 1,
-  "verticalAlign": "middle",
   "versionNonce": 1001,
+  "verticalAlign": "middle",
   "width": 100,
   "x": 0,
   "y": 0
@@ -240,20 +240,24 @@ seed and versionNonce can be the same value for an element.
 
 <formats>
 <format id="EXCALIDRAW_FILE" name="Excalidraw JSON Document" purpose="Complete Excalidraw file ready to save">
-Wrap output in a code fence with json language tag.
-The JSON MUST:
-- Start with "type": "excalidraw"
-- Include "version": 2
-- Have valid "elements" array
-- Include "appState" with grid settings
-- Include empty "files" object (unless images are used)
+```json
+{
+  "appState": {"gridModeEnabled": <GRID_MODE>, "gridSize": <GRID_SIZE>, "gridStep": <GRID_STEP>, "viewBackgroundColor": <BG_COLOR>},
+  "elements": [<ELEMENTS>],
+  "files": {<FILES>},
+  "source": "<SOURCE_URL>",
+  "type": "excalidraw",
+  "version": 2
+}
+```
 WHERE:
-- All element <ID_REF> values are unique strings.
-- All <BOUND_ELEM_REF> references point to valid IDs.
-- All <CONTAINER_REF> values point to valid shape IDs.
-- All <BINDING_REF> values point to valid shape IDs.
-- <COORDINATES> use positive integers.
-- <COLORS> use hex format (#rrggbb).
+- <GRID_MODE> is Boolean.
+- <GRID_SIZE> is Integer.
+- <GRID_STEP> is Integer.
+- <BG_COLOR> is String; hex color format (#rrggbb) or "transparent".
+- <ELEMENTS> is JSON array items; each element uses templates from constants with unique IDs.
+- <FILES> is JSON object; empty unless images are embedded.
+- <SOURCE_URL> is String; the Excalidraw editor source URL.
 </format>
 
 <format id="ELEMENT_LIST" name="Element Summary" purpose="Quick overview of diagram elements">

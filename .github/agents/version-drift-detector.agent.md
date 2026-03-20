@@ -44,8 +44,8 @@ SLIDES_DIR: "docs/slides"
 OFFICIAL_SOURCES: JSON<<
 {
   "docs": "https://docs.github.com/copilot/how-tos/copilot-cli",
-  "repo": "github/copilot-cli",
-  "releases": "https://github.com/github/copilot-cli/releases"
+  "releases": "https://github.com/github/copilot-cli/releases",
+  "repo": "github/copilot-cli"
 }
 >>
 
