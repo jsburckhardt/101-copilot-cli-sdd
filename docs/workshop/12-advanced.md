@@ -36,9 +36,10 @@ Session Overrides (flags)
 | `~/.copilot/config.json` | User settings |
 | `~/.copilot/mcp-config.json` | MCP servers |
 | `~/.copilot/skills/` | Personal skills |
+| `~/.agents/skills/` | Personal skill discovery directory (shared with VS Code extension) |
 | `.github/` | Repository config |
 
-### New Commands & Features (v1.0.3–v1.0.7)
+### New Commands & Features (v1.0.3–v1.0.16)
 
 Several commands and features have been added since v1.0.2:
 
@@ -67,6 +68,18 @@ The `read_agent` output now includes inbound messages that triggered each turn i
 #### `/experimental` Toggle
 
 > Since v1.0.5, toggling experimental mode with `/experimental on|off` automatically restarts the CLI to apply changes immediately. No manual restart needed.
+
+#### Monorepo Support
+
+Custom instructions, MCP servers, skills, and agents are now discovered at every directory level from the working directory up to the git root, enabling full monorepo support.
+
+#### `--effort` Shorthand
+
+Use `--effort` as a shorthand alias for `--reasoning-effort` to control model reasoning level.
+
+#### `--resume` Enhancements
+
+`--resume` now accepts a task ID in addition to a session ID.
 
 ## Hands-On Exercises
 
@@ -270,9 +283,7 @@ Copilot CLI integrated into automated workflows.
  copilot --additional-mcp-config ./custom-mcp.json
  ```
 
-5. **Output and streaming control (v1.0.x):**
-
- > ⚠️ **FEEDBACK**: `--output-format`, `--stream`, `--no-color`, and `--acp` are available in **v1.0.x**.
+5. **Output and streaming control:**
 
  ```bash
  # JSON output for scripting (one JSON object per line)
@@ -379,9 +390,7 @@ Full command-line control over Copilot behavior.
  # Now you'll be prompted for approval on each action
  ```
 
-7. **Limit autopilot continuation rounds (v1.0.x):**
-
- > ⚠️ **FEEDBACK**: `--max-autopilot-continues` is available in **v1.0.x**.
+7. **Limit autopilot continuation rounds:**
 
  ```bash
  # Limit to 10 continuation rounds (default: unlimited)
@@ -765,16 +774,13 @@ Language server timeouts are configured for your environment, eliminating timeou
 
  ```json
  {
- "trusted_folders": [
+ "trustedFolders": [
  "/home/user/projects",
  "/home/user/work"
  ],
- "default_model": "gpt-4.1",
+ "model": "gpt-4.1",
  "theme": "dark",
- "editor": "code",
- "shell": "bash",
- "telemetry": true,
- "auto_update": true
+ "autoUpdate": true
  }
  ```
 
@@ -782,7 +788,7 @@ Language server timeouts are configured for your environment, eliminating timeou
 
  ```bash
  # Using jq to update config
- jq '.trusted_folders += ["/new/path"]' ~/.copilot/config.json > tmp.json
+ jq '.trustedFolders += ["/new/path"]' ~/.copilot/config.json > tmp.json
  mv tmp.json ~/.copilot/config.json
  ```
 
@@ -790,15 +796,13 @@ Language server timeouts are configured for your environment, eliminating timeou
 
  ```json
  {
- "web_fetch": {
- "allowed_urls": [
+ "allowedUrls": [
  "https://api.github.com/*",
  "https://docs.github.com/*"
  ],
- "denied_urls": [
+ "deniedUrls": [
  "https://evil.com/*"
  ]
- }
  }
  ```
 
@@ -1129,67 +1133,74 @@ You can run deep-research workflows and extract insights from your session histo
 | `~/.copilot/mcp-config.json` | MCP servers | Base |
 | `~/.copilot/lsp.json` | LSP timeout configuration | |
 | `~/.copilot/skills/` | Personal skills | Base |
+| `~/.agents/skills/` | Personal skill discovery (shared with VS Code) | v1.0.11+ |
 | `.github/copilot-instructions.md` | Repository instructions | Base |
 
 ### Key Command-Line Flags
 
-| Flag | Description | Version |
-| ------ | ------------- | --------- |
-| `-p, --prompt` | Programmatic mode prompt | Base |
-| `-i, --interactive` | Interactive mode with auto-executed prompt | v1.0.x |
-| `--model` | Select AI model | Base |
-| `--resume` | Resume last session | Base |
-| `--yolo` / `--allow-all` | Allow all tools, paths, and URLs | Base |
-| `--allow-tool` / `--deny-tool` | Allow/deny specific tools | Base |
-| `--allow-url` / `--deny-url` | Allow/deny specific URLs | v1.0.x |
-| `--silent` | Suppress output | Base |
-| `--output-format` | Output as `text` or `json` (JSONL) | v1.0.x |
-| `--share PATH` | Export to markdown | Base |
-| `--share-gist` | Export to Gist | Base |
-| `--additional-mcp-config` | Add MCP config | Base |
-| `--autopilot` | Enable autonomous multi-step execution | |
-| `--max-autopilot-continues` | Limit autopilot continuation rounds | v1.0.x |
-| `--no-ask-user` | Disable agent questions (fully autonomous) | v1.0.x |
-| `--acp` | Start as Agent Client Protocol server | v1.0.x |
-| `--stream` | Enable/disable streaming (on/off) | v1.0.x |
-| `--bash-env` | Source BASH_ENV in shell sessions | |
-| `--experimental` | Enable experimental features | |
-| `--mouse` / `--no-mouse` | Alt-screen mouse behavior | |
-| `--secret-env-vars` | Redact env var values | v1.0.x |
-| `--no-custom-instructions` | Disable AGENTS.md loading | v1.0.x |
-| `--screen-reader` | Screen reader optimizations | v1.0.x |
-| `--no-color` | Disable color output | v1.0.x |
+| Flag | Description |
+| ------ | ------------- |
+| `-p, --prompt` | Programmatic mode prompt |
+| `-i, --interactive` | Interactive mode with auto-executed prompt |
+| `--model` | Select AI model |
+| `--resume` | Resume last session (accepts session ID or task ID) |
+| `--yolo` / `--allow-all` | Allow all tools, paths, and URLs |
+| `--allow-tool` / `--deny-tool` | Allow/deny specific tools |
+| `--allow-url` / `--deny-url` | Allow/deny specific URLs |
+| `--silent` | Suppress output |
+| `--output-format` | Output as `text` or `json` (JSONL) |
+| `--share PATH` | Export to markdown |
+| `--share-gist` | Export to Gist |
+| `--additional-mcp-config` | Add MCP config |
+| `--autopilot` | Enable autonomous multi-step execution |
+| `--max-autopilot-continues` | Limit autopilot continuation rounds |
+| `--no-ask-user` | Disable agent questions (fully autonomous) |
+| `--acp` | Start as Agent Client Protocol server |
+| `--stream` | Enable/disable streaming (on/off) |
+| `--bash-env` | Source BASH_ENV in shell sessions |
+| `--experimental` | Enable experimental features |
+| `--mouse` / `--no-mouse` | Mouse behavior |
+| `--effort` | Shorthand for `--reasoning-effort` |
+| `--secret-env-vars` | Redact env var values |
+| `--no-custom-instructions` | Disable AGENTS.md loading |
+| `--screen-reader` | Screen reader optimizations |
+| `--no-color` | Disable color output |
 
 ### Slash Commands
 
-| Command | Description | Version |
-| --------- | ------------- | --------- |
-| `/help` | Show all available commands | Base |
-| `/clear` | Clear session context | Base |
-| `/context` | View token usage | Base |
-| `/compact` | Compress session history | Base |
-| `/plan` | Create implementation plan | Base |
-| `/review` | Run code review agent | Base |
-| `/delegate` | Hand off to cloud agent | Base |
-| `/fleet` | Launch parallel sub-agents for complex tasks | |
-| `/autopilot on\|off` | Toggle autopilot mode | |
-| `/research` | Launch deep-research workflow with exportable reports | |
-| `/chronicle` | Session-history insights (standup, tips, improve) — experimental | |
-| `/diagnose` | Show diagnostic summary of session and environment | |
-| `/copy` | Copy last response to clipboard | v1.0.x |
-| `/ide` | Connect to IDE workspace | v1.0.x |
-| `/streamer-mode` | Toggle streamer mode | v1.0.x |
-| `/mcp` | Manage MCP servers | Base |
+| Command | Description |
+| --------- | ------------- |
+| `/help` | Show all available commands |
+| `/clear` | Abandon session and start fresh |
+| `/new [prompt]` | Start new conversation (old session backgrounded) |
+| `/context` | View token usage |
+| `/compact` | Compress session history |
+| `/plan` | Create implementation plan |
+| `/review` | Run code review agent |
+| `/delegate` | Hand off to cloud agent |
+| `/fleet` | Launch parallel sub-agents for complex tasks |
+| `/autopilot on\|off` | Toggle autopilot mode |
+| `/research` | Launch deep-research workflow with exportable reports |
+| `/chronicle` | Session-history insights (standup, tips, improve) — experimental |
+| `/diagnose` | Show diagnostic summary of session and environment |
+| `/undo` | Undo last turn and revert file changes |
+| `/rewind` | Timeline picker to roll back to any point (also double-Esc) |
+| `/copy` | Copy last response to clipboard |
+| `/ide` | Connect to IDE workspace |
+| `/streamer-mode` | Toggle streamer mode |
+| `/mcp` | Manage MCP servers |
+| `/mcp auth` | Re-authenticate MCP OAuth servers |
+| `/share html` | Export session as interactive HTML |
+| `/allow-all [on\|off\|show]` | Enable, disable, or check allow-all mode |
 
 ### Shell Mode Access
 
 > **Changed**: Shell mode removed from Shift+Tab cycle
 
-| Method | Description | Version |
-| -------- | ------------- | --------- |
-| `!` | Direct access to shell mode | |
-| `Shift+Tab` | Cycle (chat) ⟷ (edit) only | |
-| `Shift+Tab` | Cycle (chat) → (edit) → (shell) | Deprecated |
+| Method | Description |
+| -------- | ------------- |
+| `!` | Direct access to shell mode |
+| `Shift+Tab` | Cycle (chat) ⟷ (edit) only |
 
 ### Useful Aliases
 
@@ -1220,7 +1231,7 @@ alias cop-resume='copilot --resume'
 - ✅ **Autopilot mode** enables autonomous multi-step task execution
 - ✅ **Fleet command** parallelizes complex tasks with orchestrator validation
 - ✅ **--bash-env** sources custom environment for shell sessions
-- ✅ **--experimental** enables alt-screen mode by default
+- ✅ **--experimental** enables experimental features
 - ✅ **Configurable status line** displays dynamic session info via custom shell scripts
 - ✅ **Environment loading indicator** shows skills, MCPs, and plugins being loaded at startup
 - ✅ **Status line responsive layout** auto-switches to two-line layout on narrow terminals
@@ -1228,14 +1239,16 @@ alias cop-resume='copilot --resume'
 - ✅ **`/research` command** for deep-research workflows with exportable reports
 - ✅ **`--disable-parallel-tools-execution` removed** — parallel tool execution is now always enabled
 - ✅ **`/chronicle` command** (experimental) for session-history insights: standup, tips, improve
-- ✅ **`--mouse`/`--no-mouse` flag** controls alt-screen mouse behavior
+- ✅ **`--mouse`/`--no-mouse` flag** controls mouse behavior
+- ✅ **`--effort` flag** shorthand for `--reasoning-effort`
+- ✅ **Monorepo support** discovers instructions, MCPs, skills, and agents from cwd to git root
 - ✅ **`/diagnose` command** for troubleshooting session and environment issues
-- ✅ **`--max-autopilot-continues`** limits autopilot continuation rounds (v1.0.x)
-- ✅ **`--no-ask-user`** enables fully autonomous operation without questions (v1.0.x)
-- ✅ **`--acp`** starts Agent Client Protocol server (v1.0.x)
-- ✅ **`--output-format json`** enables JSONL output for scripting (v1.0.x)
-- ✅ **`--stream`** controls streaming mode (v1.0.x)
-- ✅ **`-i, --interactive`** starts interactive mode with auto-executed prompt (v1.0.x)
+- ✅ **`--max-autopilot-continues`** limits autopilot continuation rounds
+- ✅ **`--no-ask-user`** enables fully autonomous operation without questions
+- ✅ **`--acp`** starts Agent Client Protocol server
+- ✅ **`--output-format json`** enables JSONL output for scripting
+- ✅ **`--stream`** controls streaming mode
+- ✅ **`-i, --interactive`** starts interactive mode with auto-executed prompt
 - ✅ **LSP configuration** controls language server timeouts; default request timeout is 90s
 - ✅ **Shell mode access** via `!` command
 - ✅ config.json and lsp.json persist preferences

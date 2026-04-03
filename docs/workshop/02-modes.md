@@ -32,8 +32,6 @@ copilot
 
 ### Interactive-with-Prompt Mode
 
-> ⚠️ **FEEDBACK**: The `-i, --interactive` flag is available in **v1.0.x**. If your version is older, use `-p` for prompt mode or start an interactive session and type your prompt.
-
 The `-i` flag starts an interactive session **and** automatically executes a prompt — combining the best of both modes. The session stays open for follow-up after the initial prompt completes.
 
 ```bash
@@ -55,7 +53,7 @@ Programmatic mode executes a single prompt and exits. Perfect for:
 # Execute a single prompt (exits after completion)
 copilot -p "summarize the README.md file"
 
-# JSON output for scripting (v1.0.x)
+# JSON output for scripting
 copilot -p "list all TODO comments" --output-format json
 
 # Silent mode — agent response only, no stats
@@ -88,14 +86,14 @@ Slash commands are prefixed with `/` and provide quick access to CLI features wi
 
 | Category | Commands | Purpose |
 | --- | --- | --- |
-| **Session** | `/clear`, `/session`, `/resume`, `/rename`, `/usage` | Manage session lifecycle |
+| **Session** | `/clear`, `/new`, `/session`, `/resume`, `/rename`, `/usage` | Manage session lifecycle |
 | **Navigation** | `/cwd`, `/cd`, `/add-dir`, `/list-dirs` | Control directory scope |
 | **Context** | `/context`, `/compact` | Monitor and optimize token usage |
-| **Tools** | `/allow-all`, `/yolo`, `/reset-allowed-tools` | Manage tool permissions at runtime |
-| **Review** | `/diff`, `/review`, `/plan`, `/research` | Code review, planning, and research workflows |
+| **Tools** | `/allow-all [on\|off\|show]`, `/yolo`, `/reset-allowed-tools` | Manage tool permissions at runtime |
+| **Review** | `/diff`, `/review`, `/plan`, `/research`, `/undo`, `/rewind` | Code review, planning, history navigation |
 | **Configuration** | `/model`, `/mcp`, `/theme`, `/terminal-setup`, `/experimental`, `/streamer-mode`, `/instructions` | Customize CLI behavior |
 | **Extensibility** | `/skills`, `/plugin`, `/agent`, `/fleet` | Manage skills, plugins, agents, and parallel execution |
-| **Sharing** | `/share`, `/feedback`, `/copy` | Export sessions, copy responses, and submit feedback |
+| **Sharing** | `/share`, `/share html`, `/feedback`, `/copy` | Export sessions, copy responses, and submit feedback |
 | **Account** | `/login`, `/logout`, `/user` | Authentication and user management |
 | **IDE** | `/ide` | Connect to IDE workspace |
 | **System** | `/help`, `/exit`, `/quit`, `/init`, `/tasks`, `/lsp`, `/update`, `/restart`, `/changelog`, `/chronicle` | General utilities and productivity |
@@ -126,23 +124,23 @@ In addition to slash commands, Copilot CLI supports keyboard shortcuts:
 | `ctrl+y` | Edit plan in terminal editor |
 | `ctrl+x → ctrl+e` | Edit prompt in terminal editor |
 | `ctrl+z` | Suspend/resume CLI (Unix platforms only) |
-| `ctrl+insert` | Copy selected text in alt-screen mode |
-| `ctrl+f` | Page forward in alt-screen mode |
-| `ctrl+b` | Page back in alt-screen mode |
+| `ctrl+insert` | Copy selected text |
+| `ctrl+f` | Page forward |
+| `ctrl+b` | Page back |
 | `ctrl+g` | Open current prompt in external editor; or dismiss dialog |
-| `Home` / `End` | Navigate within visual line; jump to top/bottom of scroll buffer in alt-screen mode |
+| `ctrl+d` | Exit prompt (no longer queues a message; use `Ctrl+Q` or `Ctrl+Enter` to queue) |
+| `Home` / `End` | Navigate within visual line; jump to top/bottom of scroll buffer |
 | `ctrl+Home` / `ctrl+End` | Jump to text boundaries |
 | `Shift+Tab` | Cycle through modes — (chat) ⟷ (edit); use `!` for shell mode |
 | `Shift+Enter` | Insert newline in prompt (requires kitty keyboard protocol) |
-| `Page Up` / `Page Down` | Scroll in alt-screen mode |
-| `Double-click` | Select word in alt-screen mode |
-| `Triple-click` | Select line in alt-screen mode |
+| `Page Up` / `Page Down` | Scroll |
+| `Double-click` | Select word |
+| `Triple-click` | Select line |
 
 > [!WARNING]
 > Some keyboard shortcuts require specific terminal capabilities:
 > - **Shift+Enter** for newlines requires terminals with kitty keyboard protocol support
 > - **Ctrl+Z** suspend/resume works on Unix platforms only
-> - **Page Up/Down**, **Double/Triple-click** require alt-screen mode support
 > - **Ctrl+Y**, **Ctrl+X Ctrl+E**, and **Ctrl+G** require a terminal editor (set via `$COPILOT_EDITOR`, `$VISUAL`, or `$EDITOR`)
 > - Use `--screen-reader` to enable screen reader optimizations for accessible output
 
@@ -166,10 +164,10 @@ Some commands are covered in depth in later modules (`/mcp` in Module 5, `/skill
 | --- | --- |
 | `/plan [prompt]` | Ask Copilot to create an implementation plan before writing code |
 | `/review [prompt]` | Run a code review agent to analyze changes |
-| `/diff` | Review all changes with syntax highlighting (17 languages) |
+| `/diff` | Review all changes with syntax highlighting (17 languages); supports Home/End and Page Up/Page Down navigation |
 | `/init` | Initialize Copilot instructions and agentic features for a repository |
 | `/tasks` | View and manage background tasks (subagents, shell sessions) |
-| `/rename <name>` | Rename the current session for easy identification |
+| `/rename <name>` | Rename the current session for easy identification; omit name to auto-generate from conversation history |
 | `/theme [show\|set\|list]` | View or configure the terminal color theme |
 | `/terminal-setup` | Configure terminal for multiline input support (shift+enter) |
 | `/lsp` | View configured Language Server Protocol servers |
@@ -178,11 +176,18 @@ Some commands are covered in depth in later modules (`/mcp` in Module 5, `/skill
 | `/changelog` | View the changelog for recent Copilot CLI releases |
 | `/research [prompt]` | Perform deep research with exportable reports |
 | `/chronicle [standup\|tips\|improve]` | ⚠️ **Experimental** — Productivity insights powered by session history |
-| `/copy` | Copy the last response to the system clipboard (v1.0.x) |
-| `/ide` | Connect to an IDE workspace (VS Code, etc.) for diagnostics and diff review (v1.0.x) |
+| `/copy` | Copy the last response to the system clipboard |
+| `/ide` | Connect to an IDE workspace (VS Code, etc.) for diagnostics and diff review |
 | `/restart` | Hot restart the CLI while preserving your session |
 | `/version` | Display CLI version and check for updates |
-| `/streamer-mode` | Toggle streamer mode — hides preview model names and quota details (v1.0.x) |
+| `/streamer-mode` | Toggle streamer mode — hides preview model names and quota details |
+| `/undo` | Undo the last turn and revert file changes |
+| `/rewind` | Open a timeline picker to roll back to any point in conversation history (also via double-Esc) |
+| `/new [prompt]` | Start a fresh conversation (keeps old session backgrounded); optionally provide a first message |
+| `/clear [prompt]` | Abandon the current session entirely; optionally provide a first message for the new session |
+| `/allow-all [on\|off\|show]` | Enable, disable, or check allow-all (YOLO) mode |
+| `/share html` | Export session as a self-contained interactive HTML file |
+| `/mcp auth` | Re-authenticate MCP OAuth servers with account switching support |
 
 > ⚠️ **FEEDBACK**: `/research` and `/chronicle` (experimental) are recent additions. `/chronicle` subcommands (`standup`, `tips`, `improve`) and behavior may change across versions.
 

@@ -1,9 +1,9 @@
 # 101-copilot-cli-sdd
 
-[![Copilot CLI version](https://img.shields.io/badge/Copilot%20CLI-v1.0.7-blue?logo=github)](https://github.com/github/copilot-cli/releases/tag/v1.0.7)
+[![Copilot CLI version](https://img.shields.io/badge/Copilot%20CLI-v1.0.16-blue?logo=github)](https://github.com/github/copilot-cli/releases/tag/v1.0.16)
 [![APS version](https://img.shields.io/badge/APS-v1.2.1-blue?logo=github)](https://github.com/chris-buckley/agnostic-prompt-standard/releases/tag/v1.2.1)
 
-A quick guide to use GitHub Copilot CLI (tested with **v1.0.7**) + a sample SDD (Specification-Driven Development) project
+A quick guide to use GitHub Copilot CLI (tested with **v1.0.16**) + a sample SDD (Specification-Driven Development) project
 
 ## Workshop
 

@@ -59,8 +59,6 @@ This is especially helpful when multiple instruction files interact and you need
 
 ### Disabling Custom Instructions
 
-> ⚠️ **FEEDBACK**: The `--no-custom-instructions` flag and `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` env var are available in **v1.0.x**.
-
 You can completely disable loading of custom instructions from AGENTS.md and related files:
 
 ```bash
@@ -78,7 +76,7 @@ copilot
 
 ### System Message Customization
 
-> ⚠️ **FEEDBACK**: The "customize" mode for system message configuration is available in **v1.0.7**.
+> ⚠️ **FEEDBACK**: The "customize" mode for system message configuration is available since **v1.0.7**.
 
 You can override specific sections of the system prompt using the "customize" mode in configuration. This allows section-level control over the system message without replacing it entirely.
 

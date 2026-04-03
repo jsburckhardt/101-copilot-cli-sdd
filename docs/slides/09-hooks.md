@@ -81,10 +81,12 @@ Use cases: **logging**, **security guardrails**, **auditing**, **alerts**
 | `sessionEnd` | Session ends | Cleanup, metrics |
 | `userPromptSubmitted` | User sends prompt | Audit trail |
 | `preToolUse` | Before tool runs | **Permission control** |
-| `postToolUse` | After tool runs | Verification, logging |
+| `postToolUse` | After successful tool run | Verification, logging |
+| `postToolUseFailure` | After tool failure | Error handling |
 | `errorOccurred` | Error happens | Alerts, monitoring |
 | `preCompact` | Before compaction | State saving (v1.0.5) |
 | `subagentStart` | Sub-agent spawned | Context injection (v1.0.7) |
+| `permissionRequest` | Permission requested | Programmatic approve/deny (v1.0.16) |
 
 ---
 
@@ -171,7 +173,7 @@ echo "[$(date -Iseconds)] $TOOL_NAME: $RESULT" >> logs/audit.log
 
 ---
 
-## New Hook Features (v1.0.4–v1.0.7)
+## New Hook Features (v1.0.4–v1.0.16)
 
 - **`disableAllHooks`** config flag — turn off all hooks (v1.0.4)
 - **`ask`** permission decision — prompt user for confirmation (v1.0.4):
@@ -180,6 +182,9 @@ echo "[$(date -Iseconds)] $TOOL_NAME: $RESULT" >> logs/audit.log
   ```
 - **Cross-platform compat** — PascalCase event names, Claude Code nested structure (v1.0.6)
 - Hook config files that **omit `version`** field now accepted (v1.0.5)
+- **`postToolUseFailure`** hook for tool errors; `postToolUse` fires only on success (v1.0.15)
+- **`permissionRequest`** hook for programmatic tool approval (v1.0.16)
+- Hooks can also be defined in **`settings.json`** and **`config.json`** (v1.0.8)
 
 ---
 

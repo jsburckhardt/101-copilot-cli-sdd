@@ -95,8 +95,6 @@ MCP servers defined in `devcontainer.json` are merged with your personal `~/.cop
 
 ### Built-in GitHub MCP Server Controls
 
-> ⚠️ **FEEDBACK**: GitHub MCP server control flags (`--add-github-mcp-tool`, `--add-github-mcp-toolset`, `--enable-all-github-mcp-tools`, `--disable-builtin-mcps`, `--disable-mcp-server`) are available in **v1.0.x**.
-
 Copilot CLI includes a built-in GitHub MCP server with a default subset of tools. You can customize which tools are available:
 
 ```bash
@@ -569,6 +567,10 @@ MCP server names (the keys in `"mcpServers"`) support dots (`.`), slashes (`/`),
 - ✅ Remote servers connect to external services
 - ✅ `/mcp` commands manage servers without editing files
 - ✅ `/mcp reload` reloads configuration without restarting
+- ✅ `/mcp auth` re-authenticates MCP OAuth servers with account switching support
+- ✅ MCP OAuth supports device code flow (RFC 8628) for headless/CI environments
+- ✅ MCP tool calls display tool name and parameter summary in the timeline
+- ✅ MCP servers can request LLM inference (sampling) with user approval
 - ✅ Tilde (`~`) expansion works in `cwd` paths
 - ✅ MCP server errors surface in session output for easier debugging
 - ✅ Giant single-line MCP tool results are now truncated correctly

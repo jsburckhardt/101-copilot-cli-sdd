@@ -167,10 +167,10 @@ Type **`/help`** to see them all
 | `ctrl+c` | Cancel / clear input / exit |
 | `ctrl+d` | Shutdown on empty prompt |
 | `ctrl+y` | Edit plan in terminal editor |
-| `ctrl+f` / `ctrl+b` | Page forward / back in alt-screen |
+| `ctrl+f` / `ctrl+b` | Page forward / back |
 | `ctrl+g` | Open prompt in external editor |
 
-> See workshop for 25+ additional shortcuts including text editing and alt-screen navigation
+> See workshop for 25+ additional shortcuts including text editing and navigation
 
 ---
 
@@ -189,14 +189,18 @@ When Copilot wants to run a command, you choose:
 
 ---
 
-## New in v1.0.3–v1.0.7
+## New in v1.0.3–v1.0.16
 
 - **`/restart`** — Hot restart preserving your session
-- **`/diff`** now has **syntax highlighting** (17 languages)
+- **`/diff`** now has **syntax highlighting** (17 languages) with Home/End and Page Up/Page Down navigation
 - **Branch indicator** in header: `main*+%`
   - `*` unstaged, `+` staged, `%` untracked
 - **`quit`** works as exit alias (alongside `/exit`)
-- **Double-Esc** — clears input or triggers undo
+- **Double-Esc** — opens timeline picker to roll back to any conversation point
+- **`/undo`** — Undo last turn and revert file changes
+- **`/new`** — Start fresh conversation (old session stays backgrounded)
+- **`/clear`** — Abandon session entirely
+- **`/allow-all [on|off|show]`** — Toggle or check allow-all mode
 
 ---
 

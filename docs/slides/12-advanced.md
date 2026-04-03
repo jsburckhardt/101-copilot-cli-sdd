@@ -81,10 +81,10 @@ style: |
 ```bash
 copilot --autopilot -p "Create an Express API with auth, tests, and docs"
 
-# Limit continuation rounds (v1.0.x)
+# Limit continuation rounds
 copilot --autopilot --max-autopilot-continues 10
 
-# Fully autonomous — no questions (v1.0.x)
+# Fully autonomous — no questions
 copilot --autopilot --no-ask-user --allow-all-tools
 ```
 
@@ -211,7 +211,7 @@ alias cop-resume='copilot --resume'
 
 ---
 
-## New in v1.0.3–v1.0.7
+## New in v1.0.3–v1.0.16
 
 - **`/pr`** — Full PR management: create, view, fix CI, review, merge conflicts (v1.0.5)
   - `/pr view local|web` replaces old `/pr open` (v1.0.4) ⚠️
@@ -219,6 +219,10 @@ alias cop-resume='copilot --resume'
 - **`/experimental on|off`** — Toggle with auto-restart (v1.0.5)
 - **Human-readable sub-agent IDs** (e.g., `math-helper-0`) (v1.0.6)
 - **`read_agent`** includes inbound messages for multi-turn agents (v1.0.6)
+- **`--effort`** — Shorthand for `--reasoning-effort` (v1.0.10)
+- **`/undo`** — Undo last turn and revert file changes (v1.0.10)
+- **Monorepo discovery** — instructions, MCPs, skills from cwd to git root (v1.0.11)
+- **`/rewind`** — Timeline picker to roll back to any point (v1.0.13)
 
 ---
 

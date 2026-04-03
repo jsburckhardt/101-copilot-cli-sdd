@@ -313,8 +313,6 @@ source ~/.bashrc
 
 ### Authentication with GitHub Enterprise Cloud (Data Residency)
 
-> ⚠️ **FEEDBACK**: GHEC data residency login with `--host` is available in **v1.0.x**. If your version is older, this flag may not be available.
-
 If your organization uses GitHub Enterprise Cloud with data residency, authenticate with the `--host` flag:
 
 ```bash

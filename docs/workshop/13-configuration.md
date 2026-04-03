@@ -27,40 +27,37 @@ copilot --config-dir /path/to/custom/config
 
 ### Configuration Options Reference
 
-> ⚠️ **FEEDBACK**: Many config options below are available in **v1.0.x**. Run `copilot help config` to verify available options for your version.
-
 All options below are set in ~/.copilot/config.json:
 
 ```json
 {
   "model": "claude-sonnet-4.6",
   "theme": "auto",
-  "alt_screen": false,
   "mouse": true,
   "banner": "once",
   "beep": true,
   "stream": true,
-  "auto_update": true,
-  "bash_env": false,
+  "autoUpdate": true,
+  "bashEnv": false,
   "experimental": false,
-  "compact_paste": true,
-  "copy_on_select": false,
-  "render_markdown": true,
-  "screen_reader": false,
-  "streamer_mode": false,
-  "include_coauthor": true,
-  "update_terminal_title": true,
-  "log_level": "default",
+  "compactPaste": true,
+  "copyOnSelect": false,
+  "renderMarkdown": true,
+  "screenReader": false,
+  "streamerMode": false,
+  "includeCoauthor": true,
+  "updateTerminalTitle": true,
+  "logLevel": "default",
   "ide": {
-    "auto_connect": true,
-    "open_diff_on_edit": true
+    "autoConnect": true,
+    "openDiffOnEdit": true
   },
-  "custom_agents": {
-    "default_local_only": false
+  "customAgents": {
+    "defaultLocalOnly": false
   },
-  "trusted_folders": [],
-  "allowed_urls": [],
-  "denied_urls": [],
+  "trustedFolders": [],
+  "allowedUrls": [],
+  "deniedUrls": [],
   "companyAnnouncements": []
 }
 ```
@@ -69,28 +66,27 @@ All options below are set in ~/.copilot/config.json:
 |--------|------|---------|-------------|
 | `model` | string | (varies) | AI model to use; changeable via `/model` or `--model` |
 | `theme` | string | `"auto"` | Color theme: `"auto"`, `"dark"`, or `"light"` |
-| `alt_screen` | bool | `false` | Use terminal alternate screen buffer |
-| `mouse` | bool | `true` | Mouse support in alt-screen mode |
+| `mouse` | bool | `true` | Mouse support |
 | `banner` | string | `"once"` | Startup banner: `"always"`, `"never"`, or `"once"` |
 | `beep` | bool | `true` | Terminal beep when user attention is required |
 | `stream` | bool | `true` | Enable response streaming |
-| `auto_update` | bool | `true` | Auto-download CLI updates (disabled in CI by default) |
-| `bash_env` | bool | `false` | Source BASH_ENV in shell sessions |
+| `autoUpdate` | bool | `true` | Auto-download CLI updates (disabled in CI by default) |
+| `bashEnv` | bool | `false` | Source BASH_ENV in shell sessions |
 | `experimental` | bool | `false` | Enable experimental features |
-| `compact_paste` | bool | `true` | Collapse large pasted content (>10 lines) into compact tokens |
-| `copy_on_select` | bool | macOS: `true`, else: `false` | Auto-copy text selection to clipboard in alt-screen |
-| `render_markdown` | bool | `true` | Render markdown formatting in terminal output |
-| `screen_reader` | bool | `false` | Enable screen reader optimizations |
-| `streamer_mode` | bool | `false` | Hide preview model names and quota details (for streaming/screen sharing) |
-| `include_coauthor` | bool | `true` | Instruct agent to add Co-authored-by trailer to git commits |
-| `update_terminal_title` | bool | `true` | Show current intent in terminal title bar |
-| `log_level` | string | `"default"` | Log level: `"none"`, `"error"`, `"warning"`, `"info"`, `"debug"`, `"all"` |
-| `ide.auto_connect` | bool | `true` | Auto-connect to IDE workspace on startup |
-| `ide.open_diff_on_edit` | bool | `true` | Open file edit diffs in connected IDE for approval |
-| `custom_agents.default_local_only` | bool | `false` | Default to local agents only (skip remote org/enterprise agents) |
-| `trusted_folders` | array | `[]` | Folders granted read/execute permission |
-| `allowed_urls` | array | `[]` | URLs/domains allowed without prompting (supports wildcards like `*.github.com`) |
-| `denied_urls` | array | `[]` | URLs/domains denied access (takes precedence over allowed) |
+| `compactPaste` | bool | `true` | Collapse large pasted content (>10 lines) into compact tokens |
+| `copyOnSelect` | bool | macOS: `true`, else: `false` | Auto-copy text selection to clipboard |
+| `renderMarkdown` | bool | `true` | Render markdown formatting in terminal output |
+| `screenReader` | bool | `false` | Enable screen reader optimizations |
+| `streamerMode` | bool | `false` | Hide preview model names and quota details (for streaming/screen sharing) |
+| `includeCoauthor` | bool | `true` | Instruct agent to add Co-authored-by trailer to git commits |
+| `updateTerminalTitle` | bool | `true` | Show current intent in terminal title bar |
+| `logLevel` | string | `"default"` | Log level: `"none"`, `"error"`, `"warning"`, `"info"`, `"debug"`, `"all"` |
+| `ide.autoConnect` | bool | `true` | Auto-connect to IDE workspace on startup |
+| `ide.openDiffOnEdit` | bool | `true` | Open file edit diffs in connected IDE for approval |
+| `customAgents.defaultLocalOnly` | bool | `false` | Default to local agents only (skip remote org/enterprise agents) |
+| `trustedFolders` | array | `[]` | Folders granted read/execute permission |
+| `allowedUrls` | array | `[]` | URLs/domains allowed without prompting (supports wildcards like `*.github.com`) |
+| `deniedUrls` | array | `[]` | URLs/domains denied access (takes precedence over allowed) |
 | `companyAnnouncements` | array | `[]` | Custom startup messages (one randomly selected per session) |
 | `mergeStrategy` | string | `"merge"` | Git merge strategy for PR operations (renamed from `merge_strategy` in v1.0.3) |
 
@@ -168,7 +164,6 @@ All options below are set in ~/.copilot/config.json:
 | `--banner` | Show startup banner |
 | `--no-color` | Disable color output |
 | `--no-auto-update` | Disable auto-update |
-| `--alt-screen [on\|off]` | Toggle alternate screen buffer |
 | `--mouse [on\|off]` | Toggle mouse support |
 | `--bash-env [on\|off]` | Toggle BASH_ENV support |
 | `--experimental` / `--no-experimental` | Toggle experimental features |
@@ -195,11 +190,11 @@ All options below are set in ~/.copilot/config.json:
    copilot help config
    ```
 
-3. Modify a setting -- enable alt-screen mode:
+3. Modify a setting -- enable mouse mode:
 
    ```json
    {
-     "alt_screen": true
+     "mouse": true
    }
    ```
 
@@ -209,7 +204,6 @@ All options below are set in ~/.copilot/config.json:
 
    ```bash
    # These flags update config.json automatically
-   copilot --alt-screen on
    copilot --mouse off
    copilot --bash-env on
    ```
@@ -286,16 +280,16 @@ You can control Copilot behavior via environment variables and understand their 
    ```json
    {
      "ide": {
-       "auto_connect": true,
-       "open_diff_on_edit": true
+       "autoConnect": true,
+       "openDiffOnEdit": true
      }
    }
    ```
 
-   - `auto_connect: false` prevents auto-connecting to IDEs on startup
-   - `open_diff_on_edit: false` shows file diffs in terminal only, not in IDE
+   - `autoConnect: false` prevents auto-connecting to IDEs on startup
+   - `openDiffOnEdit: false` shows file diffs in terminal only, not in IDE
 
-4. Test the difference: with `open_diff_on_edit: true`, ask Copilot to edit a file and observe the diff opening in VS Code.
+4. Test the difference: with `openDiffOnEdit: true`, ask Copilot to edit a file and observe the diff opening in VS Code.
 
 **Expected Outcome:**
 You understand how Copilot integrates with IDEs and can customize the behavior.
@@ -316,7 +310,7 @@ You understand how Copilot integrates with IDEs and can customize the behavior.
    Or via config:
 
    ```json
-   { "streamer_mode": true }
+   { "streamerMode": true }
    ```
 
 2. Enable screen reader optimizations:
@@ -367,12 +361,12 @@ You can configure Copilot for streaming, screen readers, and plain-text environm
    ```json
    {
      "model": "gpt-4.1",
-     "include_coauthor": true,
-     "compact_paste": true,
-     "update_terminal_title": true,
+     "includeCoauthor": true,
+     "compactPaste": true,
+     "updateTerminalTitle": true,
      "beep": true,
-     "custom_agents": {
-       "default_local_only": false
+     "customAgents": {
+       "defaultLocalOnly": false
      }
    }
    ```
@@ -429,12 +423,12 @@ You can enable detailed logging and understand the log directory structure.
 
 - ✅ config.json centralizes all CLI preferences
 - ✅ Config options cover model, theme, streaming, mouse, and more
-- ✅ `compact_paste` auto-collapses large pastes into compact tokens
-- ✅ `copy_on_select` enables clipboard integration in alt-screen
+- ✅ `compactPaste` auto-collapses large pastes into compact tokens
+- ✅ `copyOnSelect` enables clipboard integration
 - ✅ `companyAnnouncements` broadcasts team messages on startup
-- ✅ `include_coauthor` auto-adds Co-authored-by to commits
-- ✅ `update_terminal_title` shows current intent in terminal title
-- ✅ IDE integration is controlled via `ide.auto_connect` and `ide.open_diff_on_edit`
+- ✅ `includeCoauthor` auto-adds Co-authored-by to commits
+- ✅ `updateTerminalTitle` shows current intent in terminal title
+- ✅ IDE integration is controlled via `ide.autoConnect` and `ide.openDiffOnEdit`
 - ✅ `/ide` connects to IDE workspaces, `/streamer-mode` hides sensitive info
 - ✅ `/copy` copies last response to clipboard
 - ✅ Environment variables control auth, model, editor, and instruction paths

@@ -34,10 +34,12 @@ User Prompt → Session Start → Pre-Tool → Tool Execution → Post-Tool → 
 | `sessionEnd` | Session ends | Cleanup, metrics |
 | `userPromptSubmitted` | User sends prompt | Audit, filtering |
 | `preToolUse` | Before tool execution | Permission control, validation |
-| `postToolUse` | After tool execution | Logging, verification |
+| `postToolUse` | After successful tool execution | Logging, verification |
+| `postToolUseFailure` | After tool execution fails | Error handling, retry logic |
 | `errorOccurred` | Error happens | Error handling, alerts |
 | `preCompact` | Before context compaction | Pre-compaction tasks, state saving |
 | `subagentStart` | Sub-agent is spawned | Context injection, logging |
+| `permissionRequest` | Tool permission requested | Programmatic approve/deny of tool permissions |
 
 ### Hook Locations
 
@@ -483,7 +485,7 @@ All tool executions are logged with results:
 
 **Goal:** Capture and respond to internal Copilot errors.
 
-> **Note:** The `errorOccurred` hook fires for internal Copilot errors (network failures, API errors, etc.), not for tool failures. Tool failures are handled gracefully via `postToolUse` with `resultType: "error"`.
+> **Note:** The `errorOccurred` hook fires for internal Copilot errors (network failures, API errors, etc.), not for tool failures. Tool failures are handled by the `postToolUseFailure` hook. The `postToolUse` hook fires only after successful tool calls.
 
 **Steps:**
 
@@ -736,7 +738,9 @@ All tool executions are logged with results:
 
 - ✅ Hooks execute at key points in agent lifecycle
 - ✅ `preToolUse` enables security guardrails
-- ✅ `postToolUse` allows verification and logging
+- ✅ `postToolUse` allows verification and logging (fires only on successful tool calls)
+- ✅ `postToolUseFailure` handles tool errors separately
+- ✅ `permissionRequest` hook enables programmatic approve/deny of tool permissions
 - ✅ Session hooks enable auditing
 - ✅ Error hooks support monitoring integration
 - ✅ Hooks must return JSON for permission decisions
@@ -745,6 +749,7 @@ All tool executions are logged with results:
 - ✅ `disableAllHooks` flag disables all hooks (v1.0.4+)
 - ✅ Hook `ask` permission decision prompts user for confirmation (v1.0.4+)
 - ✅ Cross-platform hook configs work across VS Code, Claude Code, and CLI (v1.0.6+)
+- ✅ Hooks can also be defined in `settings.json`, `settings.local.json`, and `config.json`
 
 ## Next Steps
 
