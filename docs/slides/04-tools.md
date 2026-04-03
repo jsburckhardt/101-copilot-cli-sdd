@@ -127,7 +127,7 @@ copilot --yolo -p "Set up a Node.js project"
 
 ---
 
-## URL & Path Permissions (v1.0.x)
+## URL & Path Permissions
 
 ```bash
 # Allow/deny URL access

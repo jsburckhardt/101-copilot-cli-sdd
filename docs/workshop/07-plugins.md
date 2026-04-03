@@ -80,7 +80,7 @@ Key capabilities:
 6. **Remote sources** - GitHub repos and git URLs referenced in `marketplace.json`
 
 > [!NOTE]
-> Two marketplaces are included by default and do not need to be added: `copilot-plugins` (github/copilot-plugins) and `awesome-copilot` (github/awesome-copilot).
+> Two marketplaces are included by default and do not need to be added: `copilot-plugins` (github/copilot-plugins) and `awesome-copilot` (github/awesome-copilot). Additional marketplaces can be configured via the `extraKnownMarketplaces` repository setting.
 
 ## Hands-On Exercises
 
@@ -473,7 +473,7 @@ You can find, evaluate, and contribute to the plugin ecosystem.
 # Install from a GitHub repository
 copilot plugin install owner/repo
 
-# Install from a subdirectory within a repo (v1.0.x)
+# Install from a subdirectory within a repo
 copilot plugin install owner/repo:plugins/my-plugin
 
 # Install from a git URL
@@ -481,8 +481,6 @@ copilot plugin install https://github.com/owner/my-plugin.git
 ```
 
 ### From a Local Directory
-
-> ⚠️ **FEEDBACK**: `--plugin-dir` is available in **v1.0.x**.
 
 Load a plugin from a local directory without installing it — useful for plugin development:
 
@@ -558,8 +556,8 @@ copilot --plugin-dir ./plugin-a --plugin-dir ./plugin-b
 - ✅ Community MCP servers add diverse capabilities
 - ✅ You can create custom plugins for specific needs
 - ✅ Always review plugins for security before installation
-- ✅ `--plugin-dir` loads local plugins for development (v1.0.x)
-- ✅ `owner/repo:path` installs from repository subdirectories (v1.0.x)
+- ✅ `--plugin-dir` loads local plugins for development
+- ✅ `owner/repo:path` installs from repository subdirectories
 - ✅ `/plugin install` and `/plugin marketplace add` now support local paths with spaces
 - ✅ `/plugin install` hot-loads agents and skills — no CLI restart needed
 - ✅ Extensions (experimental) — runtime tools via `@github/copilot-sdk` (v1.0.3+)

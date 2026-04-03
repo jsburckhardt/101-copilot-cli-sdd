@@ -167,12 +167,17 @@ The `--resume` flag restores your previous session state.
    /cwd
    ```
 
-6. **Clear conversation history:**
+6. **Clear conversation history (abandons session):**
    ```
    /clear
    ```
 
-7. Verify context is cleared:
+7. Or start a new conversation (keeps old session backgrounded):
+   ```
+   /new
+   ```
+
+8. Verify context is cleared:
    ```
    What was I just working on?
    ```
@@ -276,11 +281,11 @@ You can control Copilot's file access scope.
 
 | Scenario | Action |
 | --- | --- |
-| Switching to unrelated task | `/clear` |
-| Confused responses | `/clear` |
-| Context limit approaching | `/compact` first, then `/clear` if needed |
+| Switching to unrelated task | `/new` (keeps old session) or `/clear` (abandons) |
+| Confused responses | `/new` |
+| Context limit approaching | `/compact` first, then `/new` if needed |
 | Sensitive info discussed | `/clear` and `/exit` |
-| Session becomes slow | `/clear` |
+| Session becomes slow | `/new` |
 
 **Expected Outcome:**
 You know when clearing context improves your workflow.
@@ -366,10 +371,14 @@ Session transcript saved for future reference or sharing.
 | `/cwd` | Show/change directory | `/cwd ~/project` |
 | `/add-dir` | Add accessible directory | `/add-dir /tmp` |
 | `/list-dirs` | List accessible directories | `/list-dirs` |
-| `/clear` | Clear conversation history | `/clear` |
+| `/clear` | Abandon session and start fresh | `/clear` |
+| `/new [prompt]` | Start new conversation (old session stays backgrounded) | `/new` |
 | `/exit` | End session | `/exit` |
 | `/share` | Export session transcript (interactive alternative to `--share` flag) | `/share` |
+| `/share html` | Export session as self-contained interactive HTML file | `/share html` |
 | `/model` | Switch AI model | `/model gpt-4` |
+| `/undo` | Undo last turn and revert file changes | `/undo` |
+| `/rewind` | Roll back to any point in conversation history (also via double-Esc) | `/rewind` |
 
 ## Command Line Flags
 
@@ -384,10 +393,13 @@ Session transcript saved for future reference or sharing.
 
 - ✅ Sessions maintain conversation history and context
 - ✅ Use `--resume` to continue previous sessions
-- ✅ `/clear` resets context without exiting
-- ✅ `/cwd` and `/add-dir` control file access scope
+- ✅ `/clear` abandons the session; `/new` starts fresh while keeping the old session backgrounded
+- ✅ `/undo` reverts the last turn and its file changes
+- ✅ `/rewind` (or double-Esc) opens a timeline picker for rolling back to any conversation point
+- ✅ `/rename` auto-generates a session name from conversation history when called without arguments
+- ✅ `/cwd` and `/add-dir` control file access scope; `/cd` keeps a separate working directory per session
 - ✅ Run multiple sessions in different terminals
-- ✅ Export sessions with `--share` for documentation
+- ✅ Export sessions with `--share` for documentation or `/share html` for interactive HTML
 
 ## Next Steps
 

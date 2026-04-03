@@ -52,7 +52,7 @@ Context is everything Copilot "remembers" during a session:
 > **Model auto-migration:** Users previously on older models are automatically migrated to the current default model on startup.
 
 > [!NOTE]
-> Use `/model` to select a model and `/context` to see context window usage. The model list changes frequently; available models at the time of writing include: claude-sonnet-4.6, claude-opus-4.6, claude-opus-4.6-fast, gpt-5.4, gpt-5.2, gpt-4.1, gemini-3-pro-preview, and others.
+> Use `/model` to select a model and `/context` to see context window usage. The model list changes frequently; available models at the time of writing include: claude-sonnet-4.6, claude-opus-4.6, claude-opus-4.6-fast, gpt-5.4, gpt-5.2, gpt-4.1, and others.
 >
 > Model availability may vary by Copilot subscription tier.
 
@@ -98,8 +98,6 @@ What's the status of #150 and are there related PRs?
 ```
 
 When you type `#`, matching issues and PRs from the current repository are displayed below the prompt box. Use the arrow keys to select and press Tab to complete.
-
-> ⚠️ **FEEDBACK**: The `#` reference shortcut requires Copilot CLI v1.0.x. Verify availability with `copilot --version`.
 
 ### Auto-Compaction
 
@@ -467,7 +465,8 @@ Systematic workflow keeps context under control.
 | `/context` | Show visual overview of token usage |
 | `/usage` | Show session stats (requests, duration, lines edited, token usage per model) |
 | `/compact` | Compress session history |
-| `/clear` | Clear all context (start fresh) |
+| `/clear` | Abandon session and start fresh (session is discarded) |
+| `/new` | Start new conversation (old session stays backgrounded) |
 | `/cwd` or `/cd` | Change working directory (affects context scope) |
 | `/add-dir` | Add directory to accessible scope (persists across `/clear` and `/resume`) |
 | `@path/to/file` | Include specific file contents in your prompt |
@@ -487,7 +486,8 @@ Systematic workflow keeps context under control.
 
 | Strategy | When to Use |
 |----------|-------------|
-| `/clear` | Switching to unrelated topic |
+| `/clear` | Abandoning session entirely |
+| `/new` | Starting new topic but keeping old session accessible |
 | `/compact` | Long session, need to continue |
 | Explore agent | Codebase overview without context cost |
 | `@path/to/file` | Include specific files without broad reads |
@@ -519,7 +519,7 @@ Systematic workflow keeps context under control.
 
 - ✅ Context is limited - monitor with `/context` and `/usage`
 - ✅ `/compact` compresses while preserving key info
-- ✅ `/clear` resets for topic changes
+- ✅ `/clear` abandons the session; `/new` starts fresh while keeping the old session backgrounded
 - ✅ Auto-compaction triggers at ~95% capacity
 - ✅ Use `@path/to/file` to include specific files in prompts
 - ✅ Use `#<number>` to pull GitHub issues, PRs, or discussions into context

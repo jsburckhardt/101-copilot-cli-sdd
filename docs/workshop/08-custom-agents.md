@@ -54,7 +54,7 @@ You can create agent files manually, or use the **`/agent`** slash command in in
 5. **Restart the CLI** to load your new custom agent.
 
 > [!NOTE]
-> Manually created `.agent.md` files require a CLI restart to take effect. However, agents installed via `/plugin install` are **hot-loaded** and available immediately without restarting. See [Module 8](08-plugins.md).
+> Manually created `.agent.md` files require a CLI restart to take effect. However, agents installed via `/plugin install` are **hot-loaded** and available immediately without restarting. See [Module 7](07-plugins.md).
 
 ### Invoking Agents
 
@@ -529,9 +529,9 @@ Agent performs analysis without modification capabilities.
 
 > **Note:** Enterprise and organization-level agents are configured by admins in a `.github-private` repository. See the [GitHub Docs](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/prepare-for-custom-agents) for details.
 
-> ⚠️ **FEEDBACK**: The `custom_agents.default_local_only` config option (v1.0.x) allows you to default to only local custom agents, skipping remote org/enterprise agents. Set it in `~/.copilot/config.json`:
+> ⚠️ **FEEDBACK**: The `customAgents.defaultLocalOnly` config option allows you to default to only local custom agents, skipping remote org/enterprise agents. Set it in `~/.copilot/config.json`:
 > ```json
-> { "custom_agents": { "default_local_only": true } }
+> { "customAgents": { "defaultLocalOnly": true } }
 > ```
 
 **Expected Outcome:**

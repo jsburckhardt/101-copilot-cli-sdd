@@ -286,6 +286,9 @@ Deny rules take precedence over allow rules.
 **Expected Outcome:**
 You understand YOLO mode's power and risks.
 
+> [!TIP]
+> Inside an interactive session, use `/allow-all on` to enable, `/allow-all off` to disable, or `/allow-all show` to check the current allow-all mode status.
+
 ### Exercise 6: Configuring Trusted and Accessible Directories
 
 **Goal:** Understand the two separate directory permission layers in Copilot CLI.
@@ -294,7 +297,7 @@ You understand YOLO mode's power and risks.
 >
 > | Layer | Purpose | Scope |
 > |---|---|---|
-> | **Startup trust** (`trusted_folders`) | Skips the "do you trust this folder?" prompt when launching Copilot | Launch-time only |
+> | **Startup trust** (`trustedFolders`) | Skips the "do you trust this folder?" prompt when launching Copilot | Launch-time only |
 > | **Runtime access** (`/add-dir`, `--allow-path`) | Controls which paths the agent can read/write during a session | Session-time only |
 >
 > These are **independent** — trusting a folder does **not** grant runtime file access to it, and vice versa.
@@ -309,7 +312,7 @@ You understand YOLO mode's power and risks.
 
 2. When prompted about trusting the folder:
  - **Yes, proceed** — Trust for this session only
- - **Yes, and remember** — Permanently add to `trusted_folders`
+ - **Yes, and remember** — Permanently add to `trustedFolders`
  - **No, exit** — Don't trust
 
 3. Select **Yes, proceed** for now.
@@ -318,13 +321,13 @@ You understand YOLO mode's power and risks.
  ```bash
  cat ~/.copilot/config.json
  ```
- Notice that `trusted_folders` was **not** updated (you chose session-only trust).
+ Notice that `trustedFolders` was **not** updated (you chose session-only trust).
 
 5. To permanently skip the prompt for specific directories, add them to your config:
  ```bash
  # Edit config.json to add:
  {
- "trusted_folders": [
+ "trustedFolders": [
  "/home/user/projects",
  "/home/user/copilot-workshop"
  ]
@@ -338,7 +341,7 @@ You understand YOLO mode's power and risks.
  ```
  /list-dirs
  ```
- You'll see only the **working directory** and `/tmp` — not the `trusted_folders` entries.
+ You'll see only the **working directory** and `/tmp` — not the `trustedFolders` entries.
 
 7. Grant runtime access to an additional directory:
  > Note: Create the directory first (e.g., `mkdir -p /tmp/safe-dir`).
@@ -354,7 +357,7 @@ You understand YOLO mode's power and risks.
  ```
 
 **Expected Outcome:**
-You understand that `trusted_folders` controls the **startup trust prompt**, while `/add-dir`, `/list-dirs`, and `--allow-path` control **runtime file access** — and that these are two independent permission layers.
+You understand that `trustedFolders` controls the **startup trust prompt**, while `/add-dir`, `/list-dirs`, and `--allow-path` control **runtime file access** — and that these are two independent permission layers.
 
 ### Exercise 7: Creating a Safe Automation Script
 
@@ -433,7 +436,7 @@ Safe, repeatable automation with explicit permissions.
 # Allow specific MCP tool
 --allow-tool 'MyMCP(my_tool)'
 
-# URL access matching (v1.0.x)
+# URL access matching
 --allow-tool 'url(https://github.com)'
 --allow-tool 'url(https://*.github.com)'
 
@@ -442,8 +445,6 @@ Safe, repeatable automation with explicit permissions.
 ```
 
 ### URL Permissions
-
-> ⚠️ **FEEDBACK**: URL permission flags (`--allow-url`, `--deny-url`, `--allow-all-urls`, `--disallow-temp-dir`) are available in **v1.0.x**.
 
 Copilot CLI provides granular URL access control. All URL permissions are protocol-aware — approving `https://example.com` does NOT allow `http://example.com`.
 
@@ -486,8 +487,6 @@ copilot --disallow-temp-dir
 
 ### Secret Environment Variables
 
-> ⚠️ **FEEDBACK**: `--secret-env-vars` is available in **v1.0.x**.
-
 Strip sensitive environment variable values from shell/MCP server environments and redact them from output:
 
 ```bash
@@ -495,8 +494,6 @@ copilot --secret-env-vars MY_API_KEY DATABASE_PASSWORD
 ```
 
 ### Autonomous Mode (No User Questions)
-
-> ⚠️ **FEEDBACK**: `--no-ask-user` is available in **v1.0.x**.
 
 Disable the `ask_user` tool so the agent works autonomously without asking questions. Useful for CI/CD pipelines where no human is available to respond:
 

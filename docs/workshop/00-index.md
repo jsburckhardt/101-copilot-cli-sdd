@@ -1,6 +1,6 @@
 # GitHub Copilot CLI Workshop
 
-> **Tested against:** GitHub Copilot CLI **v1.0.7** (Generally Available, version 1.0 since v1.0.0). Check [releases](https://github.com/github/copilot-cli/releases) for newer versions — some features may change or new ones may be added.
+> **Tested against:** GitHub Copilot CLI **v1.0.16** (Generally Available, version 1.0 since v1.0.0). Check [releases](https://github.com/github/copilot-cli/releases) for newer versions — some features may change or new ones may be added.
 
 Welcome to this hands-on workshop for mastering GitHub Copilot CLI! This workshop will take you from installation to advanced automation techniques.
 
@@ -95,7 +95,8 @@ copilot --resume
 | Command | Description |
 | --- | --- |
 | `/help` | Show all available commands |
-| `/clear` | Clear session context |
+| `/clear` | Abandon session and start fresh |
+| `/new` | Start new conversation (old session stays backgrounded) |
 | `/context` | View token usage |
 | `/compact` | Compress session history |
 | `/plan` | Create implementation plan before coding |
@@ -108,6 +109,8 @@ copilot --resume
 | `/instructions` | View and toggle custom instruction files |
 | `/cwd` | Change working directory |
 | `/research` | Deep research with exportable reports |
+| `/undo` | Undo last turn and revert file changes |
+| `/rewind` | Roll back to any point in conversation history |
 | `/copy` | Copy last response to clipboard |
 | `/ide` | Connect to IDE workspace |
 | `/streamer-mode` | Toggle streamer mode |

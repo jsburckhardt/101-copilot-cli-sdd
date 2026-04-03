@@ -79,13 +79,12 @@ All settings live in `~/.copilot/config.json`:
 {
   "model": "claude-sonnet-4.6",
   "theme": "auto",
-  "alt_screen": false,
   "mouse": true,
   "beep": true,
-  "compact_paste": true,
-  "include_coauthor": true,
-  "update_terminal_title": true,
-  "streamer_mode": false
+  "compactPaste": true,
+  "includeCoauthor": true,
+  "updateTerminalTitle": true,
+  "streamerMode": false
 }
 ```
 
@@ -98,13 +97,13 @@ Override location: `COPILOT_HOME` env var or `--config-dir` flag
 | Option | Default | Description |
 |--------|---------|-------------|
 | `model` | (varies) | AI model |
-| `compact_paste` | `true` | Collapse large pastes |
-| `copy_on_select` | macOS only | Auto-copy selection |
-| `include_coauthor` | `true` | Co-authored-by in commits |
-| `streamer_mode` | `false` | Hide model names/quota |
+| `compactPaste` | `true` | Collapse large pastes |
+| `copyOnSelect` | macOS only | Auto-copy selection |
+| `includeCoauthor` | `true` | Co-authored-by in commits |
+| `streamerMode` | `false` | Hide model names/quota |
 | `companyAnnouncements` | `[]` | Team startup messages |
-| `ide.auto_connect` | `true` | Auto-connect to IDE |
-| `ide.open_diff_on_edit` | `true` | Diffs in IDE |
+| `ide.autoConnect` | `true` | Auto-connect to IDE |
+| `ide.openDiffOnEdit` | `true` | Diffs in IDE |
 
 ---
 
@@ -123,7 +122,7 @@ Override location: `COPILOT_HOME` env var or `--config-dir` flag
 
 ---
 
-## New CLI Flags (v1.0.x)
+## Additional CLI Flags
 
 | Flag | Purpose |
 |------|---------|
@@ -165,7 +164,7 @@ Config options:
     "Remember: never commit secrets",
     "Sprint 14 ends Friday"
   ],
-  "include_coauthor": true,
+  "includeCoauthor": true,
   "model": "gpt-4.1"
 }
 ```
@@ -174,17 +173,18 @@ Distribute via shared config templates in your repo.
 
 ---
 
-## New Config & Flags (v1.0.3–v1.0.7)
+## New Config & Flags (v1.0.3–v1.0.16)
 
 | Feature | Details |
 |---------|---------|
 | `mergeStrategy` | Replaces `merge_strategy` ⚠️ (v1.0.3) |
 | `--reasoning-effort` | Control model reasoning level (v1.0.4) |
+| `--effort` | Shorthand for `--reasoning-effort` (v1.0.10) |
 | `--binary-version` | Check version without launching (v1.0.3) |
 | `GH_HOST` | Override GitHub API hostname |
 | `HTTP_PROXY` / `HTTPS_PROXY` | Proxy support |
 | `NO_PROXY` | Bypass proxy for specific hosts |
-| gpt-5.4-mini | New model available (v1.0.7) |
+| camelCase config | All config keys now prefer camelCase (v1.0.10+) |
 
 ---
 

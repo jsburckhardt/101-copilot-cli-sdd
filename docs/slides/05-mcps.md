@@ -164,7 +164,7 @@ All from inside a Copilot session:
 
 ---
 
-## GitHub MCP Server Controls (v1.0.x)
+## GitHub MCP Server Controls
 
 ```bash
 # Add specific tools/toolsets

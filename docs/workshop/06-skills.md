@@ -277,7 +277,7 @@ Skill uses example files to generate framework-appropriate tests.
 **Goal:** Create skills that work across all your projects.
 
 > [!NOTE]
-> In Exercises 1-2 we created skills under `.github/skills/` — those are **project skills**, scoped to a single repository and shared with your team via Git. In this exercise we use `~/.copilot/skills/` — these are **personal skills**, stored in your home directory and available in every project you open with Copilot CLI. Use project skills for repo-specific tasks; use personal skills for workflows you want everywhere.
+> In Exercises 1-2 we created skills under `.github/skills/` — those are **project skills**, scoped to a single repository and shared with your team via Git. In this exercise we use `~/.copilot/skills/` — these are **personal skills**, stored in your home directory and available in every project you open with Copilot CLI. You can also use `~/.agents/skills/` as a personal skill discovery directory (shared with the VS Code extension). Use project skills for repo-specific tasks; use personal skills for workflows you want everywhere.
 
 **Steps:**
 
@@ -615,6 +615,7 @@ license: MIT # Optional: License identifier
 |----------|-------|----------|
 | `.github/skills/` | Project | Higher |
 | `~/.copilot/skills/` | Personal | Lower |
+| `~/.agents/skills/` | Personal (shared with VS Code) | Lower |
 | `~/.claude/skills/` | Personal (legacy) | Lower |
 
 ## Summary

@@ -1,7 +1,7 @@
 # Workshop FEEDBACK Triage
 
 > Auto-generated from all `⚠️ **FEEDBACK**` callouts across workshop modules.
-> Workshop version: **v1.0.2**
+> Workshop version: **v1.0.16**
 
 ### How to use this file
 - Set **Status** to one of: `pending` · `fix` · `skip` · `done`
