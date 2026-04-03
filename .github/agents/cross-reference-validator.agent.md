@@ -39,7 +39,6 @@ MODULES_DIR: "docs/workshop"
 SLIDES_DIR: "docs/slides"
 AGENTS_DIR: ".github/agents"
 FEEDBACK_FILE: "FEEDBACK.md"
-TRIAGE_FILE: "triage.md"
 
 REQUIRED_SECTIONS: JSON<<
 [
