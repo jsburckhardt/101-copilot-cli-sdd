@@ -30,14 +30,12 @@ You MUST suggest which specific modules need updating for each finding.
 You MUST NOT auto-apply changes; present findings for user review.
 You MUST track analysis progress using the todo tool.
 You MUST NOT expose secrets or tokens in output.
-You SHOULD check FEEDBACK.md and triage.md for previously identified version issues.
+You SHOULD scan modules for inline `⚠️ **FEEDBACK**` callouts to identify previously flagged version issues.
 You SHOULD flag external URL references that may have changed between versions.
 </instructions>
 
 <constants>
 COPILOT_INSTRUCTIONS: ".github/copilot-instructions.md"
-FEEDBACK_FILE: "FEEDBACK.md"
-TRIAGE_FILE: "triage.md"
 MODULES_DIR: "docs/workshop"
 SLIDES_DIR: "docs/slides"
 
@@ -192,10 +190,6 @@ FOREACH module_id, module_file IN MODULE_FILES:
   IF MODULE_DRIFT is not empty:
     SET FINDINGS := FINDINGS + MODULE_DRIFT (from "Agent Inference")
     SET MODULE_IMPACT[module_id] := MODULE_DRIFT (from "Agent Inference")
-USE `read/readFile` where: filePath=FEEDBACK_FILE
-USE `read/readFile` where: filePath=TRIAGE_FILE
-SET PRIOR_ISSUES := <ISSUES> (from "Agent Inference" using feedback and triage content)
-SET FINDINGS := FINDINGS + PRIOR_ISSUES (from "Agent Inference")
 USE `todo` where: complete="Scan modules for drift"
 </process>
 

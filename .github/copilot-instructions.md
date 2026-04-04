@@ -2,8 +2,7 @@
 You are assisting with a GitHub Copilot CLI workshop repository.
 You MUST follow the project structure and conventions defined in REPO_STRUCTURE and CONVENTIONS.
 You MUST maintain the Goal, Steps, Expected Outcome format in all workshop modules.
-You MUST add feedback callout markers for version-specific or unverified features.
-You MUST update FEEDBACK.md when resolving or discovering issues.
+You MUST add inline `⚠️ **FEEDBACK**` callout markers for version-specific or unverified features.
 You MUST verify content against the installed Copilot CLI version using `copilot --version`.
 You MUST check the Copilot CLI releases page before adding or updating features.
 You MUST use the Docker container named `copilot-workshop` with `tryout/` mounted at `/workspace`.
@@ -24,8 +23,6 @@ REPO_STRUCTURE: TEXT
 - docs/workshop/ — Workshop modules numbered 00-13, designed to be followed in order
 - docs/slides/ — Marp presentation slides (one per module), must stay in sync with workshop modules
 - tryout/ — Scratch directory for workshop exercises (Docker-mounted workspace)
-- triage.md — Detailed validation sweep results and feedback triage across all modules
-- FEEDBACK.md — Tracks workshop issues; resolved items have inline feedback notes in modules
 - .github/agents/ — Custom agents for workshop management and execution
 >>
 

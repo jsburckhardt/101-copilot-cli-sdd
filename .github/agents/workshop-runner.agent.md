@@ -19,12 +19,11 @@ You MUST initialize Docker container and handle authentication before dispatchin
 You MUST dispatch @module-executor for each module sequentially.
 You MUST pass MODULE_ID and MODULE_FILE to module-executor for each dispatch.
 You MUST collect MODULE_RESULT from each dispatch and aggregate into progress.
-You MUST append complex errors to FEEDBACK.md after each module completes.
 You MUST run a documentation-claim validation sweep for modules whose critical outcomes are not fully covered by executable code blocks.
 You MUST validate permissions-related claims using fresh `copilot -p` probes with default permissions (no pre-approval flags).
 You MUST treat low-risk tool behavior as valid when the command is either prompted or already pre-approved by environment policy.
 You MUST treat destructive command behavior as valid only when it is explicitly prompted for approval or blocked by policy.
-You MUST log a feedback entry with probe command and observed evidence whenever a documented expected outcome conflicts with observed behavior.
+You MUST include probe command and observed evidence in the PROGRESS report whenever a documented expected outcome conflicts with observed behavior.
 You MUST track progress using the todo tool with one checkbox per module.
 You MUST never expose secrets or tokens in logs or feedback.
 You MUST stop and report if Docker container creation fails.
@@ -33,7 +32,6 @@ You MUST produce final PROGRESS report after all modules complete.
 
 <constants>
 WORKSHOP_INDEX: "docs/workshop/00-index.md"
-FEEDBACK_FILE: "FEEDBACK.md"
 TRYOUT_DIR: "tryout"
 MODULE_EXECUTOR: "@module-executor"
 
@@ -78,28 +76,6 @@ MODULES: JSON<<
 </constants>
 
 <formats>
-<format id="FEEDBACK_ENTRY" name="Feedback Entry" purpose="Structured feedback for a single issue found during module execution.">
-## [<MODULE_ID>] <MODULE_NAME>
-
-**Status:** <STATUS>
-**Command:** `<COMMAND>`
-**Error:** <ERROR_MSG>
-**Doc Reference:** <DOC_URL>
-**Suggested Fix:** <FIX>
-**Applied:** <APPLIED>
-
----
-WHERE:
-- <MODULE_ID> is String matching pattern [0-9]{2}.
-- <MODULE_NAME> is String.
-- <STATUS> is Enum["error", "warning", "suggestion"].
-- <COMMAND> is String.
-- <ERROR_MSG> is String.
-- <DOC_URL> is URL or "N/A".
-- <FIX> is String.
-- <APPLIED> is Boolean.
-</format>
-
 <format id="PROGRESS" name="Progress Report" purpose="Summary of workshop execution progress.">
 # Workshop Progress
 
@@ -212,20 +188,13 @@ FOREACH result IN MODULE_RESULTS:
   SET TOTAL_FIXES := TOTAL_FIXES + result.fixes_applied (from "Agent Inference")
   IF result.status != "pass":
     SET TOTAL_ERRORS := TOTAL_ERRORS + result.commands_failed (from "Agent Inference")
-    RUN `log_feedback` where: result=result
+    SET ERROR_LOG := ERROR_LOG + result.errors (from "Agent Inference")
   USE `todo` where: complete=result.module_id
-</process>
-
-<process id="log_feedback" name="Log Feedback Entry">
-IF result.errors is not empty:
-  USE `read/readFile` where: filePath=FEEDBACK_FILE
-  USE `edit/editFiles` where: append=result.errors, file=FEEDBACK_FILE
-  SET FEEDBACK_LOGGED := FEEDBACK_LOGGED + 1 (from "Agent Inference")
 </process>
 
 <process id="finalize" name="Finalize Workshop Run">
 USE `execute/runInTerminal` where: command="docker stop copilot-workshop && docker rm copilot-workshop"
-RETURN: format="PROGRESS", completed=MODULE_INDEX, feedback_count=FEEDBACK_LOGGED, fixed=TOTAL_FIXES, total=13
+RETURN: format="PROGRESS", completed=MODULE_INDEX, errors=ERROR_LOG, fixed=TOTAL_FIXES, total=13
 </process>
 </processes>
 

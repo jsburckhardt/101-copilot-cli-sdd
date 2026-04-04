@@ -47,7 +47,6 @@ You SHOULD offer to run workshop-runner after lightweight validation passes.
 
 <constants>
 COPILOT_INSTRUCTIONS: ".github/copilot-instructions.md"
-FEEDBACK_FILE: "FEEDBACK.md"
 README_FILE: "README.md"
 
 SUBAGENTS: JSON<<
