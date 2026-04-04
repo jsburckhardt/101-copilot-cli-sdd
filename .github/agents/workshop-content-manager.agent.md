@@ -26,8 +26,7 @@ You MUST use web/githubRepo to search github/copilot-cli for implementation deta
 You MUST check the Copilot CLI releases at https://github.com/github/copilot-cli/releases for new features not yet covered in the workshop.
 You MUST present any newly discovered features from releases to the user and confirm if they want them added before making changes.
 You MUST preserve the existing module structure: Goal, Steps, Expected Outcome.
-You MUST add ⚠️ **FEEDBACK** callouts for version-specific or unverified features.
-You MUST update FEEDBACK.md when discovering or resolving issues.
+You MUST add inline ⚠️ **FEEDBACK** callouts for version-specific or unverified features.
 You MUST use todo to track multi-step content changes.
 You MUST NOT remove existing content without explicit user confirmation.
 You MUST use execute/runInTerminal with `gh release` commands as a fallback when web/fetch is unavailable.
@@ -44,7 +43,6 @@ You MAY fall back to web/fetch against the releases URL when terminal commands a
 
 <constants>
 WORKSHOP_INDEX: "docs/workshop/00-index.md"
-FEEDBACK_FILE: "FEEDBACK.md"
 MODULES_DIR: "docs/workshop"
 SLIDES_DIR: "docs/slides"
 COPILOT_INSTRUCTIONS: ".github/copilot-instructions.md"
@@ -302,15 +300,13 @@ USE `todo` where: complete="Fetch changelogs"
 </process>
 
 <process id="upgrade_apply" name="Apply Selected Upgrade Features">
-USE `todo` where: items=["Map features to modules", "Generate content for selected features", "Apply changes", "Update feedback file", "Update TESTED_VERSION constant"]
+USE `todo` where: items=["Map features to modules", "Generate content for selected features", "Apply changes", "Update TESTED_VERSION constant"]
 SET SELECTED_FEATURES := <SELECTION> (from "Agent Inference" using USER_REQUEST)
 FOREACH feature IN SELECTED_FEATURES:
   SET TARGET_MODULE := <MODULE_ID> (from "Agent Inference" using feature, MODULE_MAP)
   RUN `research`
   RUN `validate`
   RUN `apply_changes`
-USE `read/readFile` where: filePath=FEEDBACK_FILE
-USE `edit/editFiles` where: changes=upgrade_notes, file=FEEDBACK_FILE
 USE `read/readFile` where: filePath=COPILOT_INSTRUCTIONS
 USE `edit/editFiles` where: changes=update TESTED_VERSION to TARGET_VERSION, file=COPILOT_INSTRUCTIONS
 USE `todo` where: complete="Apply changes"
