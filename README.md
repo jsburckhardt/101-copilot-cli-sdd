@@ -1,15 +1,33 @@
-# 101-copilot-cli-sdd
+# GitHub Copilot CLI — Deep-Dive Workshop
 
 [![Copilot CLI version](https://img.shields.io/badge/Copilot%20CLI-v1.0.16-blue?logo=github)](https://github.com/github/copilot-cli/releases/tag/v1.0.16)
 [![APS version](https://img.shields.io/badge/APS-v1.2.1-blue?logo=github)](https://github.com/chris-buckley/agnostic-prompt-standard/releases/tag/v1.2.1)
 
-A quick guide to use GitHub Copilot CLI (tested with **v1.0.16**) + a sample SDD (Specification-Driven Development) project
+A **half-day, instructor-led** workshop that takes teams from first install to advanced automation with GitHub Copilot CLI. Covers operating modes, custom instructions, MCP servers, agent skills, plugins, custom agents, hooks, context management, and more — all through hands-on exercises tested against **Copilot CLI v1.0.16**.
 
-## Workshop
+## What's Inside
 
-The full workshop guide is available in [`docs/workshop/`](docs/workshop/00-index.md).
+| Component | Path | Description |
+|-----------|------|-------------|
+| **Workshop modules** | [`docs/workshop/`](docs/workshop/00-index.md) | 13 progressive modules (~4.5 h total) from installation to fleet command |
+| **Presentation slides** | [`docs/slides/`](docs/slides/) | Marp-powered slide decks, one per module — ready for live delivery |
+| **Tryout sandbox** | [`tryout/`](tryout/) | Scratch space for hands-on exercises (`.gitignored` — your work stays local) |
+| **Dev Container** | [`.devcontainer/`](.devcontainer/) | One-click reproducible environment with all prerequisites pre-installed |
+| **Responsible AI guide** | [`docs/responsible-ai.md`](docs/responsible-ai.md) | Detailed guidance on applying Microsoft's Responsible AI principles |
 
-### Presentation Slides
+## Related Workshops
+
+This repo is part of a family of Copilot CLI learning resources. Pick the format that fits your audience:
+
+| Workshop | Format | Audience | Link |
+|----------|--------|----------|------|
+| **Tailspin Toys Workshop** | 90-min event kickstart | First exposure — uses a real app to show Copilot CLI in action | [copilot-dev-days/tailspin-toys-workshop](https://github.com/copilot-dev-days/tailspin-toys-workshop) |
+| **Copilot CLI for Beginners** | Self-paced solo course | Absolute beginners learning at their own pace | [github/copilot-cli-for-beginners](https://github.com/github/copilot-cli-for-beginners) |
+| **Deep-Dive Workshop** *(this repo)* | Half-day instructor-led | Teams wanting to go beyond the basics | [copilot-dev-days/copilot-cli-deep-dive-workshop](https://github.com/copilot-dev-days/copilot-cli-deep-dive-workshop) |
+
+> **Suggested learning path:** Start with *Tailspin Toys* or *Beginners* for a quick intro, then move to this *Deep-Dive* workshop for the full treatment.
+
+## Viewing the Slides
 
 Slide decks for each module are in [`docs/slides/`](docs/slides/) (powered by [Marp](https://marp.app/)):
 
@@ -17,6 +35,8 @@ Slide decks for each module are in [`docs/slides/`](docs/slides/) (powered by [M
 - **Browser (direct preview)** — `npx @marp-team/marp-cli docs/slides/02-modes.md --preview`
 - **Browser (server-client)** — `npx @marp-team/marp-cli docs/slides/ --server` then visit http://localhost:8080
 - **Export to PDF/PPTX** — `npx @marp-team/marp-cli docs/slides/02-modes.md -o slides.pdf`
+
+## Getting Started
 
 ### Recommended: Open in Dev Container
 
