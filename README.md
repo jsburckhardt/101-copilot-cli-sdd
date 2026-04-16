@@ -1,5 +1,12 @@
 # GitHub Copilot CLI — Deep-Dive Workshop
 
+> [!WARNING]
+> **This repository is no longer maintained.**
+> All content has been migrated to the new home:
+> **➡️ [copilot-dev-days/copilot-cli-deep-dive-workshop](https://github.com/copilot-dev-days/copilot-cli-deep-dive-workshop)**
+>
+> Please use the new repository for the latest updates, issues, and contributions.
+
 [![Copilot CLI version](https://img.shields.io/badge/Copilot%20CLI-v1.0.16-blue?logo=github)](https://github.com/github/copilot-cli/releases/tag/v1.0.16)
 [![APS version](https://img.shields.io/badge/APS-v1.2.1-blue?logo=github)](https://github.com/chris-buckley/agnostic-prompt-standard/releases/tag/v1.2.1)
 
