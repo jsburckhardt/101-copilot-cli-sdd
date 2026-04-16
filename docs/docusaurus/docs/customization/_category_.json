@@ -1,0 +1,12 @@
+{
+  "label": "Customization",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Customization",
+    "description": "Configure instructions, tool permissions, and MCP servers",
+    "slug": "/category/customization"
+  }
+}

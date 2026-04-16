@@ -1,0 +1,157 @@
+---
+title: GitHub Copilot CLI Workshop
+description: A hands-on guide to mastering the GitHub Copilot CLI
+sidebar_position: 1
+sidebar_label: Introduction
+keywords: [copilot, cli, workshop, tutorial, github]
+---
+
+:::info Version
+**Tested against:** GitHub Copilot CLI **v0.0.415**. Check [releases](https://github.com/github/copilot-cli/releases) for newer versions. Some features may change or new ones may be added.
+:::
+
+Welcome to this hands-on workshop for mastering GitHub Copilot CLI! This workshop will take you from installation to advanced automation techniques.
+
+## Prerequisites
+
+* GitHub account with an active Copilot subscription (Pro, Pro+, Business, or Enterprise)
+* Node.js v22+ and npm v10+ (for npm installation method)
+* Basic command-line experience
+* A code editor (VS Code recommended)
+* Git installed and configured
+
+## Learning Objectives
+
+By the end of this workshop, you will be able to:
+
+* Install and configure Copilot CLI on any platform
+* Use interactive and programmatic modes effectively, including slash commands
+* Manage sessions and delegate tasks to cloud agents
+* Create custom instructions with AGENTS.md and llm.txt
+* Control tool permissions and use `--yolo` mode safely
+* Configure and use MCP servers
+* Create and use skills from agentskills.io
+* Build custom agents for specialized workflows
+* Set up hooks for lifecycle automation
+* Manage context effectively with `/context` and `/compact`
+* Use autopilot mode for autonomous task execution
+* Leverage fleet command for parallel multi-agent workflows
+
+## Workshop Modules
+
+| # | Module | Duration | Description |
+| --- | --- | --- | --- |
+| 01 | [Installation](/docs/getting-started/installation) | 15 min | Install via npm, Homebrew, or script |
+| 02 | [Operating Modes & Commands](/docs/getting-started/modes-and-commands) | 30 min | Interactive chat, slash commands, programmatic, and `/delegate` |
+| 03 | [Session Management](/docs/getting-started/session-management) | 15 min | Continue, resume, clear, and track sessions |
+| 04 | [Custom Instructions](/docs/customization/custom-instructions) | 25 min | AGENTS.md, llm.txt, copilot-instructions.md |
+| 05 | [Tools & Permissions](/docs/customization/tools-and-permissions) | 20 min | Built-in tools, allow/deny, `--yolo` mode |
+| 06 | [MCP Servers](/docs/customization/mcp-servers) | 25 min | Configure remote and local MCP servers |
+| 07 | [Agent Skills](/docs/extensibility/agent-skills) | 20 min | Create and use skills, agentskills.io |
+| 08 | [Plugins](/docs/extensibility/plugins) | 15 min | Plugins and the marketplace ecosystem |
+| 09 | [Custom Agents](/docs/extensibility/custom-agents) | 25 min | Build specialized agents and subagents |
+| 10 | [Hooks](/docs/advanced/advanced-topics) | 20 min | Lifecycle hooks and automation |
+| 11 | [Context Management](/docs/advanced/automation-patterns) | 15 min | `/context`, `/compact`, token optimization |
+| 12 | [Advanced Topics](/docs/advanced/team-patterns) | 30 min | Autopilot, Fleet, environment, CI/CD, LSP config, tips |
+
+**Total estimated time: ~4.25 hours**
+
+## Workshop Flow
+
+```mermaid
+flowchart LR
+    A["Installation\n(Module 1)"] --> B["Core Concepts\n(Modules 2-5)"]
+    B --> C["Advanced\n(Modules 6-12)"]
+```
+
+## How to Use This Workshop
+
+1. **Follow in order** - Modules build on each other
+2. **Complete exercises** - Hands-on practice reinforces learning
+3. **Check expected outcomes** - Verify your understanding
+4. **Use the references** - Official docs have more detail
+
+## Quick Reference Card
+
+### Essential Commands
+
+```bash
+# Start interactive session
+copilot
+
+# Programmatic mode (single prompt)
+copilot -p "your prompt here"
+
+# Allow specific tools
+copilot --allow-tool 'shell(git)'
+
+# Full autonomy (use carefully!)
+copilot --yolo
+
+# Resume last session
+copilot --resume
+```
+
+### Essential Slash Commands
+
+| Command | Description |
+| --- | --- |
+| `/help` | Show all available commands |
+| `/clear` | Clear session context |
+| `/context` | View token usage |
+| `/compact` | Compress session history |
+| `/plan` | Create implementation plan before coding |
+| `/review` | Run code review agent |
+| `/diff` | Review changes made in current directory |
+| `/delegate` | Hand off to cloud agent |
+| `/model` | Switch AI model |
+| `/mcp` | Manage MCP servers |
+| `/init` | Initialize Copilot config for repo |
+| `/instructions` | View and toggle custom instruction files |
+| `/cwd` | Change working directory |
+
+## Environment Setup Check
+
+Before starting, verify your environment:
+
+```bash
+# Check Node.js version (need v22+)
+node --version
+
+# Check npm version (need v10+)
+npm --version
+
+# Check Git
+git --version
+
+# Check GitHub CLI (optional but recommended)
+gh --version
+```
+
+### Ubuntu/Debian Quick Setup
+
+If you are missing prerequisites (for example, in a fresh Docker container):
+
+```bash
+# Basic tools
+apt-get update && apt-get install -y curl git jq gh
+
+# Install uv (Python package manager)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+# Install nvm and Node.js LTS
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+```
+
+## Getting Help
+
+* **Official Docs**: [docs.github.com/en/copilot](https://docs.github.com/en/copilot)
+* **GitHub Community**: [github.com/orgs/community/discussions](https://github.com/orgs/community/discussions)
+* **Issue Tracker**: [github.com/github/copilot-cli/issues](https://github.com/github/copilot-cli/issues)
+
+---
+
+**Ready to begin?** Continue to [Module 1: Installation](/docs/getting-started/installation)
